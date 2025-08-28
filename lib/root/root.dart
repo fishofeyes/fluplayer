@@ -65,7 +65,10 @@ class _RootPageState extends ConsumerState<RootPage> {
         },
         elevation: 0,
         backgroundColor: Colors.transparent,
-        child: Image.asset("assets/home/add.png", width: 66, height: 66),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(33),
+          child: Image.asset("assets/home/add.png", width: 66, height: 66),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
