@@ -22,15 +22,19 @@ class HistoryItem extends StatelessWidget {
     return Slidable(
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
-        extentRatio: 0.3,
+        extentRatio: 0.2,
         children: [
           CustomSlidableAction(
             onPressed: (c) {
               onDelete?.call(model);
             },
             flex: 1,
-            backgroundColor: Colors.red,
-            child: Image.asset("assets/delete.webp", width: 24, height: 24),
+            backgroundColor: Color(0xffED5D47),
+            child: Image.asset(
+              "assets/home/delete_history.png",
+              width: 24,
+              height: 24,
+            ),
           ),
         ],
       ),

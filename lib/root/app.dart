@@ -15,6 +15,7 @@ class RootApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         scaffoldBackgroundColor: const Color(0xff141414),
         useMaterial3: true,
+        splashColor: Colors.transparent,
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           sizeConstraints: BoxConstraints.tightFor(
             width: 66,
