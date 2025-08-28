@@ -1,5 +1,6 @@
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_val.dart';
+import 'package:fluplayer/common/view/background_title.dart';
 import 'package:fluplayer/mine/privacy_page.dart';
 import 'package:fluplayer/mine/terms_page.dart';
 import 'package:flutter/material.dart';
@@ -47,18 +48,27 @@ class _MinePageState extends State<MinePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 60),
-                const Text(
-                  "Setting",
-                  style: TextStyle(
-                    fontSize: 24,
+                // const Text(
+                //   "Setting",
+                //   style: TextStyle(
+                //     fontSize: 24,
+                //     fontWeight: FontWeight.w500,
+                //     color: Colors.white,
+                //   ),
+                // ),
+                BackgroundTitleView(
+                  title: "Setting",
+                  textStyle: TextStyle(
+                    fontSize: 18,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
+                    height: 1,
                   ),
                 ),
                 const SizedBox(height: 26),
                 Container(
                   decoration: BoxDecoration(
-                    color: const Color(0xff262D39),
+                    color: const Color(0xff453526).withValues(alpha: 0.46),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: ListView(

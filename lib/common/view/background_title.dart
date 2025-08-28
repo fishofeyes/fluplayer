@@ -16,6 +16,7 @@ class BackgroundTitleView extends StatelessWidget {
             "assets/home/title_bg.png",
             fit: BoxFit.contain,
             height: 12,
+            width: 42,
           ),
         ),
         Text(
