@@ -2,11 +2,13 @@ import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/view/background_title.dart';
 import 'package:fluplayer/home/history_page.dart';
 import 'package:fluplayer/home/provider/home.dart';
+import 'package:fluplayer/home/view/history_item.dart';
 import 'package:fluplayer/home/view/home_video_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../player/player_page.dart';
+import 'home_history_item.dart';
 
 class HomeHistoryView extends ConsumerWidget {
   const HomeHistoryView({super.key});
@@ -33,10 +35,11 @@ class HomeHistoryView extends ConsumerWidget {
                       color: Color(0xff919191),
                       fontWeight: FontWeight.w500,
                       fontSize: 12,
+                      height: 1,
                     ),
                   ),
                   const SizedBox(width: 4),
-                  Image.asset("assets/more.webp", width: 12, height: 12),
+                  Image.asset("assets/home/more2.png", width: 12, height: 12),
                 ],
               ),
             ),
@@ -49,7 +52,7 @@ class HomeHistoryView extends ConsumerWidget {
             scrollDirection: Axis.horizontal,
             itemCount: list.length,
             itemBuilder: (context, index) {
-              return HomeVideoView(
+              return HomeHistoryItem(
                 model: list[index],
                 onTap: (e) {
                   commonPush(context, PlayerPage(model: e, models: list));

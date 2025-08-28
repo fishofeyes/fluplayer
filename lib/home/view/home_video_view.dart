@@ -16,10 +16,16 @@ class HomeVideoView extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap?.call(model),
       child: Container(
-        height: 208,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
-          color: const Color(0xff2440FE).withOpacity(0.15),
+          gradient: LinearGradient(
+            colors: [
+              Color(0xffffbb7b).withValues(alpha: 0),
+              Color(0xffff9f45).withValues(alpha: 0.2),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,14 +48,14 @@ class HomeVideoView extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                Image.asset("assets/play.webp", width: 28, height: 28),
+                Image.asset("assets/home/play.png", width: 28, height: 28),
               ],
             ),
-            const Spacer(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6),
               child: Column(
                 children: [
+                  SizedBox(height: 7),
                   SizedBox(
                     width: double.infinity,
                     child: Text(
@@ -58,18 +64,19 @@ class HomeVideoView extends StatelessWidget {
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
+                        height: 20 / 14,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 6),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         child: Text(
-                          '${model.size.format(1)} • ${model.createDate.time()}',
+                          '${model.size.format(1)} • ${model.createDate.time('yyyy/MM/dd')}',
                           style: const TextStyle(
                             color: Colors.white70,
                             fontSize: 12,
@@ -84,7 +91,7 @@ class HomeVideoView extends StatelessWidget {
                           );
                         },
                         child: Image.asset(
-                          "assets/more2.webp",
+                          "assets/home/more.png",
                           width: 24,
                           height: 24,
                         ),
@@ -94,7 +101,7 @@ class HomeVideoView extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 5),
           ],
         ),
       ),

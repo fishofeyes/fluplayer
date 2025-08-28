@@ -2,12 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../home/model/home.dart';
+
 WidgetRef? commonRef;
 BuildContext? commonContext;
 bool screenPortraitUp = true;
-int playerForward = 0; // 初始音量值// 0: 默认， 1: 后退， 2， 前进
-double playerBrightness = 0; // 初始音量值// 0: 默认， 1: 后退， 2， 前进
-double playerVolume = 0; // 初始音量值// 0: 默认， 1: 后退， 2， 前进
+int playerForward = 0;
+double playerBrightness = 0;
+double playerVolume = 0;
+RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
 Future<dynamic> commonPush(BuildContext context, Widget page) {
   return Navigator.push(context, CupertinoPageRoute(builder: (c) => page));

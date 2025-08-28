@@ -13,7 +13,7 @@ class EmptyView extends StatelessWidget {
     return Column(
       children: [
         SizedBox(height: top, width: double.infinity),
-        Image.asset("assets/no_video_content.webp", width: 150, height: 150),
+        Image.asset("assets/home/empty.png", width: 156, height: 156),
         Padding(
           padding: const EdgeInsets.only(top: 12, bottom: 16.0),
           child: Text(
@@ -25,11 +25,25 @@ class EmptyView extends StatelessWidget {
             ),
           ),
         ),
-        CommonButton(
-          title: "Import",
+        InkWell(
           onTap: () async {
             commonRef?.read(tabIndexProvider.notifier).state = 2;
           },
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.asset("assets/home/import_bg.png", height: 48),
+              Text(
+                "Import",
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  height: 22 / 16,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

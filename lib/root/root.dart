@@ -1,6 +1,8 @@
 import 'package:fluplayer/choose/choose_media.dart';
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/home/home_page.dart';
+import 'package:fluplayer/home/model/home.dart';
+import 'package:fluplayer/home/provider/home.dart';
 import 'package:fluplayer/mine/mine_page.dart';
 import 'package:fluplayer/root/provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +17,15 @@ class RootPage extends ConsumerStatefulWidget {
 }
 
 class _RootPageState extends ConsumerState<RootPage> {
-  int index = 0;
+  int _index = 0;
   final data = [
-    {"label": "home", "icon": "home", "select": "home_in", "index": 0},
-    {"label": "Setting", "icon": "set", "select": "set_in", "index": 1},
+    {"label": "home", "icon": "home", "select": "home_selected", "index": 0},
+    {
+      "label": "Setting",
+      "icon": "setting",
+      "select": "setting_selected",
+      "index": 1,
+    },
   ];
   final _pageController = PageController();
 
@@ -40,30 +47,29 @@ class _RootPageState extends ConsumerState<RootPage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(tabIndexProvider);
     ref.listen(tabIndexProvider, (old, newvalue) {
+      _index = newvalue;
       _pageController.jumpToPage(newvalue);
     });
-    final bottom = MediaQuery.of(context).viewPadding.bottom;
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      extendBody: true,
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [HomePage(), MinePage(), ChooseMediaPage()],
       ),
-      extendBody: true,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           ref.read(tabIndexProvider.notifier).state = 2;
         },
         elevation: 0,
         backgroundColor: Colors.transparent,
-        child: Image.asset("assets/add.webp", width: 66, height: 66),
+        child: Image.asset("assets/home/add.png", width: 66, height: 66),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        notchMargin: 2,
+        notchMargin: 5,
         elevation: 0,
         padding: EdgeInsets.zero,
         clipBehavior: Clip.antiAlias,
@@ -72,39 +78,43 @@ class _RootPageState extends ConsumerState<RootPage> {
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [const Color(0xff323B1E), const Color(0xff131412)],
+              colors: [const Color(0xff3B2C1E), const Color(0xff141312)],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
-          padding: EdgeInsets.only(bottom: bottom == 0 ? 0 : 12),
           child: Row(
             children: [
               ...data.map((e) {
                 final index = e["index"]! as int;
-                final selected = index == state;
+                final selected = index == _index;
                 return Expanded(
-                  child: InkWell(
+                  child: GestureDetector(
                     onTap: () {
                       ref.read(tabIndexProvider.notifier).state = index;
+                      setState(() {
+                        _index = index;
+                      });
                     },
+                    behavior: HitTestBehavior.translucent,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Image.asset(
-                          "assets/${e[selected ? "select" : "icon"]}.png",
+                          "assets/home/${e[selected ? "select" : "icon"]}.png",
                           width: 24,
                           height: 24,
                         ),
+                        SizedBox(height: 4),
                         Text(
                           "${e['label']}",
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w500,
-                            color: Colors.white.withValues(
-                              alpha: selected ? 1.0 : 0.5,
-                            ),
+                            color: selected
+                                ? Color(0xffED9647)
+                                : Colors.white54,
                           ),
                         ),
                       ],

@@ -27,7 +27,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             top: 0,
             left: 0,
             right: 0,
-            child: Image.asset("assets/bg.webp"),
+            child: Image.asset("assets/home/bg.png"),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),

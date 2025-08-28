@@ -16,7 +16,7 @@ class ChooseMediaPage extends ConsumerWidget {
             top: 0,
             left: 0,
             right: 0,
-            child: Image.asset("assets/bg.webp"),
+            child: Image.asset("assets/home/bg.png"),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -47,7 +47,6 @@ class ChooseMediaPage extends ConsumerWidget {
                     ChooseAction(
                       title: "File",
                       img: "file",
-                      color: const Color(0xff433D34).withValues(alpha: 0.46),
                       onTap: () => ref
                           .read(homeProvider.notifier)
                           .import(context, false),
@@ -58,7 +57,6 @@ class ChooseMediaPage extends ConsumerWidget {
                       img: "video",
                       onTap: () =>
                           ref.read(homeProvider.notifier).import(context, true),
-                      color: const Color(0xff323E52).withValues(alpha: 0.6),
                     ),
                   ],
                 ),

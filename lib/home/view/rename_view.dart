@@ -41,7 +41,7 @@ class _RenameViewState extends State<RenameView> {
             Container(
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [Color(0xff1C2343), Color(0xff171717)],
+                  colors: [Color(0xff3E2309), Color(0xff000000)],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -75,14 +75,14 @@ class _RenameViewState extends State<RenameView> {
                         ),
                         decoration: InputDecoration(
                           focusedBorder: InputBorder.none,
-                          fillColor: const Color(0xff262D39),
+                          fillColor: const Color(0xff13150D),
                           filled: true,
                           enabledBorder: InputBorder.none,
-                          hintText: "Enter new name",
+                          hintText: "Please enter media name",
                           hintStyle: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
-                            color: Colors.white.withOpacity(0.5),
+                            color: Colors.white.withValues(alpha: 0.5),
                           ),
                         ),
                         onChanged: (e) {
@@ -122,7 +122,7 @@ class _RenameViewState extends State<RenameView> {
                             child: Container(
                               height: 48,
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.2),
+                                color: Color(0xffFFD4AB).withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(14),
                               ),
                               alignment: Alignment.center,

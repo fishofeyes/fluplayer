@@ -21,7 +21,7 @@ class MediaInfo extends StatelessWidget {
           height: 296,
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xff1C2343), Color(0xff171717)],
+              colors: [Color(0xff3E2309), Color(0xff000000)],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -41,8 +41,7 @@ class MediaInfo extends StatelessWidget {
                         File(model.face ?? ''),
                         width: 36,
                         height: 36,
-                        cacheWidth: 36,
-                        cacheHeight: 36,
+                        fit: BoxFit.cover,
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -77,7 +76,7 @@ class MediaInfo extends StatelessWidget {
                 children: [
                   _Action(
                     name: "Rename",
-                    img: 'm_rename',
+                    img: 'rename',
                     onTap: () async {
                       await Future.delayed(const Duration(milliseconds: 100));
                       final nam = await commonShowBottomSheet(
@@ -89,7 +88,7 @@ class MediaInfo extends StatelessWidget {
                   ),
                   _Action(
                     name: "Info",
-                    img: 'm_info',
+                    img: 'info',
                     onTap: () async {
                       await Future.delayed(const Duration(milliseconds: 100));
                       commonShowBottomSheet(
@@ -100,7 +99,7 @@ class MediaInfo extends StatelessWidget {
                   ),
                   _Action(
                     name: "Delete",
-                    img: 'm_delete',
+                    img: 'video_delete',
                     onTap: () {
                       commonRef
                           ?.read(homeProvider.notifier)
@@ -138,11 +137,11 @@ class _Action extends StatelessWidget {
             width: 87,
             height: 87,
             decoration: BoxDecoration(
-              color: const Color(0xff262D39),
+              color: const Color(0xff453526).withValues(alpha: 0.46),
               borderRadius: BorderRadius.circular(10),
             ),
             alignment: Alignment.center,
-            child: Image.asset("assets/$img.webp", width: 32, height: 32),
+            child: Image.asset("assets/home/$img.png", width: 32, height: 32),
           ),
           const SizedBox(height: 8),
           Text(

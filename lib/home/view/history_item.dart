@@ -67,13 +67,9 @@ class HistoryItem extends StatelessWidget {
                       left: 4,
                       right: 4,
                       bottom: 4,
-                      child: CommonGradientBar(
+                      child: CommonProgressBar(
                         progress: model.position.clamp(0.0, 1.0),
-                        bgColor: Colors.white.withOpacity(0.5),
-                        gradientColors: const [
-                          Color(0xff2CE1F9),
-                          Color(0xff2335FF),
-                        ],
+                        bgColor: Colors.white.withValues(alpha: 0.5),
                       ),
                     ),
                   ],
@@ -95,7 +91,7 @@ class HistoryItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      '${model.createDate.time("HH:mm:ss")} • ${model.size.format(1)} • ${model.createDate.time()}',
+                      '${model.createDate.time("HH:mm:ss")} • ${model.size.format(1)} • ${model.createDate.time("yyyy/MM/dd")}',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,

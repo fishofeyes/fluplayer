@@ -41,7 +41,7 @@ class PlayerController extends StatelessWidget {
                     }
                   },
                   child: Image.asset(
-                    "assets/${controller?.value.isPlaying == true ? 'v_pause' : 'v_play'}.webp",
+                    "assets/player/${controller?.value.isPlaying == true ? 'play' : 'supend'}.png",
                     width: 32,
                     height: 32,
                   ),
@@ -55,7 +55,7 @@ class PlayerController extends StatelessWidget {
                   child: Opacity(
                     opacity: isLast ? 0.5 : 1,
                     child: Image.asset(
-                      "assets/next.webp",
+                      "assets/player/next.png",
                       width: 24,
                       height: 24,
                     ),
@@ -87,7 +87,7 @@ class PlayerController extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Image.asset(
-                      "assets/rotate.webp",
+                      "assets/player/full.png",
                       width: 24,
                       height: 24,
                     ),

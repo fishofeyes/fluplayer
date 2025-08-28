@@ -34,7 +34,7 @@ class _HistoryMorePageState extends ConsumerState<HistoryPage> {
             top: 0,
             left: 0,
             right: 0,
-            child: Image.asset("assets/bg.webp"),
+            child: Image.asset("assets/home/bg.png"),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,40 +49,22 @@ class _HistoryMorePageState extends ConsumerState<HistoryPage> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Image.asset(
-                        "assets/back.webp",
+                        "assets/player/back.png",
                         width: 24,
                         height: 24,
                       ),
                     ),
                   ),
-                  GestureDetector(
+                  InkWell(
                     onTap: () {
                       ref.read(homeProvider.notifier).deleteAll();
                     },
-                    child: Container(
-                      height: 28,
-                      margin: const EdgeInsetsDirectional.only(end: 12),
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.16),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            "assets/delete.webp",
-                            width: 20,
-                            height: 20,
-                          ),
-                          const Text(
-                            "Delete All",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: Image.asset(
+                        "assets/home/delete.png",
+                        width: 20,
+                        height: 20,
                       ),
                     ),
                   ),

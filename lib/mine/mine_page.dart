@@ -1,7 +1,9 @@
 import 'package:fluplayer/common/common.dart';
+import 'package:fluplayer/common/common_val.dart';
 import 'package:fluplayer/mine/privacy_page.dart';
 import 'package:fluplayer/mine/terms_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -30,7 +32,6 @@ class _MinePageState extends State<MinePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -38,7 +39,7 @@ class _MinePageState extends State<MinePage> {
             top: 0,
             left: 0,
             right: 0,
-            child: Image.asset("assets/bg.webp"),
+            child: Image.asset("assets/home/bg.png"),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -78,34 +79,37 @@ class _MinePageState extends State<MinePage> {
                       ),
                       SettingsTile(
                         title: 'Feedback',
-                        onTap: () async {
-                          const url = 'mailto://vagfrjg3@outlook.com';
-                          await launchUrl(Uri.parse(url));
-                        },
+                        onTap: () =>
+                            launchUrl(Uri.parse('mailto://$contactEmail')),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 0),
-                        height: 60,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'About',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
+                      InkWell(
+                        onTap: () {
+                          EasyLoading.showToast("current version $version");
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 0),
+                          height: 60,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'About',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                ),
                               ),
-                            ),
-                            Text(
-                              version,
-                              style: const TextStyle(
-                                color: Colors.white70,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
+                              Text(
+                                version,
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],

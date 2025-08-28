@@ -20,7 +20,7 @@ class PlayerMediaView extends ConsumerWidget {
           width: 180,
           height: 48,
           decoration: BoxDecoration(
-            color: const Color(0xff1B4C9C).withOpacity(0.65),
+            color: const Color(0xff401F00).withValues(alpha: 0.5),
             borderRadius: BorderRadius.circular(8),
           ),
           alignment: Alignment.center,
@@ -28,15 +28,15 @@ class PlayerMediaView extends ConsumerWidget {
           child: Row(
             children: [
               Image.asset(
-                "assets/${state == 1 ? 'volume' : 'bright'}.webp",
+                "assets/player/${state == 1 ? 'volume' : 'sun'}.png",
                 width: 16,
                 height: 16,
               ),
               const SizedBox(width: 4),
               Expanded(
-                child: CommonGradientBar(
+                child: CommonProgressBar(
                   progress: progress,
-                  gradientColors: const [Color(0xff2CE1F9), Color(0xff2335FF)],
+                  bgColor: Colors.white70,
                 ),
               ),
             ],

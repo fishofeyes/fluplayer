@@ -2,20 +2,20 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_hive.dart';
-import 'package:fluplayer/common/view/have_permission.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:fluplayer/root/provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:uuid/uuid.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:collection/collection.dart';
 import 'package:path/path.dart';
 part 'home.g.dart';
+
+const _uuid = Uuid();
 
 @Riverpod(keepAlive: true)
 class Home extends _$Home {
@@ -50,8 +50,13 @@ class Home extends _$Home {
     m = m.copyWith(position: position);
     final tempList = state.history;
     final idx1 = tempList.indexWhere((e) => e.path == m.path);
-    state.history[idx1] = m;
-    CommonHive.historyBox.put(m.id, m);
+    if (idx1 != -1) {
+      tempList[idx1] = m;
+      state = state.copyWith(history: tempList);
+      CommonHive.historyBox.put(m.id, m);
+    } else {
+      insertHistory(m);
+    }
   }
 
   void deleteAll() {
@@ -79,18 +84,11 @@ class Home extends _$Home {
   }
 
   void import(BuildContext context, bool isVideo) async {
-    await Permission.appTrackingTransparency.request();
     if (isVideo) {
-      PermissionStatus status = await Permission.photos.status;
-      status = await Permission.photos.request();
-      if (status.isGranted) {
-        final res = await _imagePicker.pickVideo(source: ImageSource.gallery);
-        if (res != null) {
-          await _copyVideoToAppDirectory(res);
-          ref.read(tabIndexProvider.notifier).state = 0;
-        }
-      } else {
-        commonShowBottomSheet(context, const HavePermission());
+      final res = await _imagePicker.pickVideo(source: ImageSource.gallery);
+      if (res != null) {
+        await _copyVideoToAppDirectory(res);
+        ref.read(tabIndexProvider.notifier).state = 0;
       }
     } else {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -135,7 +133,7 @@ class Home extends _$Home {
         path: newPath,
         face: face,
         position: 0,
-        id: newPath,
+        id: _uuid.v4(),
       );
       state = state.copyWith(home: [m, ...state.home]);
       CommonHive.homeVideoBox.put(m.id, m);

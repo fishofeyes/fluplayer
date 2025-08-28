@@ -14,7 +14,7 @@ class ShowMediaInfoView extends StatelessWidget {
         Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xff1C2343), Color(0xff171717)],
+              colors: [Color(0xff3E2309), Color(0xff000000)],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -35,14 +35,18 @@ class ShowMediaInfoView extends StatelessWidget {
                         fontSize: 24,
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
+                        height: 26 / 24,
                       ),
                     ),
                     GestureDetector(
                       onTap: () => Navigator.pop(context),
                       behavior: HitTestBehavior.translucent,
-                      child: const Padding(
+                      child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Icon(Icons.close, color: Colors.white, size: 20),
+                        child: Image.asset(
+                          "assets/player/close.png",
+                          width: 20,
+                        ),
                       ),
                     ),
                   ],
@@ -56,6 +60,7 @@ class ShowMediaInfoView extends StatelessWidget {
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
+                    height: 16 / 14,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -96,6 +101,7 @@ class _Row extends StatelessWidget {
                 fontSize: 14,
                 color: Color(0xffBFBFBF),
                 fontWeight: FontWeight.w400,
+                height: 18 / 14,
               ),
             ),
           ),
@@ -107,6 +113,7 @@ class _Row extends StatelessWidget {
                 fontSize: 14,
                 color: Colors.white,
                 fontWeight: FontWeight.w400,
+                height: 18 / 14,
               ),
             ),
           ),

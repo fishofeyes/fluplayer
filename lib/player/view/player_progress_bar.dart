@@ -102,17 +102,14 @@ class _VideoProgressIndicatorState extends State<PlayerProgressBar> {
             valueColor: AlwaysStoppedAnimation<Color>(colors.bufferedColor),
             backgroundColor: colors.backgroundColor,
           ),
-          CommonGradientBar(
-            progress: position / duration,
-            gradientColors: const [Color(0xff2CE1F9), Color(0xff2335FF)],
-          ),
+          CommonProgressBar(progress: position / duration),
           Positioned(
             left: offset,
             child: Container(
               width: 12,
               height: 14,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Color(0xffED9647),
                 borderRadius: BorderRadius.circular(4),
               ),
             ),

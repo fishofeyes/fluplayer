@@ -17,6 +17,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:video_player/video_player.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../common/common.dart';
 
@@ -29,7 +30,7 @@ class PlayerPage extends ConsumerStatefulWidget {
   ConsumerState<PlayerPage> createState() => _VideoScreenState();
 }
 
-class _VideoScreenState extends ConsumerState<PlayerPage> {
+class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   VideoPlayerController? _controller;
   final ScrollController _scrollController = ScrollController();
   late HomeVideoModel model;
@@ -41,6 +42,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> {
   @override
   void initState() {
     super.initState();
+    WakelockPlus.toggle(enable: true);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     model = widget.model;
     SchedulerBinding.instance.addPostFrameCallback((e) {
@@ -49,7 +51,17 @@ class _VideoScreenState extends ConsumerState<PlayerPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    if (ModalRoute.of(context) != null) {
+      routeObserver.subscribe(this, ModalRoute.of(context)!);
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
+    routeObserver.unsubscribe(this);
+    WakelockPlus.toggle(enable: false);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     _scrollController.dispose();
     _timer?.cancel();
@@ -64,16 +76,23 @@ class _VideoScreenState extends ConsumerState<PlayerPage> {
     super.dispose();
   }
 
-  void _initVideo([bool isShow = true]) async {
+  @override
+  void didPop() {
+    commonRef?.read(homeProvider.notifier).updatePosition(model, progress);
+    super.didPop();
+  }
+
+  void _initVideo() async {
     _controller?.dispose();
     _controller = null;
     error = null;
     setState(() {});
     try {
       _controller = VideoPlayerController.file(File(model.path));
-      ref.read(homeProvider.notifier).insertHistory(model);
+      ref.read(homeProvider.notifier).updatePosition(model, progress);
       await _controller!.initialize();
       _controller?.addListener(() {
+        if (!mounted) return;
         setState(() {});
         if (_controller?.value.isCompleted == true) {
           setState(() {
@@ -142,7 +161,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> {
     } else {
       showGeneralDialog(
         context: context,
-        barrierLabel: "video list",
+        barrierLabel: "list",
         barrierDismissible: true,
         barrierColor: Colors.black38,
         transitionDuration: Duration(milliseconds: 300),
@@ -227,9 +246,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> {
                 aspectRatio: _controller!.value.aspectRatio,
                 child: GestureDetector(
                   onTap: () {
-                    setState(() {
-                      _isVisible = !_isVisible;
-                    });
+                    _onUserActivity();
                   },
                   child: VideoPlayer(_controller!),
                 ),
@@ -269,7 +286,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> {
                 width: 180,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: const Color(0xff1B4C9C).withOpacity(0.65),
+                  color: const Color(0xff401F00).withValues(alpha: 0.5),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 alignment: Alignment.center,
@@ -277,7 +294,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Image.asset(
-                      "assets/${playerForward == 2 ? 'fast_forward' : 'rewind'}.webp",
+                      "assets/player/${playerForward == 2 ? 'forward_go' : 'forward_back'}.png",
                       width: 16,
                       height: 16,
                     ),
