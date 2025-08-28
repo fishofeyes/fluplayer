@@ -15,6 +15,16 @@ class RootApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         scaffoldBackgroundColor: const Color(0xff141414),
         useMaterial3: true,
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          sizeConstraints: BoxConstraints.tightFor(
+            width: 66,
+            height: 66,
+          ), // 自定义尺寸
+          // 或复用标准约束：
+          extendedSizeConstraints: BoxConstraints(
+            minWidth: 80,
+          ), // 扩展型 FAB 宽度[6](@ref)
+        ),
       ),
       home: const RootPage(),
       navigatorObservers: [routeObserver],
