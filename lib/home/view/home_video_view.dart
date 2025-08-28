@@ -16,6 +16,7 @@ class HomeVideoView extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap?.call(model),
       child: Container(
+        height: 208,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
           gradient: LinearGradient(
@@ -51,6 +52,7 @@ class HomeVideoView extends StatelessWidget {
                 Image.asset("assets/home/play.png", width: 28, height: 28),
               ],
             ),
+            Spacer(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6),
               child: Column(

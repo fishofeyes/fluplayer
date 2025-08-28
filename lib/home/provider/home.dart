@@ -39,10 +39,22 @@ class Home extends _$Home {
     HomeVideoModel? res2 = state.home.firstWhereOrNull((e) => e.path == m.path);
     if (res != null) {
       CommonHive.historyBox.put(m.id, m);
+      state = state.copyWith(
+        history: [
+          for (final i in state.history)
+            if (i.path == m.path) res.copyWith(name: name) else i,
+        ],
+      );
     }
     if (res2 != null) {
       res2 = res2.copyWith(name: name);
       CommonHive.homeVideoBox.put(m.id, m);
+      state = state.copyWith(
+        home: [
+          for (final i in state.home)
+            if (i.path == m.path) res2.copyWith(name: name) else i,
+        ],
+      );
     }
   }
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:extended_image/extended_image.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +18,12 @@ class CommonCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(4),
       clipBehavior: Clip.antiAlias,
-      child: ExtendedImage.network(
-        data.face ?? "",
+      child: ExtendedImage.file(
+        File(data.face ?? ""),
         width: width,
         height: height,
-        cacheHeight: width.toInt() * 2,
-        cacheWidth: height.toInt() * 2,
         fit: BoxFit.cover,
         loadStateChanged: (state) {
           switch (state.extendedImageLoadState) {

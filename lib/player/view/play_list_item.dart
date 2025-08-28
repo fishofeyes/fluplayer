@@ -13,13 +13,16 @@ class PlayListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final id = ref.watch(playProvider);
+    final id = ref.watch(playProvider).id;
     return InkWell(
       onTap: () => onTap?.call(data),
       child: Container(
-        decoration: BoxDecoration(color: Colors.white12),
-        height: 78,
+        decoration: BoxDecoration(
+          color: id == data.id ? Colors.white12 : Colors.transparent,
+        ),
         padding: EdgeInsets.only(top: 8, bottom: 8, left: 20, right: 14),
+        constraints: BoxConstraints(minHeight: 78),
+        margin: EdgeInsets.only(bottom: 12),
         child: Row(
           children: [
             ClipRRect(
@@ -34,7 +37,7 @@ class PlayListItem extends ConsumerWidget {
                     child: Visibility(
                       visible: id == data.id,
                       child: Image.asset(
-                        "assets/play/play.png",
+                        "assets/player/playing.png",
                         width: 10,
                         height: 10,
                       ),
@@ -61,7 +64,7 @@ class PlayListItem extends ConsumerWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    "${data.createDate.time("HH:mm:ss")} · ${data.size.format()} · ${data.createDate.time()}",
+                    "${data.size.format()} · ${data.createDate.time()}",
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.white.withValues(alpha: 0.5),

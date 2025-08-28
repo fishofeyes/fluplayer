@@ -1,4 +1,3 @@
-import 'package:fluplayer/common/view/common_gradient_buttom.dart';
 import 'package:flutter/material.dart';
 
 class RenameView extends StatefulWidget {
@@ -141,18 +140,32 @@ class _RenameViewState extends State<RenameView> {
                         Expanded(
                           child: Opacity(
                             opacity: length == 0 ? 0.5 : 1,
-                            child: CustomGradientButton(
-                              title: "Confirm",
-                              width: double.infinity,
-                              height: 48,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
-                              ),
-                              onTap: () {
+                            child: InkWell(
+                              onTap: () async {
                                 if (length == 0) return;
                                 Navigator.pop(context, _controller.text);
                               },
+                              child: Stack(
+                                alignment: Alignment.center,
+                                fit: StackFit.loose,
+                                children: [
+                                  Image.asset(
+                                    "assets/home/bg1.png",
+                                    height: 48,
+                                    width: double.infinity,
+                                    fit: BoxFit.fill,
+                                  ),
+                                  Text(
+                                    "Confirm",
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                      height: 1,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

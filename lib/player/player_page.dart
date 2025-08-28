@@ -150,13 +150,14 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   }
 
   void _showList() async {
-    if (screenPortraitUp == false) {
+    if (screenPortraitUp) {
       showMaterialModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
         duration: Duration(milliseconds: 300),
         animationCurve: Curves.easeInOut,
-        builder: (e) => AlertPlayList(list: widget.models),
+        builder: (e) =>
+            AlertPlayList(list: widget.models, controller: _scrollController),
       );
     } else {
       showGeneralDialog(
@@ -182,7 +183,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           );
         },
         pageBuilder: (context, animation, secondaryAnimation) =>
-            AlertPlayList(list: widget.models),
+            AlertPlayList(list: widget.models, controller: _scrollController),
       );
     }
     await Future.delayed(const Duration(milliseconds: 200));
@@ -196,7 +197,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
 
   void _onRotate() async {
     screenPortraitUp = !screenPortraitUp;
-    if (screenPortraitUp) {
+    if (screenPortraitUp == false) {
       await SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight,
@@ -244,14 +245,15 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
             Center(
               child: AspectRatio(
                 aspectRatio: _controller!.value.aspectRatio,
-                child: GestureDetector(
-                  onTap: () {
-                    _onUserActivity();
-                  },
-                  child: VideoPlayer(_controller!),
-                ),
+                child: VideoPlayer(_controller!),
               ),
             ),
+          Positioned.fill(
+            child: GestureDetector(
+              onTap: _onUserActivity,
+              behavior: HitTestBehavior.translucent,
+            ),
+          ),
           Positioned.fill(
             child: Visibility(
               visible: _isVisible,
