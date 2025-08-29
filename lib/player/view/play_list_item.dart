@@ -8,14 +8,13 @@ import '../../common/view/common_cover.dart';
 
 class PlayListItem extends ConsumerWidget {
   final HomeVideoModel data;
-  final Function(HomeVideoModel)? onTap;
-  const PlayListItem({super.key, required this.data, this.onTap});
+  const PlayListItem({super.key, required this.data});
 
   @override
   Widget build(BuildContext context, ref) {
     final id = ref.watch(playProvider).id;
     return InkWell(
-      onTap: () => onTap?.call(data),
+      onTap: () => ref.read(playProvider.notifier).tapModel(data),
       child: Container(
         decoration: BoxDecoration(
           color: id == data.id ? Colors.white12 : Colors.transparent,
