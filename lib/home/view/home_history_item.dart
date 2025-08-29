@@ -25,21 +25,6 @@ class HomeHistoryItem extends StatelessWidget {
         ),
         child: Stack(
           children: [
-            // Positioned(
-            //   top: 8,
-            //   right: 8,
-            //   child: Container(
-            //     padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-            //     decoration: BoxDecoration(
-            //       color: Colors.black54,
-            //       borderRadius: BorderRadius.circular(4),
-            //     ),
-            //     child: Text(
-            //       '02:48',
-            //       style: TextStyle(color: Colors.white, fontSize: 9),
-            //     ),
-            //   ),
-            // ),
             Positioned(
               bottom: 0,
               left: 0,
@@ -50,6 +35,16 @@ class HomeHistoryItem extends StatelessWidget {
                   child: Container(
                     height: 44,
                     padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xffFFDBB9).withValues(alpha: 0),
+                          Color(0xffA04D00).withValues(alpha: 0.45),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
                     child: Text(
                       model.name,
                       style: const TextStyle(

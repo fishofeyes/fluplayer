@@ -17,7 +17,9 @@ class PlayListItem extends ConsumerWidget {
       onTap: () => ref.read(playProvider.notifier).tapModel(data),
       child: Container(
         decoration: BoxDecoration(
-          color: id == data.id ? Colors.white12 : Colors.transparent,
+          color: id == data.id
+              ? Color(0xffED9647).withValues(alpha: 0.2)
+              : Colors.transparent,
         ),
         padding: EdgeInsets.only(top: 8, bottom: 8, left: 20, right: 14),
         constraints: BoxConstraints(minHeight: 78),

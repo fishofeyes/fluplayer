@@ -39,7 +39,7 @@ class _HistoryMorePageState extends ConsumerState<HistoryPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 58),
+              const SizedBox(height: 56),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -70,7 +70,7 @@ class _HistoryMorePageState extends ConsumerState<HistoryPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 22),
+              const SizedBox(height: 24),
               const Padding(
                 padding: EdgeInsets.only(left: 8.0),
                 child: Text(
@@ -79,10 +79,11 @@ class _HistoryMorePageState extends ConsumerState<HistoryPage> {
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
+                    height: 20 / 18,
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
               Expanded(
                 child: ListView.builder(
                   itemCount: state.history.length,

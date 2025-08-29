@@ -26,7 +26,6 @@ class Home extends _$Home {
   }
 
   void insertHistory(HomeVideoModel m) {
-    final res = state.history;
     state = state.copyWith(history: [m, ...state.history]);
     CommonHive.homeVideoBox.put(m.id, m);
   }
@@ -78,7 +77,7 @@ class Home extends _$Home {
 
   // 删除历史
   void deleteSingle(HomeVideoModel m) {
-    final res = state.history;
+    final res = [...state.history];
     res.removeWhere((e) => e.path == m.path);
     CommonHive.historyBox.delete(m.id);
     state = state.copyWith(history: [...res]);
@@ -86,8 +85,8 @@ class Home extends _$Home {
 
   // 删除文件
   void deleteSingleVideo(HomeVideoModel m) {
-    final res = state.history;
-    final res2 = state.home;
+    final res = [...state.history];
+    final res2 = [...state.home];
     res.removeWhere((e) => e.path == m.path);
     res2.removeWhere((e) => e.path == m.path);
     CommonHive.historyBox.delete(m.id);
