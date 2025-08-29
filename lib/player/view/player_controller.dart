@@ -21,9 +21,10 @@ class PlayerController extends StatelessWidget {
     if (controller == null) return const SizedBox();
     final position = controller!.value.position;
     final total = controller!.value.duration;
+    final bottom = MediaQuery.of(context).padding.bottom;
     return Positioned(
       left: 12,
-      bottom: 0,
+      bottom: bottom == 0 ? 20 : 0,
       right: 0,
       child: SafeArea(
         top: false,
