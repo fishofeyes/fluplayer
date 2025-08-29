@@ -76,7 +76,13 @@ class _RootPageState extends ConsumerState<RootPage> {
         elevation: 0,
         padding: EdgeInsets.zero,
         clipBehavior: Clip.antiAlias,
-        shape: CircularNotchedRectangle(),
+        // shape: CircularNotchedRectangle(),
+        shape: AutomaticNotchedShape(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          ),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(33)),
+        ),
         color: Colors.transparent,
         child: Container(
           decoration: BoxDecoration(

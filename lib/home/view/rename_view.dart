@@ -72,6 +72,7 @@ class _RenameViewState extends State<RenameView> {
                           color: Colors.white,
                           fontWeight: FontWeight.w400,
                         ),
+                        cursorColor: Color(0xffED9647),
                         decoration: InputDecoration(
                           focusedBorder: InputBorder.none,
                           fillColor: const Color(0xff13150D),

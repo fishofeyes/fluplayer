@@ -76,6 +76,7 @@ class PlayerController extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
                   "${position.inSeconds.hhMM()}/${total.inSeconds.hhMM()}",
