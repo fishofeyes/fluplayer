@@ -12,6 +12,8 @@ double playerBrightness = 0;
 double playerVolume = 0;
 RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
+enum SharedStoreKey { recommendUserId, isMiddle, userEmail, userTags }
+
 Future<dynamic> commonPush(BuildContext context, Widget page) {
   return Navigator.push(context, CupertinoPageRoute(builder: (c) => page));
 }
