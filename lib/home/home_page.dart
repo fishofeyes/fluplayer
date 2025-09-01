@@ -5,6 +5,7 @@ import 'package:fluplayer/home/provider/home.dart';
 import 'package:fluplayer/home/view/empry_view.dart';
 import 'package:fluplayer/home/view/home_history.dart';
 import 'package:fluplayer/home/view/home_video_view.dart';
+import 'package:fluplayer/home/view/recommend_history_group.dart';
 import 'package:fluplayer/player/player_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,6 +40,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   visible: state.history.isNotEmpty,
                   child: const HomeHistoryView(),
                 ),
+                const RecommendHistoryGroup(),
                 const BackgroundTitleView(title: 'All videos'),
                 const SizedBox(height: 12),
                 Expanded(
