@@ -1,3 +1,4 @@
+import 'package:fluplayer/common/common_hive.dart';
 import 'package:fluplayer/common/request/http_helper.dart';
 import 'package:fluplayer/home/provider/recommend.dart';
 import 'package:fluplayer/out/model/out_media_model.dart';
@@ -5,6 +6,8 @@ import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/model/out_user_model.dart';
 import 'package:fluplayer/out/provider/out_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../home/model/recommend_model.dart';
 
 part 'out_user.g.dart';
 
@@ -52,13 +55,13 @@ class OutUser extends _$OutUser {
       rPage = 1;
     }
     final res = await HttpHelper.request(
-      HttpHelperApi.openPage,
+      HttpHelperApi.openData,
       isMiddle: isMiddle,
       params: {
-        "navarin": uid,
-        "eyases": "v2",
-        "cocoonery": rPage, //页码
-        "vibioid": pageSize, //分页大小
+        "uid": uid,
+        "version": "v2",
+        "current_page": rPage, //页码
+        "page_size": pageSize, //分页大小
       },
     );
     final List? files = res['pend'];
@@ -67,7 +70,7 @@ class OutUser extends _$OutUser {
           .map(
             (e) => OutMediaModel.fromJson(
               e,
-              e['fileMeta'],
+              e['file_meta'],
               uid,
               isMiddle,
               isRecommend: true,
@@ -103,13 +106,13 @@ class OutUser extends _$OutUser {
 
   Future<void> requestData({bool isLoad = false}) async {
     final res = await HttpHelper.request(
-      HttpHelperApi.openPage,
+      HttpHelperApi.openData,
       isMiddle: model.isMiddle,
       params: {
-        "navarin": model.userId,
-        "eyases": "v2",
-        "cocoonery": page, //页码
-        "vibioid": pageSize, //分页大小
+        "uid": uid,
+        "version": "v2",
+        "current_page": rPage, //页码
+        "page_size": pageSize, //分页大小
       },
     );
     if (res == null) {
@@ -120,21 +123,22 @@ class OutUser extends _$OutUser {
       state = state.copyWith(noData: true, isLoading: false);
       return;
     }
-    final u = res["q15izceo7d"];
-    final List? rect = res['usherism'];
-    final List? top = res['hdkf'];
-    final List? files = res['pend'];
+    final u = res["user"];
+    final List? rect = res['recent_videos'];
+    final List? top = res['top100_view_count_videos'];
+    final List? files = res['files'];
     if (u != null) {
       final user = OutUserModel.fromJson(u);
-      // await DatabaseHelper.instance.insertFollow(
-      //   CommendModel(
-      //     uid: user.id,
-      //     uname: user.name,
-      //     picture: user.picture,
-      //     createDate: DateTime.now().millisecondsSinceEpoch,
-      //     fromWeb: model.from,
-      //   ),
-      // );
+      CommonHive.recommendBox.put(
+        user.id,
+        RecommendModel(
+          uid: user.id,
+          uname: user.name,
+          cover: user.corver,
+          createDate: DateTime.now().millisecondsSinceEpoch,
+          isMiddle: model.isMiddle,
+        ),
+      );
       ref
           .read(recommendProvider.notifier)
           .requestHistory(
@@ -150,7 +154,7 @@ class OutUser extends _$OutUser {
             .map(
               (e) => OutMediaModel.fromJson(
                 e,
-                e['fileMeta'],
+                e['file_meta'],
                 model.userId,
                 model.isMiddle,
               ),
@@ -165,7 +169,7 @@ class OutUser extends _$OutUser {
             .map(
               (e) => OutMediaModel.fromJson(
                 e,
-                e['fileMeta'],
+                e['file_meta'],
                 model.userId,
                 model.isMiddle,
               ),
@@ -179,7 +183,7 @@ class OutUser extends _$OutUser {
           .map(
             (e) => OutMediaModel.fromJson(
               e,
-              e['fileMeta'],
+              e['file_meta'],
               model.userId,
               model.isMiddle,
             ),

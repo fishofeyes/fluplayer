@@ -1,3 +1,4 @@
+import 'package:fluplayer/load/load_page.dart';
 import 'package:fluplayer/root/root.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -27,7 +28,7 @@ class RootApp extends StatelessWidget {
           ), // 扩展型 FAB 宽度[6](@ref)
         ),
       ),
-      home: const RootPage(),
+      home: LoadPage(),
       navigatorObservers: [routeObserver],
       builder: EasyLoading.init(),
     );

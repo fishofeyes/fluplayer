@@ -68,13 +68,13 @@ class Recommend extends _$Recommend {
     tags = jsonDecode(sp.getString(SharedStoreKey.userTags.name)!);
     if (uid == null) return;
     final res = await HttpHelper.request(
-      HttpHelperApi.appRecommend,
+      HttpHelperApi.appUsers,
       isMiddle: isMiddle,
       params: {
-        "bemercy": uid, //站长id
-        "androphore": Platform.isIOS ? "ios" : "android", //系统(android , ios)
-        "triplefold": Platform.localeName, //语言
-        "unfound": {"skedge": tags},
+        "uid": uid, //站长id
+        "os": "ios", //系统(android , ios)
+        "language": Platform.localeName, //语言
+        "labels": tags, // 未处理
       },
     );
     if (res is List) {

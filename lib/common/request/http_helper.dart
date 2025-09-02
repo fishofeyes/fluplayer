@@ -3,13 +3,21 @@ import 'package:fluplayer/common/common_aes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum HttpHelperApi {
-  openPage("/v1/coffeebush/marmorize/tremors", "affiants"),
-  openDec("/v1/baguet/ladydom/matriarchs/", "brainpans"),
-  playUrl("/v1/warori/court/athamaunte/", "ploesti"),
-  appPost("/v1/bulies/undashed", "bedazzle"),
-  appRecommend("/v1/foldure/yelm", "l5rbrlmna8"),
-  appRecommendDetail("/v1/melicerous/forlornity", "hemlock"),
-  warning("/v1/hydrophora/mioses", "pernyi");
+  openData("/v1/cassideous/lollers/matina", "agrief"),
+  openFile("/v1/unbegotten/landplane/triglyphed", "unbronzed"),
+  getUrl("/v1/backage/skunktop/quartzitic", "gargol"),
+  event("/v1/scotogram/creedbound", "knoxian"),
+  appUsers("/v1/rhaphe/withery", "petiolar"),
+  recommend("/v1/windrower/refels", "starnose"),
+  report("/v1/mulder/rescuable", "expediment");
+
+  // openData("/v1/app/open/data", ""),
+  // openFile("/v1/app/open/file/", ""),
+  // getUrl("/v1/app/download/file/", ""),
+  // event("/v1/app/events", ""),
+  // appUsers("/v1/app/push_operation_pools", ""),
+  // recommend("/v1/app/recommend", ""),
+  // report("/v1/app/violate_report", "");
 
   final String desc;
   final String val;
@@ -19,6 +27,7 @@ enum HttpHelperApi {
 
 class HttpHelper {
   static final Dio _dio = Dio();
+
   static Future<dynamic> request(
     HttpHelperApi api, {
     Map<String, dynamic>? params,

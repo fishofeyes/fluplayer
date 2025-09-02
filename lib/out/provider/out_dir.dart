@@ -27,22 +27,22 @@ class OutDir extends _$OutDir {
 
   Future<void> requestData({bool isLoad = false}) async {
     final res = await HttpHelper.request(
-      HttpHelperApi.openDec,
+      HttpHelperApi.openFile,
       query: "${model.userId}/$dirId",
       post: false,
       isMiddle: model.isMiddle,
       params: {
-        "yapp": page, //页码
-        "pluvine": pageSize, //分页大小
+        "current_page": page, //页码
+        "page_size": pageSize, //分页大小
       },
     );
-    final List? files = res['vison'];
+    final List? files = res['files'];
     if (files != null) {
       final f = files
           .map(
             (e) => OutMediaModel.fromDirJson(
               e,
-              e["fileMeta"],
+              e["file_meta"],
               model.userId,
               model.isMiddle,
             ),

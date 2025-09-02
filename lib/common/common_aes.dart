@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:encrypt/encrypt.dart';
 
 class CommonAes {
-  static const headerIdentifier = "laticifer";
+  static const headerIdentifier = "umbonal";
   static const apiIdxKey = {true: "api_middle_idx", false: "api_no_middle_idx"};
   static const apiMap = {
     true: [
@@ -16,8 +16,9 @@ class CommonAes {
   };
 
   static String getRequestUrl(bool isMiddle, int idx) {
-    final desc = CommonAes.apiMap[isMiddle]![idx];
-    return utf8.decode(base64Decode(desc.replaceAll("zsd2kIFCHY", "")));
+    return "https://fluplayer.tbxbxdev.com";
+    // final desc = CommonAes.apiMap[isMiddle]![idx];
+    // return utf8.decode(base64Decode(desc.replaceAll("zsd2kIFCHY", "")));
   }
 
   static String getUrl(String sender) {

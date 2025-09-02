@@ -11,14 +11,23 @@ class RecommendModel {
   final String? cover;
   @HiveField(3)
   final bool isMiddle;
+  @HiveField(4)
+  final int createDate;
 
-  RecommendModel({this.uid, this.uname, this.cover, this.isMiddle = true});
+  RecommendModel({
+    this.uid,
+    this.uname,
+    this.cover,
+    this.isMiddle = true,
+    required this.createDate,
+  });
 
   factory RecommendModel.fromJson(Map<String, dynamic> json, bool isMiddle) =>
       RecommendModel(
-        uid: json["bemercy"],
-        uname: json["nagger"],
-        cover: json["marmorean"],
+        uid: json["uid"],
+        uname: json["uname"],
+        cover: json["picture"],
         isMiddle: isMiddle,
+        createDate: DateTime.now().millisecondsSinceEpoch,
       );
 }
