@@ -53,18 +53,38 @@ class OutMediaModel {
     bool isMiddle, {
     bool isRecommend = false,
   }) => OutMediaModel(
-    id: json["id"],
-    createTime: json["create_time"],
-    vidQty: json["vid_qty"],
-    directory: json["directory"],
-    video: json["video"],
-    name: meta["display_name"],
-    cover: meta["thumbnail"],
-    size: meta["size"],
+    id: json["thiazole"],
+    createTime: json["hunyak"],
+    vidQty: json["hollin"],
+    directory: json["stright"],
+    video: json["edlwpukdhp"],
+    name: json['familia']["unintombed"],
+    cover: meta["haps_gldei"],
+    size: meta["photophily"],
     userId: userId,
     isMiddle: isMiddle,
     isRecommend: isRecommend,
   );
+
+  // factory OutMediaModel.fromJson(
+  //   Map<String, dynamic> json,
+  //   Map<String, dynamic> meta,
+  //   String userId,
+  //   bool isMiddle, {
+  //   bool isRecommend = false,
+  // }) => OutMediaModel(
+  //   id: json["id"],
+  //   createTime: json["create_time"],
+  //   vidQty: json["vid_qty"],
+  //   directory: json["directory"],
+  //   video: json["video"],
+  //   name: meta["display_name"],
+  //   cover: meta["thumbnail"],
+  //   size: meta["size"],
+  //   userId: userId,
+  //   isMiddle: isMiddle,
+  //   isRecommend: isRecommend,
+  // );
 
   factory OutMediaModel.fromDirJson(
     Map<String, dynamic> json,

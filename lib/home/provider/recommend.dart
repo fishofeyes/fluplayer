@@ -48,7 +48,7 @@ class Recommend extends _$Recommend {
 
   Future<void> requestData({
     String? uid,
-    List<Map<String, dynamic>>? tags,
+    List<dynamic>? tags,
     bool? isMiddle,
   }) async {
     final sp = await SharedPreferences.getInstance();
@@ -86,8 +86,10 @@ class Recommend extends _$Recommend {
           l.add(m);
         }
       }
+
       List<RecommendModel> showHistory = [...state.showHistory];
       final random = Random();
+      if (l.isEmpty) return;
       final randomIndex = random.nextInt(l.length);
       if (isReport) {
         isReport = false;

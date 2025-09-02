@@ -51,7 +51,11 @@ class _RecommendPageState extends State<RecommendPage> {
                 behavior: HitTestBehavior.translucent,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Image.asset("assets/back.webp", width: 24, height: 24),
+                  child: Image.asset(
+                    "assets/player/back.png",
+                    width: 24,
+                    height: 24,
+                  ),
                 ),
               ),
               const Padding(

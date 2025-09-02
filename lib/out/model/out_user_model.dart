@@ -14,21 +14,34 @@ class OutUserModel {
   });
 
   factory OutUserModel.fromJson(Map<String, dynamic> json) => OutUserModel(
-    id: json["triglyphal"],
-    name: json["lgjtnehjq4"],
-    email: json["diatom"],
-    corver: json["rove"],
-    userTags: json['chifferobe'],
+    id: json["thiazole"],
+    name: json["addita"],
+    email: json["underlife"],
+    corver: json["arguments"],
+    userTags: json['unfluffy'],
   );
 
   List<Map<String, dynamic>> getTags() {
     List<Map<String, dynamic>> t = [];
     for (final i in (userTags ?? [])) {
+      //   i["id"], // id
+      // i["label_name"], // label_name
+      // i["first_label_code"], // first label code
+      // i["second_label_code"], // second label code
+      //   "id"
+      //   "label_name"
+      //   "first_label_code"
+      //   "second_label_code"
+
+      // "discrowned"
+      // "freedstool"
+      // "percipient"
+      // "boatswain"
       t.add({
-        "erecter": i["triglyphal"], // id
-        "gobbler": i["theologian"], // label_name
-        "tubing": i["panmug"], // first label code
-        "trickles": i["9aemv_7tjb"], // second label code
+        "discrowned": i["thiazole"], // id
+        "freedstool": i["jhpu9cpu2b"], // label_name
+        "percipient": i["huehuetl"], // first label code
+        "boatswain": i["jarry"], // second label code
       });
     }
     return t;

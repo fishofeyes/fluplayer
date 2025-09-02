@@ -20,7 +20,11 @@ class OutHeader extends StatelessWidget {
               behavior: HitTestBehavior.translucent,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Image.asset("assets/back.webp", width: 24, height: 24),
+                child: Image.asset(
+                  "assets/player/back.png",
+                  width: 24,
+                  height: 24,
+                ),
               ),
             ),
           ],
@@ -36,14 +40,6 @@ class OutHeader extends StatelessWidget {
                 Container(
                   width: 28,
                   height: 28,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xff2ACDF9), Color(0xff2448FE)],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    shape: BoxShape.circle,
-                  ),
                   alignment: Alignment.center,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
@@ -66,7 +62,7 @@ class OutHeader extends StatelessWidget {
                             return Container(
                               color: Colors.black,
                               child: Image.asset(
-                                "assets/photo.webp",
+                                "assets/user.png",
                                 fit: BoxFit.cover,
                               ),
                             );

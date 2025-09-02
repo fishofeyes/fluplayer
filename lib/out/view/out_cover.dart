@@ -11,7 +11,7 @@ class OutCover extends StatelessWidget {
     final isVideo = model.video;
     final isDir = model.directory;
     if (isDir) {
-      return Image.asset("assets/p_dir.png", width: 110, height: 62);
+      return Image.asset("assets/home/file.png", width: 110, height: 62);
     }
     return Stack(
       alignment: Alignment.center,
@@ -29,9 +29,9 @@ class OutCover extends StatelessWidget {
               cacheHeight: 110 * 2,
               loadStateChanged: (state) {
                 final str = isDir
-                    ? 'p_dir.png'
+                    ? 'home/file.png'
                     : isVideo
-                    ? 'p_video.png'
+                    ? 'home/video.png'
                     : 'p_pic.png';
                 switch (state.extendedImageLoadState) {
                   case LoadState.loading:
@@ -50,7 +50,7 @@ class OutCover extends StatelessWidget {
         ),
         Visibility(
           visible: isVideo,
-          child: Image.asset("assets/play.webp", width: 28, height: 28),
+          child: Image.asset("assets/home/play.png", width: 28, height: 28),
         ),
       ],
     );

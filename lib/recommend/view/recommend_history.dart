@@ -65,7 +65,7 @@ class RecommendHistory extends StatelessWidget {
                   if (state.extendedImageLoadState == LoadState.failed ||
                       state.extendedImageLoadState == LoadState.loading) {
                     return Image.asset(
-                      "assets/photo.webp",
+                      "assets/user.png",
                       width: size,
                       height: size,
                       fit: BoxFit.cover,

@@ -50,7 +50,7 @@ class ReCommendCell extends StatelessWidget {
                 loadStateChanged: (state) {
                   if (state.extendedImageLoadState == LoadState.failed ||
                       state.extendedImageLoadState == LoadState.loading) {
-                    return Image.asset("assets/photo.webp");
+                    return Image.asset("assets/user.png");
                   } else {
                     return ExtendedRawImage(
                       image: state.extendedImageInfo?.image,

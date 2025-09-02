@@ -99,7 +99,7 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Image.asset(
-                        "assets/back.webp",
+                        "assets/player/back.png",
                         width: 24,
                         height: 24,
                       ),
