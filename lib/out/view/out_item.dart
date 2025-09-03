@@ -23,7 +23,7 @@ class OutItem extends StatelessWidget {
     String str =
         "${model.createTime.time("HH:mm:ss")} · ${model.size.format(1)} · ${model.createTime.time("yyyy/MM/dd")}";
     if (model.directory) {
-      str = "${model.vidQty} videos";
+      str = "${model.qty} videos";
     }
     if (isFromWeb) {
       str = model.showTime ?? "";

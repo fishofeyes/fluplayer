@@ -48,6 +48,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   double progress = 0.0;
   bool showedAd = false;
   String? error;
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -94,7 +95,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   void _backReport() async {
     CommonReport.model = model;
     if (model.isMiddle != null) {
-      final res = await CommonReport.backEvent(
+      await CommonReport.backEvent(
         CommonReportEnum.commonPlay,
         source: widget.place,
         isMiddle: model.isMiddle,
@@ -120,11 +121,19 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     _controller?.dispose();
     _controller = null;
     error = null;
+    isLoading = true;
+    _isVisible = true;
     setState(() {});
     try {
-      _controller = VideoPlayerController.file(File(model.path));
+      if (model.isMiddle == null) {
+        _controller = VideoPlayerController.file(File(model.path));
+      } else {
+        final r = await model.getRealLink();
+        _controller = VideoPlayerController.networkUrl(Uri.parse(r));
+      }
       ref.read(homeProvider.notifier).updatePosition(model, progress);
       await _controller!.initialize();
+      isLoading = false;
       _controller?.addListener(() {
         if (!mounted) return;
         setState(() {});
@@ -158,6 +167,8 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       _controller?.dispose();
       _controller = null;
       setState(() {
+        isLoading = false;
+        _isVisible = true;
         error = "Failed to load video";
       });
       print("video play err: $e");
@@ -270,7 +281,6 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       model = ref.read(playProvider.notifier).getModel();
       _initVideo();
     });
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -294,7 +304,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
               visible: _isVisible,
               child: IgnorePointer(
                 ignoring: true,
-                child: Container(color: Colors.black.withOpacity(0.35)),
+                child: Container(color: Colors.black.withValues(alpha: 0.35)),
               ),
             ),
           ),
@@ -345,6 +355,30 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
                       ),
                     ),
                   ],
+                ),
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: Visibility(
+              visible: isLoading,
+              child: CupertinoActivityIndicator(color: Colors.white),
+            ),
+          ),
+          Positioned.fill(
+            child: Visibility(
+              visible: error != null,
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  error ?? '',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),

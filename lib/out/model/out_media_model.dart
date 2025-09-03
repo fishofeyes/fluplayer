@@ -4,7 +4,7 @@ class OutMediaModel {
   final String id;
   final int createTime;
   final String? showTime;
-  final int vidQty;
+  final int qty;
   final bool directory;
   final bool video;
   final String name;
@@ -16,7 +16,7 @@ class OutMediaModel {
 
   OutMediaModel({
     required this.id,
-    required this.vidQty,
+    required this.qty,
     required this.directory,
     required this.video,
     required this.isMiddle,
@@ -39,10 +39,9 @@ class OutMediaModel {
       face: cover,
       position: 0,
       id: id,
-      // webLink: link,
-      // webFrom: from,
-      // userId: userId,
-      // isDir: directory,
+      uidUrl: link,
+      isMiddle: isMiddle,
+      uid: userId,
     );
   }
 
@@ -55,7 +54,7 @@ class OutMediaModel {
   }) => OutMediaModel(
     id: json["thiazole"],
     createTime: json["hunyak"],
-    vidQty: json["hollin"],
+    qty: json["hollin"],
     directory: json["stright"],
     video: json["edlwpukdhp"],
     name: json['familia']["unintombed"],
@@ -95,7 +94,7 @@ class OutMediaModel {
   }) => OutMediaModel(
     id: json["kz4g3xf5ci"],
     createTime: json["twinging"],
-    vidQty: json["venenose"],
+    qty: json["venenose"],
     directory: json["munches"],
     video: json["decarhinus"],
     name: json["gijvuv0x2c"]["jocosity"], // 未处理

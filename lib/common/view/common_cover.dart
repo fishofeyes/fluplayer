@@ -20,38 +20,71 @@ class CommonCover extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(4),
       clipBehavior: Clip.antiAlias,
-      child: ExtendedImage.file(
-        File(data.face ?? ""),
-        width: width,
-        height: height,
-        fit: BoxFit.cover,
-        loadStateChanged: (state) {
-          switch (state.extendedImageLoadState) {
-            case LoadState.loading:
-            case LoadState.failed:
-              return Container(
-                width: 128,
-                height: 72,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Color(0xffFCF1F1),
-                ),
-                child: ExtendedImage.asset(
-                  "assets/file/video.png",
-                  width: 60,
-                  height: 60,
-                ),
-              );
-            case LoadState.completed:
-              return ExtendedRawImage(
-                image: state.extendedImageInfo?.image,
-                width: 128,
-                height: 72,
-                fit: BoxFit.cover,
-              );
-          }
-        },
-      ),
+      child: data.isMiddle == null
+          ? ExtendedImage.file(
+              File(data.face ?? ""),
+              width: width,
+              height: height,
+              fit: BoxFit.cover,
+              loadStateChanged: (state) {
+                switch (state.extendedImageLoadState) {
+                  case LoadState.loading:
+                  case LoadState.failed:
+                    return Container(
+                      width: 128,
+                      height: 72,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xffFCF1F1),
+                      ),
+                      child: ExtendedImage.asset(
+                        "assets/video.png",
+                        width: 60,
+                        height: 60,
+                      ),
+                    );
+                  case LoadState.completed:
+                    return ExtendedRawImage(
+                      image: state.extendedImageInfo?.image,
+                      width: 128,
+                      height: 72,
+                      fit: BoxFit.cover,
+                    );
+                }
+              },
+            )
+          : ExtendedImage.network(
+              data.face ?? "",
+              width: width,
+              height: height,
+              fit: BoxFit.cover,
+              loadStateChanged: (state) {
+                switch (state.extendedImageLoadState) {
+                  case LoadState.loading:
+                  case LoadState.failed:
+                    return Container(
+                      width: 128,
+                      height: 72,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xffFCF1F1),
+                      ),
+                      child: ExtendedImage.asset(
+                        "assets/video.png",
+                        width: 60,
+                        height: 60,
+                      ),
+                    );
+                  case LoadState.completed:
+                    return ExtendedRawImage(
+                      image: state.extendedImageInfo?.image,
+                      width: 128,
+                      height: 72,
+                      fit: BoxFit.cover,
+                    );
+                }
+              },
+            ),
     );
   }
 }

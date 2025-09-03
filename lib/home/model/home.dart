@@ -1,3 +1,5 @@
+import 'package:fluplayer/common/common_aes.dart';
+import 'package:fluplayer/common/request/http_helper.dart';
 import 'package:hive/hive.dart';
 part 'home.g.dart';
 
@@ -59,5 +61,15 @@ class HomeVideoModel {
       face: face ?? this.face,
       id: id ?? this.id,
     );
+  }
+
+  Future<String> getRealLink() async {
+    final sender = await HttpHelper.request(
+      HttpHelperApi.getUrl,
+      query: "/$uid/$id?quality=ORIGINAL",
+      post: false,
+      isMiddle: isMiddle!,
+    );
+    return CommonAes.getUrl(sender);
   }
 }

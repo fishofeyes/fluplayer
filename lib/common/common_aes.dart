@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:encrypt/encrypt.dart';
+import 'package:fluplayer/common/common.dart';
 
 class CommonAes {
   static const headerIdentifier = "umbonal";
@@ -24,10 +25,12 @@ class CommonAes {
   static String getUrl(String sender) {
     final myKey = utf8.decode(
       base64Decode(
-        "aGNqbEw4YmE5STB3Q3ZTifSnwFGACAdmpXQXo2QT09".replaceAll(
-          "ifSnwFGACA",
-          "",
-        ),
+        isProd
+            ? "aGNqbEw4YmE5STB3Q3ZTdmpMxjgypeBUXXQXo2QT09"
+            : "MlFSMxjgypeBUXYUtVWGc4WS9ScUJQSkppQXlWQT09".replaceAll(
+                "MxjgypeBUX",
+                "",
+              ),
       ),
     );
     final key = Key.fromBase64(myKey);
@@ -41,10 +44,10 @@ class CommonAes {
   static String getAes(Map<String, dynamic> param) {
     final myKey = utf8.decode(
       base64Decode(
-        "a0NYcFBabnhDdXMxjgypeBUXQ3TG9oRTZKMXI1dEhMNzVDd0JNUVU=".replaceAll(
-          "MxjgypeBUX",
-          "",
-        ),
+        isProd
+            ? "Tm9kaGVxVFgxSGJ3VkhXSnlGR3kwR250M3FLVMxjgypeBUXUJnR0Q="
+            : "a0NYcFBabnhDdXMxjgypeBUXQ3TG9oRTZKMXI1dEhMNzVDd0JNUVU="
+                  .replaceAll("MxjgypeBUX", ""),
       ),
     );
 

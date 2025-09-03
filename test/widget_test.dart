@@ -10,7 +10,7 @@ import 'dart:convert';
 void main() {
   final myKey = utf8.decode(
     base64Decode(
-      "MlhrNGRMbzM4YzlaMlEyYolVuvkBNziQ==".replaceAll("olVuvkBNzi", ""),
+      "MlFSMxjgypeBUXYUtVWGc4WS9ScUJQSkppQXlWQT09".replaceAll("MxjgypeBUX", ""),
     ),
   );
   print(myKey);
