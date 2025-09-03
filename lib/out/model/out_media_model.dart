@@ -31,7 +31,7 @@ class OutMediaModel {
     this.outUrl,
   });
 
-  HomeVideoModel convertModel() {
+  HomeVideoModel convertModel({bool recommend = false}) {
     return HomeVideoModel(
       name: name,
       size: size,
@@ -44,6 +44,7 @@ class OutMediaModel {
       uidUrl: outUrl,
       isMiddle: isMiddle,
       uid: userId,
+      recommend: recommend,
     );
   }
 
@@ -78,10 +79,10 @@ class OutMediaModel {
   // }) => OutMediaModel(
   //   id: json["id"],
   //   createTime: json["create_time"],
-  //   vidQty: json["vid_qty"],
+  //   qty: json["vid_qty"],
   //   directory: json["directory"],
   //   video: json["video"],
-  //   name: meta["display_name"],
+  //   name: json["display_name"],
   //   cover: meta["thumbnail"],
   //   size: meta["size"],
   //   userId: userId,
@@ -106,6 +107,26 @@ class OutMediaModel {
     name: json["gijvuv0x2c"]["jocosity"], // 未处理
     cover: meta["liparite"],
     size: meta["atkyl_7v_y"],
+    userId: userId,
+    isMiddle: isMiddle,
+    isRecommend: isRecommend,
+  );
+
+  factory OutMediaModel.fromRecommend(
+    Map<String, dynamic> json,
+    Map<String, dynamic> meta,
+    String userId,
+    bool isMiddle, {
+    bool isRecommend = false,
+  }) => OutMediaModel(
+    id: json["fryperq0qd"],
+    createTime: json["sultanry"],
+    qty: json["sitcoms"],
+    directory: json["corticose"],
+    video: json["miseats"],
+    name: json["mutilators"]["nssi6g_kun"],
+    cover: meta["chpgsdt02a"],
+    size: meta["reunionism"],
     userId: userId,
     isMiddle: isMiddle,
     isRecommend: isRecommend,

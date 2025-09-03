@@ -56,7 +56,12 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     model = widget.model;
     SchedulerBinding.instance.addPostFrameCallback((e) {
-      ref.read(playProvider.notifier).initList(widget.models, model);
+      final haveRecommend =
+          widget.place != CommonReportSourceEnum.history &&
+          widget.model.isMiddle != null;
+      ref
+          .read(playProvider.notifier)
+          .initList(widget.models, model, haveRecommend);
     });
   }
 
@@ -131,9 +136,10 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         final r = await model.getRealLink();
         _controller = VideoPlayerController.networkUrl(Uri.parse(r));
       }
-      ref.read(homeProvider.notifier).updatePosition(model, progress);
       await _controller!.initialize();
+      ref.read(homeProvider.notifier).updatePosition(model, progress);
       isLoading = false;
+      error = null;
       _controller?.addListener(() {
         if (!mounted) return;
         setState(() {});
@@ -149,7 +155,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
               _controller!.value.duration.inMilliseconds;
         }
       });
-      if (model.position > 0) {
+      if (model.position > 0 && model.position < 0.9) {
         await _controller!.seekTo(
           Duration(
             milliseconds:
@@ -202,8 +208,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         backgroundColor: Colors.transparent,
         duration: Duration(milliseconds: 300),
         animationCurve: Curves.easeInOut,
-        builder: (e) =>
-            AlertPlayList(list: widget.models, controller: _scrollController),
+        builder: (e) => AlertPlayList(controller: _scrollController),
       );
     } else {
       showGeneralDialog(
@@ -229,7 +234,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           );
         },
         pageBuilder: (context, animation, secondaryAnimation) =>
-            AlertPlayList(list: widget.models, controller: _scrollController),
+            AlertPlayList(controller: _scrollController),
       );
     }
     await Future.delayed(const Duration(milliseconds: 200));

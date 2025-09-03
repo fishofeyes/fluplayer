@@ -245,7 +245,6 @@ class AdmobAdHelper {
       return false;
     }
     final list = adDataMap[AdPositionEnum.media];
-    debugPrint('竖屏播放插屏开始加载 ${list?.length}');
     if (list == null) {
       return false;
     }

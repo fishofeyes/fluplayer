@@ -4,9 +4,9 @@ part 'recommend_model.g.dart';
 @HiveType(typeId: 2)
 class RecommendModel {
   @HiveField(0)
-  final String? uid;
+  final String uid;
   @HiveField(1)
-  final String? uname;
+  final String uname;
   @HiveField(2)
   final String? cover;
   @HiveField(3)
@@ -15,8 +15,8 @@ class RecommendModel {
   final int createDate;
 
   RecommendModel({
-    this.uid,
-    this.uname,
+    required this.uid,
+    required this.uname,
     this.cover,
     this.isMiddle = true,
     required this.createDate,

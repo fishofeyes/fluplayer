@@ -44,6 +44,34 @@ class PlayListItem extends ConsumerWidget {
                       ),
                     ),
                   ),
+                  Positioned(
+                    left: 0,
+                    bottom: 0,
+                    child: Visibility(
+                      visible: data.recommend == true,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 4,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color(0xffED9647),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(2),
+                            bottomRight: Radius.circular(2),
+                          ),
+                        ),
+                        child: Text(
+                          "Recommended",
+                          style: TextStyle(
+                            fontSize: 9,
+                            color: Colors.white,
+                            height: 13 / 9,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

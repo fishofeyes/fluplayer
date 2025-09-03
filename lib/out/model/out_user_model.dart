@@ -1,13 +1,13 @@
 class OutUserModel {
   final String id;
-  final String? name;
+  final String name;
   final String? email;
   final String? corver;
   final List<dynamic>? userTags;
 
   OutUserModel({
     required this.id,
-    this.name,
+    required this.name,
     this.email,
     this.corver,
     this.userTags,

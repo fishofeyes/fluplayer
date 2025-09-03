@@ -27,6 +27,7 @@ class HomeVideoModel {
   final String? uidUrl;
   @HiveField(10)
   final bool? isMiddle;
+  final bool? recommend;
 
   HomeVideoModel({
     required this.name,
@@ -40,6 +41,7 @@ class HomeVideoModel {
     this.uid,
     this.uidUrl,
     this.isMiddle,
+    this.recommend,
   });
 
   HomeVideoModel copyWith({
@@ -63,6 +65,7 @@ class HomeVideoModel {
       isMiddle: isMiddle,
       uid: uid,
       uidUrl: uidUrl,
+      recommend: recommend,
     );
   }
 
