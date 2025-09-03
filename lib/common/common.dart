@@ -18,6 +18,8 @@ enum SharedStoreKey {
   userEmail,
   userTags,
   firstInstall,
+  newUser,
+  userDistinctId,
 }
 
 Future<dynamic> commonPush(BuildContext context, Widget page) {

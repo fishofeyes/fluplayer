@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/request/http_helper.dart';
 import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/model/out_user_model.dart';
@@ -8,6 +9,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/common.dart';
+import '../../common/common_enum.dart';
 import '../../home/provider/recommend.dart';
 import '../model/out_media_model.dart';
 import 'out_state.dart';
@@ -51,19 +53,19 @@ class Out extends _$Out {
         HttpHelperApi.openData,
         isMiddle: model.isMiddle,
         params: {
-          "uid": uid,
-          "version": "v2",
-          "current_page": rPage, //页码
-          "page_size": pageSize, //分页大小
+          "fishbones": uid,
+          "phenyls": "v2",
+          "spirogram": rPage, //页码
+          "unfealty": pageSize, //分页大小
         },
       );
-      final List? files = res['pend'];
+      final List? files = res['regrowing'];
       if (files != null) {
         final f = files
             .map(
               (e) => OutMediaModel.fromJson(
                 e,
-                e['file_meta'],
+                e['unholiness'],
                 uid,
                 model.isMiddle,
                 isRecommend: true,
@@ -95,7 +97,7 @@ class Out extends _$Out {
         state = state.copyWith(isMore: true);
       }
     } catch (e) {
-      // AdReportService.myEvent(MySessionEvent.landpaCDZgeFail);
+      CommonReport.myEvent(MySessionEvent.landpaCDZgeFail);
     }
   }
 
@@ -131,20 +133,22 @@ class Out extends _$Out {
       if (isReport == false) {
         // 拿到数据之后上报view_app
         isReport = true;
-        // BackReportService.reportEvent(ReportType.view, from: model.from);
+        CommonReport.backEvent(
+          CommonReportEnum.commonView,
+          isMiddle: model.isMiddle,
+        );
       }
       final sp = await SharedPreferences.getInstance();
 
       if (sp.getString(SharedStoreKey.userEmail.name) == null) {
-        // BackReportService.reportEvent(
-        //   ReportType.download,
-        //   from: model.from,
-        //   linkId: model.web,
-        // );
+        CommonReport.backEvent(
+          CommonReportEnum.commonDownload,
+          isMiddle: model.isMiddle,
+          linkId: model.outUrl,
+        );
       }
       await sp.setString(SharedStoreKey.userEmail.name, user.email ?? "");
       await sp.setBool(SharedStoreKey.isMiddle.name, model.isMiddle);
-      // AdReportService.initParam(email: user.email, from: model.from);
     }
     if (rect != null) {
       state = state.copyWith(

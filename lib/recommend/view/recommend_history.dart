@@ -1,11 +1,14 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:fluplayer/common/common.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/home/model/recommend_model.dart';
 import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/model/out_user_model.dart';
 import 'package:fluplayer/out/out_user_page.dart';
 import 'package:fluplayer/out/provider/out_user.dart';
 import 'package:flutter/material.dart';
+
+import '../../common/common_enum.dart';
 
 class RecommendHistory extends StatelessWidget {
   final RecommendModel model;
@@ -22,14 +25,14 @@ class RecommendHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // AdReportService.myEvent(
-        //   MySessionEvent.channellEw9istClick,
-        //   data: {
-        //     "caycJ": "echgctd",
-        //     "OZI": isHome ? "ruZHz" : "LBfCnCNiI",
-        //     "PzgyR": "pNZSbnOq",
-        //   },
-        // );
+        CommonReport.myEvent(
+          MySessionEvent.channellEw9istClick,
+          data: {
+            "caycJ": "echgctd",
+            "OZI": isHome ? "ruZHz" : "LBfCnCNiI",
+            "PzgyR": "pNZSbnOq",
+          },
+        );
         commonPush(
           context,
           OutUserPage(
@@ -65,7 +68,7 @@ class RecommendHistory extends StatelessWidget {
                   if (state.extendedImageLoadState == LoadState.failed ||
                       state.extendedImageLoadState == LoadState.loading) {
                     return Image.asset(
-                      "assets/user.png",
+                      "assets/home/photo.png",
                       width: size,
                       height: size,
                       fit: BoxFit.cover,

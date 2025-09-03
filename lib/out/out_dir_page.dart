@@ -10,11 +10,18 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../common/common.dart';
+import '../common/common_enum.dart';
 
 class OutDirPage extends ConsumerStatefulWidget {
   final OutModel model;
   final OutMediaModel mediaModel;
-  const OutDirPage({super.key, required this.model, required this.mediaModel});
+  final CommonReportSourceEnum place;
+  const OutDirPage({
+    super.key,
+    required this.model,
+    required this.mediaModel,
+    required this.place,
+  });
 
   @override
   ConsumerState<OutDirPage> createState() => _PresentDirPageState();
@@ -65,7 +72,7 @@ class _PresentDirPageState extends ConsumerState<OutDirPage> {
             top: 0,
             left: 0,
             right: 0,
-            child: Image.asset("assets/bg.webp"),
+            child: Image.asset("assets/home/bg.png"),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,6 +160,7 @@ class _PresentDirPageState extends ConsumerState<OutDirPage> {
                                   OutDirPage(
                                     model: widget.model,
                                     mediaModel: m,
+                                    place: widget.place,
                                   ),
                                 );
                               } else if (m.video) {
@@ -164,6 +172,7 @@ class _PresentDirPageState extends ConsumerState<OutDirPage> {
                                         .where((e) => e.video)
                                         .map((e) => e.convertModel())
                                         .toList(),
+                                    place: widget.place,
                                   ),
                                 );
                               }

@@ -13,6 +13,22 @@ enum RemoteConfigEnum {
   adConfigSecond, // 第二广告配置字符串 base64
 }
 
+enum CommonReportEnum {
+  commAd("pathways"),
+  commonPlay("axebreaker"),
+  commonView("cronartium"),
+  commonDownload("whatkin"),
+  commLocalAd("decubital"),
+  commLocalPlay("wedlocks"),
+  commUserActive("azine");
+
+  final String key;
+
+  const CommonReportEnum(this.key);
+}
+
+enum CommonReportSourceEnum { landpage, channelpage, history, home }
+
 enum MySessionValue {
   copen(""),
   hopen(""),

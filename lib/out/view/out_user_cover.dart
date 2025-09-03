@@ -10,7 +10,7 @@ class OutUserCover extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        Image.asset("assets/avatar.webp", width: 52, height: 52),
+        Image.asset("assets/user.png", width: 52, height: 52),
         ClipRRect(
           clipBehavior: Clip.antiAlias,
           borderRadius: BorderRadius.circular(25),

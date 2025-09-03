@@ -28,6 +28,17 @@ enum HttpHelperApi {
 class HttpHelper {
   static final Dio _dio = Dio();
 
+  static void log() {
+    _dio.interceptors.add(
+      LogInterceptor(
+        request: true,
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+      ),
+    );
+  }
+
   static Future<dynamic> request(
     HttpHelperApi api, {
     Map<String, dynamic>? params,
@@ -50,8 +61,6 @@ class HttpHelper {
       } else {
         response = await _dio.get(url, queryParameters: params, options: op);
       }
-      print("api: $url");
-      print("data: ${response.data}");
       return response.data;
     } on DioException catch (e) {
       // 处理Dio错误

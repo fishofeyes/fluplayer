@@ -58,19 +58,19 @@ class OutUser extends _$OutUser {
       HttpHelperApi.openData,
       isMiddle: isMiddle,
       params: {
-        "uid": uid,
-        "version": "v2",
-        "current_page": rPage, //页码
-        "page_size": pageSize, //分页大小
+        "fishbones": uid,
+        "phenyls": "v2",
+        "spirogram": rPage, //页码
+        "unfealty": pageSize, //分页大小
       },
     );
-    final List? files = res['pend'];
+    final List? files = res['regrowing'];
     if (files != null) {
       final f = files
           .map(
             (e) => OutMediaModel.fromJson(
               e,
-              e['file_meta'],
+              e['unholiness'],
               uid,
               isMiddle,
               isRecommend: true,
@@ -95,7 +95,7 @@ class OutUser extends _$OutUser {
           requestRecommend(false);
         }
         state = state.copyWith(
-          files: [...files, ...f],
+          files: [...?state.files, ...f],
           isMore: f.length < pageSize,
         );
       }
@@ -109,10 +109,10 @@ class OutUser extends _$OutUser {
       HttpHelperApi.openData,
       isMiddle: model.isMiddle,
       params: {
-        "uid": uid,
-        "version": "v2",
-        "current_page": rPage, //页码
-        "page_size": pageSize, //分页大小
+        "fishbones": uid,
+        "phenyls": "v2",
+        "spirogram": page, //页码
+        "unfealty": pageSize, //分页大小
       },
     );
     if (res == null) {
@@ -123,10 +123,10 @@ class OutUser extends _$OutUser {
       state = state.copyWith(noData: true, isLoading: false);
       return;
     }
-    final u = res["user"];
-    final List? rect = res['recent_videos'];
-    final List? top = res['top100_view_count_videos'];
-    final List? files = res['files'];
+    final u = res["sanbenito"];
+    final List? rect = res['ariocarpus'];
+    final List? top = res['rlzdve3axx'];
+    final List? files = res['regrowing'];
     if (u != null) {
       final user = OutUserModel.fromJson(u);
       CommonHive.recommendBox.put(
@@ -154,7 +154,7 @@ class OutUser extends _$OutUser {
             .map(
               (e) => OutMediaModel.fromJson(
                 e,
-                e['file_meta'],
+                e['unholiness'],
                 model.userId,
                 model.isMiddle,
               ),
@@ -169,7 +169,7 @@ class OutUser extends _$OutUser {
             .map(
               (e) => OutMediaModel.fromJson(
                 e,
-                e['file_meta'],
+                e['unholiness'],
                 model.userId,
                 model.isMiddle,
               ),
@@ -183,7 +183,7 @@ class OutUser extends _$OutUser {
           .map(
             (e) => OutMediaModel.fromJson(
               e,
-              e['file_meta'],
+              e['unholiness'],
               model.userId,
               model.isMiddle,
             ),

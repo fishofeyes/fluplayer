@@ -40,7 +40,7 @@ class _RecommendPageState extends State<RecommendPage> {
             top: 0,
             left: 0,
             right: 0,
-            child: Image.asset("assets/bg.webp"),
+            child: Image.asset("assets/home/bg.png"),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,10 +106,7 @@ class _RecommendPageState extends State<RecommendPage> {
                             padding: const EdgeInsets.only(top: 16),
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                colors: [
-                                  const Color(0xff4A74FF).withOpacity(0.12),
-                                  Colors.transparent,
-                                ],
+                                colors: [const Color(0xff3E2309), Colors.black],
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                               ),

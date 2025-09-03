@@ -19,6 +19,12 @@ class HomeVideoModel {
   final String id;
   @HiveField(7)
   final double position;
+  @HiveField(8)
+  final String? uid;
+  @HiveField(9)
+  final String? uidUrl;
+  @HiveField(10)
+  final bool? isMiddle;
 
   HomeVideoModel({
     required this.name,
@@ -29,6 +35,9 @@ class HomeVideoModel {
     required this.face,
     required this.position,
     required this.id,
+    this.uid,
+    this.uidUrl,
+    this.isMiddle,
   });
 
   HomeVideoModel copyWith({

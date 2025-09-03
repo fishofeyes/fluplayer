@@ -15,7 +15,7 @@ class PrivacyPage extends StatelessWidget {
             top: 0,
             left: 0,
             right: 0,
-            child: Image.asset("assets/bg.webp"),
+            child: Image.asset("assets/home/bg.png"),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

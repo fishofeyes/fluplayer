@@ -28,7 +28,7 @@ class OutDir extends _$OutDir {
   Future<void> requestData({bool isLoad = false}) async {
     final res = await HttpHelper.request(
       HttpHelperApi.openFile,
-      query: "${model.userId}/$dirId",
+      query: "/${model.userId}/$dirId",
       post: false,
       isMiddle: model.isMiddle,
       params: {
@@ -36,13 +36,13 @@ class OutDir extends _$OutDir {
         "page_size": pageSize, //分页大小
       },
     );
-    final List? files = res['files'];
+    final List? files = res['helicogyre'];
     if (files != null) {
       final f = files
           .map(
             (e) => OutMediaModel.fromDirJson(
               e,
-              e["file_meta"],
+              e["paratypic"],
               model.userId,
               model.isMiddle,
             ),

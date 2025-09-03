@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:fluplayer/common/common_enum.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/view/common_button.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:fluplayer/home/provider/home.dart';
@@ -20,11 +22,18 @@ import 'package:video_player/video_player.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../common/common.dart';
+import '../common/common_af_helper.dart';
 
 class PlayerPage extends ConsumerStatefulWidget {
   final List<HomeVideoModel> models;
   final HomeVideoModel model;
-  const PlayerPage({super.key, required this.models, required this.model});
+  final CommonReportSourceEnum place;
+  const PlayerPage({
+    super.key,
+    required this.models,
+    required this.model,
+    required this.place,
+  });
 
   @override
   ConsumerState<PlayerPage> createState() => _VideoScreenState();
@@ -82,6 +91,31 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     super.didPop();
   }
 
+  void _backReport() async {
+    CommonReport.model = model;
+    if (model.isMiddle != null) {
+      final res = await CommonReport.backEvent(
+        CommonReportEnum.commonPlay,
+        source: widget.place,
+        isMiddle: model.isMiddle,
+      );
+    } else {
+      final res = await CommonReport.backEvent(
+        CommonReportEnum.commLocalPlay,
+        isMiddle: model.isMiddle,
+        source: widget.place,
+      );
+    }
+    if (CommonAfHelper().isDeep == true) {
+      await CommonReport.backEvent(
+        CommonReportEnum.commUserActive,
+        isMiddle: model.isMiddle,
+        source: widget.place,
+      );
+      CommonAfHelper().isDeep = false;
+    }
+  }
+
   void _initVideo() async {
     _controller?.dispose();
     _controller = null;
@@ -119,6 +153,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         _controller!.play();
       }
       _resetTimer();
+      _backReport();
     } catch (e) {
       _controller?.dispose();
       _controller = null;

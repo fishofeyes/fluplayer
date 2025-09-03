@@ -93,14 +93,14 @@ class OutMediaModel {
     bool isMiddle, {
     bool isRecommend = false,
   }) => OutMediaModel(
-    id: json["id"],
-    createTime: json["create_time"],
-    vidQty: json["vid_qty"],
-    directory: json["directory"],
-    video: json["video"],
-    name: meta["display_name"],
-    cover: meta["thumbnail"],
-    size: meta["size"],
+    id: json["kz4g3xf5ci"],
+    createTime: json["twinging"],
+    vidQty: json["venenose"],
+    directory: json["munches"],
+    video: json["decarhinus"],
+    name: json["gijvuv0x2c"]["jocosity"], // 未处理
+    cover: meta["liparite"],
+    size: meta["atkyl_7v_y"],
     userId: userId,
     isMiddle: isMiddle,
     isRecommend: isRecommend,

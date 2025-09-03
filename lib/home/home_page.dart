@@ -12,6 +12,8 @@ import 'package:fluplayer/player/player_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../common/common_enum.dart';
+
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
@@ -77,7 +79,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 onTap: (e) {
                                   commonPush(
                                     context,
-                                    PlayerPage(model: e, models: state.home),
+                                    PlayerPage(
+                                      model: e,
+                                      models: state.home,
+                                      place: CommonReportSourceEnum.home,
+                                    ),
                                   );
                                 },
                               );

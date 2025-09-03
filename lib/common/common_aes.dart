@@ -41,8 +41,8 @@ class CommonAes {
   static String getAes(Map<String, dynamic> param) {
     final myKey = utf8.decode(
       base64Decode(
-        "Tm92SCqidh7aIkaGVxVFgxSGJ3VkhXSnlGR3kwR250M3FLVUJnR0Q=".replaceAll(
-          "2SCqidh7aI",
+        "a0NYcFBabnhDdXMxjgypeBUXQ3TG9oRTZKMXI1dEhMNzVDd0JNUVU=".replaceAll(
+          "MxjgypeBUX",
           "",
         ),
       ),
@@ -52,7 +52,7 @@ class CommonAes {
     final iv = IV.fromUtf8(
       utf8.decode(
         base64Decode(
-          "MlhrNGRMbzM4YzlaMlEyYolVuvkBNziQ==".replaceAll("olVuvkBNzi", ""),
+          "MxjgypeBUXMlhrNGRMbzM4YzlaMlEyYQ==".replaceAll("MxjgypeBUX", ""),
         ),
       ),
     );

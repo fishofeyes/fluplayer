@@ -37,7 +37,7 @@ class RecommendHistoryGroup extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(width: 4),
-                  Image.asset("assets/more.webp", width: 12, height: 12),
+                  Image.asset("assets/home/more2.png", width: 12, height: 12),
                 ],
               ),
             ),

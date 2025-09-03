@@ -34,7 +34,6 @@ class OutItem extends StatelessWidget {
       behavior: HitTestBehavior.translucent,
       child: Container(
         height: 62 + 26,
-        color: bgColor ?? const Color(0xff2440FE).withOpacity(0.12),
         alignment: Alignment.center,
         padding: padding,
         child: Row(

@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/request/http_helper.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/common.dart';
+import '../../common/common_enum.dart';
 import '../../common/common_hive.dart';
 import '../model/recommend_model.dart';
 
@@ -93,10 +95,10 @@ class Recommend extends _$Recommend {
       final randomIndex = random.nextInt(l.length);
       if (isReport) {
         isReport = false;
-        // AdReportService.myEvent(
-        //   MySessionEvent.homeChanlzRQUnelExpose,
-        //   data: {"PzgyR": showHistory.length},
-        // );
+        CommonReport.myEvent(
+          MySessionEvent.homeChanlzRQUnelExpose,
+          data: {"PzgyR": showHistory.length},
+        );
       }
       if (showHistory.length < 3) {
         showHistory.add(l[randomIndex]);
