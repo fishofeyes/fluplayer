@@ -77,7 +77,6 @@ class _RootPageState extends ConsumerState<RootPage>
     });
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      extendBody: true,
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,

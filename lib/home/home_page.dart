@@ -34,8 +34,8 @@ class _HomePageState extends ConsumerState<HomePage> {
             right: 0,
             child: Image.asset("assets/home/bg.png"),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          SingleChildScrollView(
+            padding: EdgeInsets.only(left: 12, right: 12, bottom: 150),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -61,36 +61,29 @@ class _HomePageState extends ConsumerState<HomePage> {
                   child: const BackgroundTitleView(title: 'All videos'),
                 ),
                 const SizedBox(height: 12),
-                Expanded(
-                  child: state.home.isEmpty
-                      ? EmptyView()
-                      : SingleChildScrollView(
-                          padding: const EdgeInsetsDirectional.only(
-                            bottom: 150,
-                          ),
-                          child: CustomListView(
-                            itemCount: state.home.length,
-                            itemsPerRow: 2,
-                            itemSpacing: 15,
-                            rowSpacing: 12,
-                            itemBuilder: (ctx, index) {
-                              return HomeVideoView(
-                                model: state.home[index],
-                                onTap: (e) {
-                                  commonPush(
-                                    context,
-                                    PlayerPage(
-                                      model: e,
-                                      models: state.home,
-                                      place: CommonReportSourceEnum.home,
-                                    ),
-                                  );
-                                },
+                state.home.isEmpty
+                    ? EmptyView()
+                    : CustomListView(
+                        itemCount: state.home.length,
+                        itemsPerRow: 2,
+                        itemSpacing: 15,
+                        rowSpacing: 12,
+                        itemBuilder: (ctx, index) {
+                          return HomeVideoView(
+                            model: state.home[index],
+                            onTap: (e) {
+                              commonPush(
+                                context,
+                                PlayerPage(
+                                  model: e,
+                                  models: state.home,
+                                  place: CommonReportSourceEnum.home,
+                                ),
                               );
                             },
-                          ),
-                        ),
-                ),
+                          );
+                        },
+                      ),
               ],
             ),
           ),
