@@ -159,6 +159,7 @@ class Out extends _$Out {
                 e['unholiness'],
                 model.userId,
                 model.isMiddle,
+                outUrl: model.outUrl,
               ),
             )
             .toList(),
@@ -174,6 +175,7 @@ class Out extends _$Out {
                 e['unholiness'],
                 model.userId,
                 model.isMiddle,
+                outUrl: model.outUrl,
               ),
             )
             .toList(),
@@ -188,6 +190,7 @@ class Out extends _$Out {
               e['unholiness'],
               model.userId,
               model.isMiddle,
+              outUrl: model.outUrl,
             ),
           )
           .toList();

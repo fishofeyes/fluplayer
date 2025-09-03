@@ -54,17 +54,30 @@ class HistoryItem extends StatelessWidget {
                     ClipRRect(
                       clipBehavior: Clip.antiAlias,
                       borderRadius: BorderRadius.circular(4),
-                      child: Image.file(
-                        File(model.face ?? ''),
-                        width: 128,
-                        height: 72,
-                        errorBuilder: (_, __, ___) => Container(
-                          color: Colors.black,
-                          width: 128,
-                          height: 72,
-                        ),
-                        fit: BoxFit.cover,
-                      ),
+                      child: model.isMiddle == null
+                          ? Image.file(
+                              File(model.face ?? ''),
+                              width: 128,
+                              height: 72,
+                              errorBuilder: (_, __, ___) => Container(
+                                color: Colors.black,
+                                width: 128,
+                                height: 72,
+                              ),
+                              fit: BoxFit.cover,
+                            )
+                          : Image.network(
+                              model.face ?? '',
+                              width: 128,
+                              height: 72,
+                              errorBuilder: (_, __, ___) => Image.asset(
+                                "assets/video.png",
+                                color: Colors.black,
+                                width: 128,
+                                height: 72,
+                              ),
+                              fit: BoxFit.cover,
+                            ),
                     ),
                     Positioned(
                       height: 2,

@@ -60,6 +60,9 @@ class HomeVideoModel {
       path: path ?? this.path,
       face: face ?? this.face,
       id: id ?? this.id,
+      isMiddle: isMiddle,
+      uid: uid,
+      uidUrl: uidUrl,
     );
   }
 

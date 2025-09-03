@@ -27,7 +27,18 @@ enum CommonReportEnum {
   const CommonReportEnum(this.key);
 }
 
-enum CommonReportSourceEnum { landpage, channelpage, history, home }
+enum CommonReportSourceEnum {
+  outpage("herohead"),
+  userpage("tribual"),
+  history("jockey"),
+  home("home"),
+  playlistRecommend("bkwbv4t_sm"),
+  outPageRecommend("spartiate"),
+  userPageRecommend("1vtdxrtclv");
+
+  final String key;
+  const CommonReportSourceEnum(this.key);
+}
 
 enum MySessionValue {
   copen(""),

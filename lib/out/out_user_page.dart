@@ -277,8 +277,11 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                                               OutDirPage(
                                                 model: widget.model,
                                                 mediaModel: m,
-                                                place: CommonReportSourceEnum
-                                                    .channelpage,
+                                                place: m.isRecommend
+                                                    ? CommonReportSourceEnum
+                                                          .userPageRecommend
+                                                    : CommonReportSourceEnum
+                                                          .userpage,
                                               ),
                                             );
                                           } else if (m.video) {
@@ -292,8 +295,11 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                                                       (e) => e.convertModel(),
                                                     )
                                                     .toList(),
-                                                place: CommonReportSourceEnum
-                                                    .channelpage,
+                                                place: m.isRecommend
+                                                    ? CommonReportSourceEnum
+                                                          .userPageRecommend
+                                                    : CommonReportSourceEnum
+                                                          .userpage,
                                               ),
                                             );
                                           }

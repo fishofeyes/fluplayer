@@ -221,9 +221,10 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                         OutDirPage(
                                           model: widget.model,
                                           mediaModel: m,
-                                          place:
-                                              CommonReportSourceEnum.landpage,
-                                          // source: ReportSource.landpage,
+                                          place: m.isRecommend
+                                              ? CommonReportSourceEnum
+                                                    .outPageRecommend
+                                              : CommonReportSourceEnum.outpage,
                                         ),
                                       );
                                     } else if (m.video) {
@@ -238,9 +239,11 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                       commonPush(
                                         context,
                                         PlayerPage(
-                                          model: m.convertModel(link: ""),
-                                          place:
-                                              CommonReportSourceEnum.landpage,
+                                          model: m.convertModel(),
+                                          place: m.isRecommend
+                                              ? CommonReportSourceEnum
+                                                    .outPageRecommend
+                                              : CommonReportSourceEnum.outpage,
                                           models: res ?? [],
                                         ),
                                       );

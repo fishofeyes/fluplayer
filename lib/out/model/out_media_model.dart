@@ -13,6 +13,7 @@ class OutMediaModel {
   final String? userId;
   final bool isMiddle;
   final bool isRecommend;
+  final String? outUrl;
 
   OutMediaModel({
     required this.id,
@@ -27,9 +28,10 @@ class OutMediaModel {
     this.cover,
     this.userId,
     this.isRecommend = false,
+    this.outUrl,
   });
 
-  HomeVideoModel convertModel({String? link}) {
+  HomeVideoModel convertModel() {
     return HomeVideoModel(
       name: name,
       size: size,
@@ -39,7 +41,7 @@ class OutMediaModel {
       face: cover,
       position: 0,
       id: id,
-      uidUrl: link,
+      uidUrl: outUrl,
       isMiddle: isMiddle,
       uid: userId,
     );
@@ -51,6 +53,7 @@ class OutMediaModel {
     String userId,
     bool isMiddle, {
     bool isRecommend = false,
+    String? outUrl,
   }) => OutMediaModel(
     id: json["thiazole"],
     createTime: json["hunyak"],
@@ -62,6 +65,7 @@ class OutMediaModel {
     size: meta["photophily"],
     userId: userId,
     isMiddle: isMiddle,
+    outUrl: outUrl,
     isRecommend: isRecommend,
   );
 
@@ -89,8 +93,10 @@ class OutMediaModel {
     Map<String, dynamic> json,
     Map<String, dynamic> meta,
     String userId,
+
     bool isMiddle, {
     bool isRecommend = false,
+    String? outUrl,
   }) => OutMediaModel(
     id: json["kz4g3xf5ci"],
     createTime: json["twinging"],
