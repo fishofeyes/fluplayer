@@ -14,3 +14,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+```bash
+flutter build ipa
+xcrun altool --upload-app --type ios -f build/ios/ipa/*.ipa --apiKey Q3KX2RASC4 --apiIssuer 41f76a5b-7758-477d-98fc-b93b8a4b6bd0
+```
