@@ -55,7 +55,9 @@ class TermsPage extends StatelessWidget {
                     bottom: 60,
                   ),
                   child: Text(
-                    utf8.decode(base64Decode(commTerm)),
+                    utf8.decode(
+                      base64Decode(commTerm.replaceAll("MxjgypeBUX", "")),
+                    ),
                     style: const TextStyle(
                       fontSize: 14,
                       color: Colors.white,
