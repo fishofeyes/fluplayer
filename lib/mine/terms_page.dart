@@ -15,7 +15,7 @@ class TermsPage extends StatelessWidget {
             top: 0,
             left: 0,
             right: 0,
-            child: Image.asset("assets/bg.webp"),
+            child: Image.asset("assets/home/bg.png"),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,7 +26,11 @@ class TermsPage extends StatelessWidget {
                 behavior: HitTestBehavior.translucent,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Image.asset("assets/back.webp", width: 24, height: 24),
+                  child: Image.asset(
+                    "assets/player/back.png",
+                    width: 24,
+                    height: 24,
+                  ),
                 ),
               ),
               const SizedBox(height: 22),
@@ -51,7 +55,9 @@ class TermsPage extends StatelessWidget {
                     bottom: 60,
                   ),
                   child: Text(
-                    utf8.decode(base64Decode(commTerm)),
+                    utf8.decode(
+                      base64Decode(commTerm.replaceAll("MxjgypeBUX", "")),
+                    ),
                     style: const TextStyle(
                       fontSize: 14,
                       color: Colors.white,
