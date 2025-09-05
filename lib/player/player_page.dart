@@ -78,6 +78,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
 
   @override
   void dispose() {
+    CommonReport.fileId = null;
     _loadAd(MySessionValue.playback);
     _showAd(MySessionValue.playback);
     routeObserver.unsubscribe(this);
@@ -156,16 +157,18 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     error = null;
     isLoading = true;
     _isVisible = true;
-    _loadAd(MySessionValue.play);
-    _showAd(MySessionValue.play);
     setState(() {});
     try {
       if (model.isMiddle == null) {
+        CommonReport.fileId = null;
         _controller = VideoPlayerController.file(File(model.path));
       } else {
+        CommonReport.fileId = widget.model.id;
         final r = await model.getRealLink();
         _controller = VideoPlayerController.networkUrl(Uri.parse(r));
       }
+      _loadAd(MySessionValue.play);
+      _showAd(MySessionValue.play);
       await _controller!.initialize();
       ref.read(homeProvider.notifier).updatePosition(model, progress);
       isLoading = false;

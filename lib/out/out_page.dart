@@ -37,13 +37,14 @@ class _PresentPageState extends ConsumerState<OutPage> {
     SchedulerBinding.instance.addPostFrameCallback((e) {
       ref.read(outProvider(widget.model).notifier).initData();
     });
-    // BackReportService.presentUrl = widget.model.outUrl;
+    CommonReport.outUrl = widget.model.outUrl;
     CommonReport.myEvent(MySessionEvent.landpagMJFlMeExpose);
     // isLinkPagePop = true;
   }
 
   @override
   void dispose() {
+    CommonReport.outUrl = null;
     // alertIds.remove(widget.model.outUrl);
     // DeepLinkService.deepLink = null;
     // BackReportService.presentUrl = null;

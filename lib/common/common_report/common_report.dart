@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:advertising_id/advertising_id.dart';
@@ -6,6 +7,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_aes.dart';
+import 'package:fluplayer/common/common_report/model/common_event_model.dart';
 import 'package:fluplayer/common/request/http_helper.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:fluplayer/out/model/out_user_model.dart';
@@ -16,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 import '../common_enum.dart';
+import '../common_hive.dart';
 
 class CommonReport {
   static PackageInfo? _package;
@@ -23,6 +26,8 @@ class CommonReport {
   static const FlutterSecureStorage _storage = FlutterSecureStorage();
   static const _uuid = Uuid();
   static final _dio = Dio();
+  static String? outUrl;
+  static String? fileId;
   static const host = isProd
       ? "https://test-fiddle.fluplayer.com/buggy/hoc"
       : "https://fiddle.fluplayer.com/air/equine";
@@ -173,10 +178,7 @@ class CommonReport {
   ///
   /// other platform ad event params
   ///
-  static Future<Map<String, dynamic>> otherParams({
-    String? fileId,
-    String? outUrl,
-  }) async {
+  static Future<Map<String, dynamic>> otherParams() async {
     final p = await package();
     final d = await device();
     final sp = await SharedPreferences.getInstance();
@@ -210,11 +212,13 @@ class CommonReport {
         "spite": await AdvertisingId.id(),
       },
       "scarlet": {
-        "iplayer_linkid": "",
-        "iplayer_resource": "",
-        "iplayer_recent_email": "",
-        "iplayer_recent_uid": "",
-        "channel_platform": "",
+        "pSEsS": outUrl,
+        "eELXrc": fileId,
+        "jxMjP": sp.getString(SharedStoreKey.userEmail.name),
+        "kroulaXb": sp.getString(SharedStoreKey.userId.name),
+        "CdbP": sp.getBool(SharedStoreKey.isMiddle.name) == true
+            ? "oOskWjNYM"
+            : "CrYC",
       },
     };
   }
@@ -228,8 +232,13 @@ class CommonReport {
       return true;
     } catch (e) {
       print("error ad: $e");
-      if (retry == false) {
-        // await DatabaseHelper.instance.insertTba(data);
+      if (retry) {
+        final m = CommonEventModel(
+          id: _uuid.v4(),
+          createTime: DateTime.now().millisecondsSinceEpoch,
+          parameters: jsonEncode(data),
+        );
+        CommonHive.commonEventBox.put(m.id, m);
       }
       return false;
     }
@@ -285,5 +294,21 @@ class CommonReport {
         "azalea": adT,
       },
     });
+  }
+
+  static void reportFail() async {
+    for (final i in CommonHive.commonEventBox.values) {
+      bool isLessThanTwoDays =
+          (DateTime.now().millisecondsSinceEpoch - i.createTime) <
+          2 * 24 * 60 * 60 * 1000;
+      if (isLessThanTwoDays == false) {
+        CommonHive.commonEventBox.delete(i.id);
+        continue;
+      }
+      final res = await _commonPost(jsonDecode(i.parameters), retry: false);
+      if (res) {
+        CommonHive.commonEventBox.delete(i.id);
+      }
+    }
   }
 }
