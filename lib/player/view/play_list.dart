@@ -74,7 +74,7 @@ class _AlertPlayListState extends ConsumerState<AlertPlayList> {
                 ),
               ],
             ),
-            SizedBox(height: screenPortraitUp == false ? 16 : 24),
+            SizedBox(height: screenPortraitUp == false ? 16 : 16),
             Expanded(
               child: EasyRefresh(
                 controller: _refreshController,
