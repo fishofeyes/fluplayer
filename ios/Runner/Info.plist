@@ -48,6 +48,8 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>To add photos and videos from your media library, please grant access. You can modify permissions in Settings.</string>
+    <string>To make sure that the photo and video import feature in the media library works properly, you need to give access permissions to your photos and videos. You can adjust these permissions in "Settings."</string>
+    <key>NSUserTrackingUsageDescription</key>
+    <string>To ensure the proper import of photos and videos into the media library, you need to provide access permissions for your photos and videos. You can update these permissions in "Settings."</string>
 	</dict>
 </plist>
