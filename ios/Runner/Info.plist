@@ -49,5 +49,9 @@
 		<false/>
 		<key>NSPhotoLibraryUsageDescription</key>
         <string>To import photos and videos from your media library, please grant access. You can modify permissions in Settings.</string>
+        <key>NSUserTrackingUsageDescription</key>
+        <string>This identifier will be used to deliver personalized ads to you.To ensure the proper import of photos and videos into the media library, you need to provide access permissions for your photos and videos. You can update these permissions in "Settings."</string>
+        <key>ITSAppUsesNonExemptEncryption</key>
+        <false/>
 	</dict>
 </plist>
