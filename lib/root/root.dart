@@ -74,6 +74,7 @@ class _RootPageState extends ConsumerState<RootPage> {
       bottomNavigationBar: BottomAppBar(
         notchMargin: 5,
         elevation: 0,
+        height: 64,
         padding: EdgeInsets.zero,
         clipBehavior: Clip.antiAlias,
         // shape: CircularNotchedRectangle(),

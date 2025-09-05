@@ -53,7 +53,7 @@ class AlertPlayList extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: screenPortraitUp == false ? 16 : 24),
+            SizedBox(height: screenPortraitUp == false ? 16 : 16),
             Expanded(
               child: ListView.builder(
                 itemCount: list.length,
