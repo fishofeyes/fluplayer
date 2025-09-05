@@ -67,13 +67,13 @@ class HistoryItem extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      height: 2,
                       left: 4,
                       right: 4,
                       bottom: 4,
                       child: CommonProgressBar(
                         progress: model.position.clamp(0.0, 1.0),
                         bgColor: Colors.white.withValues(alpha: 0.5),
+                        height: 4,
                       ),
                     ),
                   ],

@@ -74,7 +74,14 @@ class _RenameViewState extends State<RenameView> {
                         ),
                         cursorColor: Color(0xffED9647),
                         decoration: InputDecoration(
-                          focusedBorder: InputBorder.none,
+                          focusedBorder: length == 100
+                              ? OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: const Color(0xffED5D47),
+                                  ),
+                                  borderRadius: BorderRadius.circular(12),
+                                )
+                              : InputBorder.none,
                           fillColor: const Color(0xff13150D),
                           filled: true,
                           enabledBorder: InputBorder.none,
@@ -105,7 +112,9 @@ class _RenameViewState extends State<RenameView> {
                         "$length/100",
                         style: TextStyle(
                           fontSize: 9,
-                          color: Colors.white.withOpacity(0.75),
+                          color: length == 100
+                              ? Color(0xffED5D47)
+                              : Colors.white.withValues(alpha: 0.75),
                           fontWeight: FontWeight.w400,
                         ),
                       ),
