@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
+import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/common/common_enum.dart';
+import 'package:fluplayer/common/common_report/common_event.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/view/common_button.dart';
 import 'package:fluplayer/home/model/home.dart';
@@ -75,6 +78,8 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
 
   @override
   void dispose() {
+    _loadAd(MySessionValue.playback);
+    _showAd(MySessionValue.playback);
     routeObserver.unsubscribe(this);
     WakelockPlus.toggle(enable: false);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -98,12 +103,14 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   }
 
   void _backReport() async {
-    CommonReport.model = model;
     if (model.isMiddle != null) {
       await CommonReport.backEvent(
         CommonReportEnum.commonPlay,
         source: widget.place,
         isMiddle: model.isMiddle,
+        uid: model.uid,
+        fid: model.id,
+        outUrl: model.uidUrl,
       );
     } else {
       final res = await CommonReport.backEvent(
@@ -117,8 +124,29 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         CommonReportEnum.commUserActive,
         isMiddle: model.isMiddle,
         source: widget.place,
+        uid: model.uid,
+        outUrl: model.uidUrl,
       );
       CommonAfHelper().isDeep = false;
+    }
+  }
+
+  void _loadAd(MySessionValue session) {
+    CommonEvent.loadAd(AdPositionEnum.media, session);
+  }
+
+  void _showAd(MySessionValue value) {
+    if (model.isMiddle == null) {
+      CommonEvent.showAd(AdPositionEnum.media, value);
+    } else {
+      CommonEvent.showAd(
+        AdPositionEnum.media,
+        value,
+        fId: model.id,
+        outUrl: model.uidUrl,
+        isMiddle: model.isMiddle,
+        source: widget.place,
+      );
     }
   }
 
@@ -128,6 +156,8 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     error = null;
     isLoading = true;
     _isVisible = true;
+    _loadAd(MySessionValue.play);
+    _showAd(MySessionValue.play);
     setState(() {});
     try {
       if (model.isMiddle == null) {
@@ -153,6 +183,11 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           progress =
               _controller!.value.position.inMilliseconds /
               _controller!.value.duration.inMilliseconds;
+          if (_controller!.value.position.inSeconds ==
+              admobHelper.mediaPlayPoint) {
+            _loadAd(MySessionValue.play10);
+            _loadAd(MySessionValue.play10);
+          }
         }
       });
       if (model.position > 0 && model.position < 0.9) {

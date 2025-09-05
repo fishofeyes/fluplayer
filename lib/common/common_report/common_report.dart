@@ -21,7 +21,6 @@ class CommonReport {
   static const FlutterSecureStorage _storage = FlutterSecureStorage();
   static const _uuid = Uuid();
   static final _dio = Dio();
-  static HomeVideoModel? model;
 
   static Future<IosDeviceInfo?> device() async {
     _iosDevice ??= await DeviceInfoPlugin().iosInfo;
@@ -86,14 +85,19 @@ class CommonReport {
     CommonReportSourceEnum? source,
     required bool? isMiddle,
     String? curr,
+    String? uid,
+    String? fid,
     double? val,
-    String? linkId,
+    String? outUrl,
   }) async {
     final p = await backEventParam(
       report: report,
       source: source,
       curr: curr,
       val: val,
+      outUrl: outUrl,
+      uid: uid,
+      fId: fid,
     );
     try {
       final sp = await SharedPreferences.getInstance();
@@ -113,7 +117,9 @@ class CommonReport {
     required CommonReportEnum report,
     CommonReportSourceEnum? source,
     String? curr,
-    String? linkId,
+    String? outUrl,
+    String? fId,
+    String? uid,
     double? val,
   }) async {
     final p = await package();
@@ -128,9 +134,9 @@ class CommonReport {
     final res = {
       "underthief": _uuid.v4(),
       "rclame": report.key,
-      "jibbooms": model?.uid,
-      "lyopoma": linkId ?? model?.uidUrl,
-      "enceinte": model?.id,
+      "jibbooms": uid,
+      "lyopoma": outUrl,
+      "enceinte": fId,
       "ezdcflccnu": curr,
       "waterstead": val,
       "alfaqui": "v2",

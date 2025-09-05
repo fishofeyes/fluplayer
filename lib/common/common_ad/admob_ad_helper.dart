@@ -126,6 +126,10 @@ class AdmobAdHelper {
     Future<bool> Function({required MySessionValue value})? adLoader,
     ValueChanged<bool>? onReward,
   }) async {
+    if (adShowing) {
+      debugPrint('ad is showing');
+      return false;
+    }
     final nowDate = currentTime();
     final selfInterval = nowDate - lastShowTime;
 
@@ -268,8 +272,8 @@ class AdmobAdHelper {
     return _playerAd != null;
   }
 
-  Future<bool> showMediaAd({required MySessionValue placement}) async {
-    return await _showAD(_playerAd, value: placement, adLoader: loadMedia);
+  Future<bool> showMediaAd({required MySessionValue value}) async {
+    return await _showAD(_playerAd, value: value, adLoader: loadMedia);
   }
 
   Future<bool> loadDetail({required MySessionValue value}) async {

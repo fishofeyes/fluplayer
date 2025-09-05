@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:fluplayer/common/common.dart';
+import 'package:fluplayer/common/common_ad/base_ad.dart';
+import 'package:fluplayer/common/common_report/common_event.dart';
 import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/model/out_user_model.dart';
 import 'package:fluplayer/out/out_dir_page.dart';
@@ -47,6 +49,12 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
     //   from: widget.model.from,
     //   value: MySessionValue.chpage,
     // );
+    CommonEvent.loadAd(AdPositionEnum.detail, MySessionValue.chpage);
+    CommonEvent.showAd(
+      AdPositionEnum.detail,
+      MySessionValue.chpage,
+      source: CommonReportSourceEnum.userpage,
+    );
   }
 
   @override

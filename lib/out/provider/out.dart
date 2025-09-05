@@ -136,19 +136,20 @@ class Out extends _$Out {
         CommonReport.backEvent(
           CommonReportEnum.commonView,
           isMiddle: model.isMiddle,
+          outUrl: model.outUrl,
         );
       }
       final sp = await SharedPreferences.getInstance();
-
+      await sp.setString(SharedStoreKey.userId.name, user.id);
+      await sp.setBool(SharedStoreKey.isMiddle.name, model.isMiddle);
       if (sp.getString(SharedStoreKey.userEmail.name) == null) {
         CommonReport.backEvent(
           CommonReportEnum.commonDownload,
           isMiddle: model.isMiddle,
-          linkId: model.outUrl,
+          outUrl: model.outUrl,
         );
       }
       await sp.setString(SharedStoreKey.userEmail.name, user.email ?? "");
-      await sp.setBool(SharedStoreKey.isMiddle.name, model.isMiddle);
     }
     if (rect != null) {
       state = state.copyWith(

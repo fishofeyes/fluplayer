@@ -2,6 +2,7 @@ import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:fluplayer/choose/choose_media.dart';
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
+import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/home/home_page.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:fluplayer/home/provider/home.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common/common_enum.dart';
+import '../common/common_report/common_event.dart';
 
 class RootPage extends ConsumerStatefulWidget {
   const RootPage({super.key});
@@ -68,12 +70,12 @@ class _RootPageState extends ConsumerState<RootPage>
 
   void _appLife(AppLifecycleState appState) async {
     print("app life state = $appState");
-    if (appState == AppLifecycleState.resumed && !admobHelper.adShowing) {
-      admobHelper.loadOpenAd(value: MySessionValue.hopen);
+    if (appState == AppLifecycleState.resumed) {
+      CommonEvent.loadAd(AdPositionEnum.open, MySessionValue.hopen);
       final sp = await SharedPreferences.getInstance();
       final canShow = sp.getBool(SharedStoreKey.firstInstall.name);
       if (canShow != null) {
-        admobHelper.showOpenAd(value: MySessionValue.hopen);
+        CommonEvent.showAd(AdPositionEnum.open, MySessionValue.hopen);
       }
     }
   }

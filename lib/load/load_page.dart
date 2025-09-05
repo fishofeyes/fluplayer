@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
+import 'package:fluplayer/common/common_ad/base_ad.dart';
+import 'package:fluplayer/common/common_report/common_event.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/root/root.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -72,7 +75,7 @@ class _SplashPageState extends ConsumerState<LoadPage> {
     await Future.delayed(Duration(seconds: time.clamp(0, time)));
     final canShow = sp.getBool(SharedStoreKey.firstInstall.name);
     if (canShow != null) {
-      admobHelper.showOpenAd(value: MySessionValue.copen);
+      CommonEvent.showAd(AdPositionEnum.open, MySessionValue.copen);
     }
     sp.setBool(SharedStoreKey.firstInstall.name, true);
     await Future.delayed(const Duration(seconds: 1));
