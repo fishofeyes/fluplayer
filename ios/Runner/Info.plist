@@ -47,7 +47,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-<key>NSPhotoLibraryUsageDescription</key>
-        <string>To import photos and videos from your media library, please grant access. You can modify permissions in Settings.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>To add photos and videos from your media library, please grant access. You can modify permissions in Settings.</string>
 	</dict>
 </plist>
