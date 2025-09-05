@@ -38,7 +38,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
       ref.read(outProvider(widget.model).notifier).initData();
     });
     // BackReportService.presentUrl = widget.model.outUrl;
-    CommonReport.myEvent(MySessionEvent.landpag1lAeExpose);
+    CommonReport.myEvent(MySessionEvent.landpagMJFlMeExpose);
     // isLinkPagePop = true;
   }
 
@@ -123,7 +123,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
                   onTap: (i) {
                     if (i == 2) {
                       CommonReport.myEvent(
-                        MySessionEvent.landpageUpl1LFD0oadedExpose,
+                        MySessionEvent.landpageUplhpnoadedExpose,
                       );
                     }
                     setState(() {
@@ -233,8 +233,12 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                           .map((e) => e.convertModel())
                                           .toList();
                                       CommonReport.myEvent(
-                                        MySessionEvent.playSPmdU5ource,
-                                        data: {"caycJ": "mygpO"},
+                                        MySessionEvent.playST5Xource,
+                                        data: {
+                                          "PuUTVimak": m.isRecommend
+                                              ? "Rqq"
+                                              : "ZBH",
+                                        },
                                       );
                                       commonPush(
                                         context,

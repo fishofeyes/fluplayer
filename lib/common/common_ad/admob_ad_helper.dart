@@ -107,10 +107,15 @@ class AdmobAdHelper {
     loadNative(value: MySessionValue.copen);
   }
 
-  Future<BaseAdModel?> _doLoadAD(
+  Future<BaseAdModel?> _loadAd(
     List<BaseAdModel> models, {
     CommAdLoadListener? load,
+    required MySessionValue value,
   }) async {
+    CommonReport.myEvent(
+      MySessionEvent.adReqPlR1Kacement,
+      data: {"PuUTVimak": value.value, "gNAuA": 1},
+    );
     for (final model in models) {
       final result = await model.load(listener: load);
       if (result) {
@@ -138,8 +143,8 @@ class AdmobAdHelper {
       return false;
     }
     CommonReport.myEvent(
-      MySessionEvent.adNeejLNWUdShow,
-      data: {"caycJ": value.value, "SuDJs": 1},
+      MySessionEvent.adNee8aQdShow,
+      data: {"PuUTVimak": value.value, "gNAuA": 1},
     );
 
     Completer<bool> closeCompleter = Completer();
@@ -214,13 +219,11 @@ class AdmobAdHelper {
     if (list == null) {
       return false;
     }
-    CommonReport.myEvent(
-      MySessionEvent.adReqPlzuowyacement,
-      data: {"caycJ": value.value, "SuDJs": 1},
-    );
+
     _openLoading = true;
-    _openAd = await _doLoadAD(
+    _openAd = await _loadAd(
       list,
+      value: value,
       load: CommAdLoadListener(
         error: (error) {
           CommonEvent.loadFail(value, false);
@@ -252,13 +255,10 @@ class AdmobAdHelper {
     if (list == null) {
       return false;
     }
-    CommonReport.myEvent(
-      MySessionEvent.adReqPlzuowyacement,
-      data: {"caycJ": value.value, "SuDJs": 1},
-    );
     _playerLoading = true;
-    _playerAd = await _doLoadAD(
+    _playerAd = await _loadAd(
       list,
+      value: value,
       load: CommAdLoadListener(
         error: (error) {
           CommonEvent.loadFail(value, false);
@@ -285,12 +285,9 @@ class AdmobAdHelper {
     }
     final list = adDataMap[AdPositionEnum.detail];
     if (list == null) return false;
-    CommonReport.myEvent(
-      MySessionEvent.adReqPlzuowyacement,
-      data: {"caycJ": value.value, "SuDJs": 1},
-    );
-    _channelAd = await _doLoadAD(
+    _channelAd = await _loadAd(
       list,
+      value: value,
       load: CommAdLoadListener(
         error: (error) {
           CommonEvent.loadFail(value, false);
@@ -313,13 +310,10 @@ class AdmobAdHelper {
     if (_nativeAd?.isCacheAvailable() ?? false) return false;
     final list = adDataMap[AdPositionEnum.native];
     if (list == null) return false;
-    CommonReport.myEvent(
-      MySessionEvent.adReqPlzuowyacement,
-      data: {"caycJ": value.value, "SuDJs": 1},
-    );
     _nativeLoading = true;
-    _nativeAd = await _doLoadAD(
+    _nativeAd = await _loadAd(
       list,
+      value: value,
       load: CommAdLoadListener(
         error: (e) {
           CommonEvent.loadFail(value, false);

@@ -26,11 +26,11 @@ class RecommendHistory extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         CommonReport.myEvent(
-          MySessionEvent.channellEw9istClick,
+          MySessionEvent.channellqZkdlistClick,
           data: {
-            "caycJ": "echgctd",
-            "OZI": isHome ? "ruZHz" : "LBfCnCNiI",
-            "PzgyR": "pNZSbnOq",
+            "PuUTVimak": "LhtQBrCkMh",
+            "gNAuA": isHome ? "WFZcIkYdR" : "TXM",
+            "NTeYg": "faFWosBtC",
           },
         );
         commonPush(

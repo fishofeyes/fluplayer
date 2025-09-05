@@ -52,7 +52,12 @@ class AdmobAdHelper2 {
   Future<BaseAdModel?> _load(
     List<BaseAdModel> adWrappers, {
     CommAdLoadListener? load,
+    required MySessionValue value,
   }) async {
+    CommonReport.myEvent(
+      MySessionEvent.adReqPlR1Kacement,
+      data: {"PuUTVimak": value.value, "gNAuA": 2},
+    );
     for (final adWrapper in adWrappers) {
       final result = await adWrapper.load(listener: load);
       if (result) {
@@ -69,8 +74,8 @@ class AdmobAdHelper2 {
     ValueChanged<bool>? onReward,
   }) async {
     CommonReport.myEvent(
-      MySessionEvent.adNeejLNWUdShow,
-      data: {"caycJ": value.value, "SuDJs": 2},
+      MySessionEvent.adNee8aQdShow,
+      data: {"PuUTVimak": value.value, "gNAuA": 2},
     );
     Completer<bool> closeCompleter = Completer();
     final isEnable = model?.isEnable() ?? false;
@@ -127,13 +132,11 @@ class AdmobAdHelper2 {
     if (splashADList.isEmpty) {
       return false;
     }
-    CommonReport.myEvent(
-      MySessionEvent.adReqPlzuowyacement,
-      data: {"caycJ": value.value, "SuDJs": 2},
-    );
+
     _openLoading = true;
     _openAD = await _load(
       splashADList,
+      value: value,
       load: CommAdLoadListener(
         error: (error) {
           CommonEvent.loadFail(value, true);

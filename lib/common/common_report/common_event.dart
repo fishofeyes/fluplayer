@@ -33,8 +33,8 @@ class CommonEvent {
   static void showSuccessAd(MySessionValue value, {bool isSecond = false}) {
     adShowController.add(true);
     CommonReport.myEvent(
-      MySessionEvent.adShowPH9FvSlacement,
-      data: {"caycJ": value.value, "SuDJs": isSecond ? 2 : 1},
+      MySessionEvent.adShowPqEpOslacement,
+      data: {"PuUTVimak": value.value, "gNAuA": isSecond ? 2 : 1},
     ); // 统一上报到一个事件
   }
 
@@ -44,29 +44,29 @@ class CommonEvent {
     bool isSecond = false,
   }) {
     CommonReport.myEvent(
-      MySessionEvent.adShowFail,
-      data: {"caycJ": value.value, "gnHt": e, "SuDJs": isSecond ? 2 : 1},
+      MySessionEvent.adShoIjxp9wFail,
+      data: {"PuUTVimak": value.value, "pAoJksW": e, "gNAuA": isSecond ? 2 : 1},
     ); // 统一上报到一个事件
   }
 
   static void adClick(MySessionValue value, bool isSecond) {
     CommonReport.myEvent(
-      MySessionEvent.adCI3llick,
-      data: {"caycJ": value.value, "SuDJs": isSecond ? 2 : 1},
+      MySessionEvent.adCLfrDZlick,
+      data: {"PuUTVimak": value.value, "gNAuA": isSecond ? 2 : 1},
     );
   }
 
   static void loadFail(MySessionValue value, bool isSecond) {
     CommonReport.myEvent(
-      MySessionEvent.adFzZ4ail,
-      data: {"caycJ": value.value, "SuDJs": isSecond ? 2 : 1},
+      MySessionEvent.adRe7aTtqFail,
+      data: {"PuUTVimak": value.value, "gNAuA": isSecond ? 2 : 1},
     );
   }
 
   static void loadSuccess(MySessionValue value, bool isSecond) {
     CommonReport.myEvent(
-      MySessionEvent.adReNazqSuc,
-      data: {"caycJ": value.value, "SuDJs": isSecond ? 2 : 1},
+      MySessionEvent.adReuKkp8qSuc,
+      data: {"PuUTVimak": value.value, "gNAuA": isSecond ? 2 : 1},
     );
   }
 
@@ -135,16 +135,15 @@ class CommonEvent {
       uid: uid,
       curr: curr,
     );
-    // CommonReport.adParam(
-    //   val,
-    //   curr,
-    //   network,
-    //   adS,
-    //   adId,
-    //   _source?.name ?? "",
-    //   adT,
-    //   from: model.is,
-    // );
+    CommonReport.adEvent(
+      val,
+      curr,
+      network,
+      adS,
+      adId,
+      _source?.name ?? "",
+      adT,
+    );
     // BackReportService.adEvent(
     //   curr,
     //   val,

@@ -96,8 +96,8 @@ class Recommend extends _$Recommend {
       if (isReport) {
         isReport = false;
         CommonReport.myEvent(
-          MySessionEvent.homeChanlzRQUnelExpose,
-          data: {"PzgyR": showHistory.length},
+          MySessionEvent.homeChan8FvYXnelExpose,
+          data: {"NTeYg": showHistory.length},
         );
       }
       if (showHistory.length < 3) {

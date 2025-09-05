@@ -3,6 +3,7 @@ import 'package:fluplayer/choose/choose_media.dart';
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/home/home_page.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:fluplayer/home/provider/home.dart';
@@ -48,6 +49,8 @@ class _RootPageState extends ConsumerState<RootPage>
     commonContext = context;
     WidgetsBinding.instance.addObserver(this);
     _track();
+    CommonReport.adCreateEvent();
+    CommonReport.adSessionEvent();
   }
 
   void _track() async {

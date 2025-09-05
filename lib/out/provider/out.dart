@@ -97,7 +97,7 @@ class Out extends _$Out {
         state = state.copyWith(isMore: true);
       }
     } catch (e) {
-      CommonReport.myEvent(MySessionEvent.landpaCDZgeFail);
+      CommonReport.myEvent(MySessionEvent.landpa6EQy5geFail);
     }
   }
 
@@ -148,6 +148,7 @@ class Out extends _$Out {
           isMiddle: model.isMiddle,
           outUrl: model.outUrl,
         );
+        CommonReport.adCreateEvent(user: user);
       }
       await sp.setString(SharedStoreKey.userEmail.name, user.email ?? "");
     }

@@ -63,41 +63,76 @@ enum MySessionValue {
 }
 
 enum MySessionEvent {
-  Direct_AD_Show("Direct_AD_Show"), // ad show
-  Direct_AD_Click("Direct_AD_Click"), // ad click
-  ad_req_time("ad_req_time"),
-  homeERILtSxpose("gsXnaHxEC"), // 首页曝光
-  homeChanlzRQUnelExpose("Tzy"), // 首页群组模块曝光
-  homeHistSgPoryExpose("VFJqLj"), // 首页历史模块曝光
-  landpag1lAeExpose("dGBxBIFQCW"), // 承接页曝光（外部进入）
-  landpaCDZgeFail("vdfrSgTQYo"), // 承接页加载失败
-  landpageAzaKQ0vatarClick("hxPSE"), // 承接页点击头像
-  landpageUpl1LFD0oadedExpose("Rqqjs"), // 承接页最近上传曝光
-  playStiHLOgartAll("Vei"), // 播放
-  playSPmdU5ource("RpMhBiYQC"), // 主动播放
-  plaP2cySuc("iugVd"), // 播放成功
-  playmRC3dFail("NHpdo"), // 播放失败
-  adReqPlzuowyacement("RBIx"), // 广告请求场景
-  adReNazqSuc("WECKWgcR"), // 广告请求成功
-  adNeejLNWUdShow("phAiw"), // 广告应展示场景
-  adShowPH9FvSlacement("UTkFsjE"), // 广告展示场景
-  adFzZ4ail("Sws"), // 请求失败
-  adShowFail("aEdHjjh"), // 广告展示失败
-  adCI3llick("gcASmdwtp"), // 广告点击
-  historP2A2lyExpose("MSBecqgva"), // 历史列表曝光
-  deepliC5qrfnkOpen("IpNligC"), // 外部支持深链打开（冷热启动都算）
-  channell3pAistExpose("ppVLDwafD"), // 频道列表曝光
-  channellEw9istClick("cPZW"), // 频道列表点击
-  channelpRPpageExpose("kbjK"), // 频道页曝光
-  premiub4LmExpose("uWGwBww"), // 订阅页曝光
-  premiupcuZmmClick("gyzcyYtf"), // 订阅点击
-  premirt7GUumSuc("cShM"), // 订阅成功
-  premiVn2xumFail("pbq"), // 订阅失败时机：取消时上报
-  commendShow("Liushe"), // 订阅失败时机：取消时上报
-  commendClick("Zmuxi") // 订阅失败时机：取消时上报
+  homeEJ6gQHxpose("KcsdYa"), // 首页曝光
+  imporgmh8tClick("pVLJEQSMy"), // 导入点击
+  impo1SnrtSuc("RvD"), // 导入成功
+  imporQPhtFail("pJW"), // 导入失败
+  import7wvHORename("FCnrZIoh"), // 导入文件重命名
+  import4vyyqDelate("VgdLYkmjO"), // 导入文件删除
+  homeAuthEohMrorizedSuc("iljHoPVk"), // 授权成功
+  homeAuthoitKrizedFail("flabk"), // 授权失败
+  homeChan8FvYXnelExpose("hOdweL"), // 首页群组模块曝光
+  homeHistyQOoryExpose("BTxLWMO"), // 首页历史模块曝光
+  downloadpnXhFOageExpose("oLO"), // 下载页曝光
+  downloadAdWD3pageStart("XeYTXoB"), // 全部开始/全部暂停点击
+  downloadpaFptHVgeDelateAll("jpwFrd"), // 全部删除
+  downloadpwILp4ageDelate("ITnHxhqRxI"), // 单个任务删除
+  downlwjbhpoadSuc("RyuM"), // 下载成功
+  downloYIXr3adFail("bMx"), // 下载失败
+  downlorC6x5adClick("pHpXLLCvi"), // 下载点击
+  downloadR1zc1LetryClick("KyfRiWtBn"), // 下载重试点击
+  landpagMJFlMeExpose("PgMroVCnx"), // 承接页曝光（外部进入）
+  landpa0n3gePlay("vNYDwAL"), // 承接页播放
+  landpa6EQy5geFail("eEjccn"), // 承接页加载失败
+  landpageAvYH5bvatarClick("cXW"), // 承接页点击头像
+  landpageUplhpnoadedExpose("NGReON"), // 承接页最近上传曝光
+  landpageUploxksJHadedAllclick("uEPtkJjH"), // 承接页最近最热点击view all
+  playStaZuartAll("NMBrA"), // 播放
+  playST5Xource("SBRUgZSt"), // 主动播放
+  pla5djkhySuc("qxCi"), // 播放成功
+  playrrXujFail("xTC"), // 播放失败
+  playPage1lwaBDuration("hTLm"), // 播放页面使用时长
+  playbP7LUPlay("eXpMHCG"), // 暂停/播放点击
+  playMuY0bNext("ddQGF"), // 下一个
+  playACKcSpeed("zpvyQsMzw"), // 倍速
+  playST86witch("TLWbVMP"), // 横竖屏切换
+  playPlKFMQSaylist("FzTEDLr"), // 播放列表点击
+  playFJgDFforword("INSwm"), // 前进
+  playRobFewind("YKr"), // 后退
+  playDoHXNwnload("SlV"), // 点击开始下载
+  playFidSVtClick("laBe"), // 画面适配按钮点击
+  adReqPlR1Kacement("OPhe"), // 广告请求场景
+  adReuKkp8qSuc("mug"), // 广告请求成功
+  adRe7aTtqFail("qwjQF"), // 请求失败
+  adNee8aQdShow("lIjzMlQsda"), // 广告应展示场景
+  adShowPqEpOslacement("EmHIfmsS"), // 广告展示场景
+  adShoIjxp9wFail("DBJnzBlBF"), // 广告展示失败
+  adCLfrDZlick("OKa"), // 广告点击
+  historlGwOyyExpose("FyBMgpLVj"), // 历史列表曝光
+  historbhuWtyClick("sALZ"), // 历史记录点击
+  histornmplXyDelete("BRtMUKmL"), // 历史记录删除
+  deepliJgyZHnkOpen("kUSRZ"), // 外部支持深链打开（冷热启动都算）
+  channellbXVRwistExpose("ISCMOMRfRH"), // 频道列表曝光
+  channellqZkdlistClick("mfJPs"), // 频道列表点击
+  channelSuNi7SYbscription("mWEW"), // 点击关注
+  channelUnsWZiNSubscription("pNp"), // 取消关注
+  channelpsMQ3HageExpose("nFwQsHw"), // 频道页曝光
+  browsey6o6rClick("KparilVl"), // 浏览器入口点击
+  browserpZsyycageExpose("UNv"), // 浏览器页面曝光
+  browserpageSUtBnSearchExpose("oscrdFsx"), // 输入框点击
+  browserpageFhZerSearchClick("VDD"), // 浏览器搜索确认
+  browserfQtU8Website("zSTS"), // 浏览器网址
+  browserpagHdSlteAheadClick("oSOmInnOvC"), // 前进点击
+  browserpageSlKaDEtepbackClick("NSNx"), // 后退点击
+  browserRecNgguommendClick("xGXwnR"), // 推荐网址点击
+  premiug8amExpose("uKyLLUesLL"), // 订阅页曝光
+  premiuTHTLmClick("nASyXC"), // 订阅点击
+  premiBdUumSuc("cua"), // 订阅成功
+  premiwqfumFail("ZcdFigmKPy"), // 订阅失败时机：取消时上报
+  rateServgRe0iceVisit("NjB"), // 好评弹窗曝光
+  rateServj2snjiceClick("OVzeSH") // 好评评分提交
   ;
 
-  final String desc;
-
-  const MySessionEvent(this.desc);
+  final String value;
+  const MySessionEvent(this.value);
 }
