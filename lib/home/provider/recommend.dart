@@ -95,8 +95,8 @@ class Recommend extends _$Recommend {
       final randomIndex = random.nextInt(l.length);
       if (isReport) {
         isReport = false;
-        CommonReport.myEvent(
-          MySessionEvent.homeChan8FvYXnelExpose,
+        CommonReport.eventThings(
+          ThingEnum.homeChan8FvYXnelExpose,
           data: {"NTeYg": showHistory.length},
         );
       }

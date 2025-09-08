@@ -25,12 +25,11 @@ class CommonReport {
   static IosDeviceInfo? _iosDevice;
   static const FlutterSecureStorage _storage = FlutterSecureStorage();
   static const _uuid = Uuid();
-  static final _dio = Dio();
   static String? outUrl;
   static String? fileId;
   static const host = isProd
-      ? "https://test-fiddle.fluplayer.com/buggy/hoc"
-      : "https://fiddle.fluplayer.com/air/equine";
+      ? "https://fiddle.fluplayer.com/air/equine"
+      : "https://test-fiddle.fluplayer.com/buggy/hoc";
 
   static Future<IosDeviceInfo?> device() async {
     _iosDevice ??= await DeviceInfoPlugin().iosInfo;
@@ -70,24 +69,8 @@ class CommonReport {
     return isSameDay ? 1 : 0;
   }
 
-  // static Future<bool> _post(
-  //   Map<String, dynamic> data, {
-  //   bool retry = true,
-  // }) async {
-  //   try {
-  //     await _dio.post("xxx", data: data);
-  //     return true;
-  //   } catch (e) {
-  //     print("error ad: $e");
-  //     if (retry == false) {
-  //       // await DatabaseHelper.instance.insertTba(data);
-  //     }
-  //     return false;
-  //   }
-  // }
-
   // tba event
-  static void myEvent(MySessionEvent e, {Map<String, dynamic>? data}) async {}
+  static void eventThings(ThingEnum e, {Map<String, dynamic>? data}) async {}
 
   // back event
   static Future<void> backEvent(
@@ -228,7 +211,7 @@ class CommonReport {
     bool retry = true,
   }) async {
     try {
-      await _dio.post(host, data: data);
+      await HttpHelper.dio2.post(host, data: data);
       return true;
     } catch (e) {
       print("error ad: $e");
@@ -252,19 +235,34 @@ class CommonReport {
     if (reportStatus == 1 && user == null) return;
     final pp = await package();
     final p = await otherParams();
-    _commonPost({
-      ...p,
-      "eucre": "build/${pp?.version}",
-      "browne": "utm_source=google-play&utm_medium=organic",
-      "diode": "Mozilla/5.0",
-      "eluate": 0,
-      "erasure": 0,
-      "nagoya": 0,
-      "confect": 0,
-      "topmost": 0,
-      "bernie": 0,
-      "hello": "low",
-    });
+    try {
+      final data = {
+        ...p,
+        "eucre": "build/${pp?.version}",
+        "browne": "utm_source=google-play&utm_medium=organic",
+        "diode": "Mozilla/5.0",
+        "zigzag":
+            (await AppTrackingTransparency.trackingAuthorizationStatus) ==
+                TrackingStatus.authorized
+            ? "gypsum"
+            : "faber",
+        "eluate": 0,
+        "erasure": 0,
+        "nagoya": 0,
+        "confect": 0,
+        "topmost": 0,
+        "bernie": 0,
+        "hello": "low",
+      };
+      final res = await _commonPost(data);
+      if (res && user != null) {
+        sp.setInt(SharedStoreKey.isInstall.name, 2);
+      } else if (res && user == null) {
+        sp.setInt(SharedStoreKey.isInstall.name, 1);
+      }
+    } catch (e) {
+      print("error install: $e");
+    }
   }
 
   static void adSessionEvent() async {

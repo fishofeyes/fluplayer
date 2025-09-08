@@ -30,49 +30,49 @@ class CommonEvent {
     // }
   }
 
-  static void showSuccessAd(MySessionValue value, {bool isSecond = false}) {
+  static void showSuccessAd(ThingSourceEnum value, {bool isSecond = false}) {
     adShowController.add(true);
-    CommonReport.myEvent(
-      MySessionEvent.adShowPqEpOslacement,
+    CommonReport.eventThings(
+      ThingEnum.adShowPqEpOslacement,
       data: {"PuUTVimak": value.value, "gNAuA": isSecond ? 2 : 1},
     ); // 统一上报到一个事件
   }
 
   static void showFailed(
-    MySessionValue value,
+    ThingSourceEnum value,
     String e, {
     bool isSecond = false,
   }) {
-    CommonReport.myEvent(
-      MySessionEvent.adShoIjxp9wFail,
+    CommonReport.eventThings(
+      ThingEnum.adShoIjxp9wFail,
       data: {"PuUTVimak": value.value, "pAoJksW": e, "gNAuA": isSecond ? 2 : 1},
     ); // 统一上报到一个事件
   }
 
-  static void adClick(MySessionValue value, bool isSecond) {
-    CommonReport.myEvent(
-      MySessionEvent.adCLfrDZlick,
+  static void adClick(ThingSourceEnum value, bool isSecond) {
+    CommonReport.eventThings(
+      ThingEnum.adCLfrDZlick,
       data: {"PuUTVimak": value.value, "gNAuA": isSecond ? 2 : 1},
     );
   }
 
-  static void loadFail(MySessionValue value, bool isSecond) {
-    CommonReport.myEvent(
-      MySessionEvent.adRe7aTtqFail,
+  static void loadFail(ThingSourceEnum value, bool isSecond) {
+    CommonReport.eventThings(
+      ThingEnum.adRe7aTtqFail,
       data: {"PuUTVimak": value.value, "gNAuA": isSecond ? 2 : 1},
     );
   }
 
-  static void loadSuccess(MySessionValue value, bool isSecond) {
-    CommonReport.myEvent(
-      MySessionEvent.adReuKkp8qSuc,
+  static void loadSuccess(ThingSourceEnum value, bool isSecond) {
+    CommonReport.eventThings(
+      ThingEnum.adReuKkp8qSuc,
       data: {"PuUTVimak": value.value, "gNAuA": isSecond ? 2 : 1},
     );
   }
 
   static Future<bool> loadAd(
     AdPositionEnum position,
-    MySessionValue value,
+    ThingSourceEnum value,
   ) async {
     switch (position) {
       case AdPositionEnum.open:
@@ -88,7 +88,7 @@ class CommonEvent {
 
   static Future<bool> showAd(
     AdPositionEnum position,
-    MySessionValue value, {
+    ThingSourceEnum value, {
     String? outUrl,
     String? fId,
     CommonReportSourceEnum? source,

@@ -52,6 +52,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   bool showedAd = false;
   String? error;
   bool isLoading = true;
+  bool isFirstOpen = true;
   @override
   void initState() {
     super.initState();
@@ -79,8 +80,8 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   @override
   void dispose() {
     CommonReport.fileId = null;
-    _loadAd(MySessionValue.playback);
-    _showAd(MySessionValue.playback);
+    _loadAd(ThingSourceEnum.playBk);
+    _showAd(ThingSourceEnum.playBk);
     routeObserver.unsubscribe(this);
     WakelockPlus.toggle(enable: false);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -132,11 +133,11 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     }
   }
 
-  void _loadAd(MySessionValue session) {
+  void _loadAd(ThingSourceEnum session) {
     CommonEvent.loadAd(AdPositionEnum.media, session);
   }
 
-  void _showAd(MySessionValue value) {
+  void _showAd(ThingSourceEnum value) {
     if (model.isMiddle == null) {
       CommonEvent.showAd(AdPositionEnum.media, value);
     } else {
@@ -167,8 +168,8 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         final r = await model.getRealLink();
         _controller = VideoPlayerController.networkUrl(Uri.parse(r));
       }
-      _loadAd(MySessionValue.play);
-      _showAd(MySessionValue.play);
+      _loadAd(ThingSourceEnum.play);
+      _showAd(ThingSourceEnum.play);
       await _controller!.initialize();
       ref.read(homeProvider.notifier).updatePosition(model, progress);
       isLoading = false;
@@ -188,8 +189,8 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
               _controller!.value.duration.inMilliseconds;
           if (_controller!.value.position.inSeconds ==
               admobHelper.mediaPlayPoint) {
-            _loadAd(MySessionValue.play10);
-            _loadAd(MySessionValue.play10);
+            _loadAd(ThingSourceEnum.play10);
+            _loadAd(ThingSourceEnum.play10);
           }
         }
       });
@@ -321,8 +322,11 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   Widget build(BuildContext context) {
     final state = ref.watch(playProvider);
     ref.listen(playProvider, (old, newValue) {
-      model = ref.read(playProvider.notifier).getModel();
-      _initVideo();
+      if (newValue.id != model.id || isFirstOpen) {
+        isFirstOpen = false;
+        model = ref.read(playProvider.notifier).getModel();
+        _initVideo();
+      }
     });
     return Scaffold(
       backgroundColor: Colors.black,

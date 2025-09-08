@@ -52,10 +52,10 @@ class AdmobAdHelper2 {
   Future<BaseAdModel?> _load(
     List<BaseAdModel> adWrappers, {
     CommAdLoadListener? load,
-    required MySessionValue value,
+    required ThingSourceEnum value,
   }) async {
-    CommonReport.myEvent(
-      MySessionEvent.adReqPlR1Kacement,
+    CommonReport.eventThings(
+      ThingEnum.adReqPlR1Kacement,
       data: {"PuUTVimak": value.value, "gNAuA": 2},
     );
     for (final adWrapper in adWrappers) {
@@ -69,12 +69,12 @@ class AdmobAdHelper2 {
 
   Future<bool> _showAD(
     BaseAdModel? model, {
-    required MySessionValue value,
-    Future<bool> Function({required MySessionValue value})? adLoader,
+    required ThingSourceEnum value,
+    Future<bool> Function({required ThingSourceEnum value})? adLoader,
     ValueChanged<bool>? onReward,
   }) async {
-    CommonReport.myEvent(
-      MySessionEvent.adNee8aQdShow,
+    CommonReport.eventThings(
+      ThingEnum.adNee8aQdShow,
       data: {"PuUTVimak": value.value, "gNAuA": 2},
     );
     Completer<bool> closeCompleter = Completer();
@@ -119,7 +119,7 @@ class AdmobAdHelper2 {
   }
 
   ///开屏位置
-  Future<bool> loadOpenAd({required MySessionValue value}) async {
+  Future<bool> loadOpenAd({required ThingSourceEnum value}) async {
     if (_openLoading) {
       debugPrint('开屏请求中不请求');
       return false;
@@ -150,7 +150,7 @@ class AdmobAdHelper2 {
     return _openAD != null;
   }
 
-  Future<bool> showOpenAd({required MySessionValue value}) async {
+  Future<bool> showOpenAd({required ThingSourceEnum value}) async {
     return _showAD(_openAD, value: value, adLoader: loadOpenAd);
   }
 }

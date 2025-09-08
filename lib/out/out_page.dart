@@ -38,7 +38,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
       ref.read(outProvider(widget.model).notifier).initData();
     });
     CommonReport.outUrl = widget.model.outUrl;
-    CommonReport.myEvent(MySessionEvent.landpagMJFlMeExpose);
+    CommonReport.eventThings(ThingEnum.landpagMJFlMeExpose);
     // isLinkPagePop = true;
   }
 
@@ -123,8 +123,8 @@ class _PresentPageState extends ConsumerState<OutPage> {
                   index: tabIndex,
                   onTap: (i) {
                     if (i == 2) {
-                      CommonReport.myEvent(
-                        MySessionEvent.landpageUplhpnoadedExpose,
+                      CommonReport.eventThings(
+                        ThingEnum.landpageUplhpnoadedExpose,
                       );
                     }
                     setState(() {
@@ -233,8 +233,8 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                           .where((e) => e.video)
                                           .map((e) => e.convertModel())
                                           .toList();
-                                      CommonReport.myEvent(
-                                        MySessionEvent.playST5Xource,
+                                      CommonReport.eventThings(
+                                        ThingEnum.playST5Xource,
                                         data: {
                                           "PuUTVimak": m.isRecommend
                                               ? "Rqq"

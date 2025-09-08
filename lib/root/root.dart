@@ -51,6 +51,9 @@ class _RootPageState extends ConsumerState<RootPage>
     _track();
     CommonReport.adCreateEvent();
     CommonReport.adSessionEvent();
+    Future.delayed(
+      const Duration(seconds: 5),
+    ).then((e) => CommonReport.reportFail());
   }
 
   void _track() async {
@@ -74,11 +77,11 @@ class _RootPageState extends ConsumerState<RootPage>
   void _appLife(AppLifecycleState appState) async {
     print("app life state = $appState");
     if (appState == AppLifecycleState.resumed) {
-      CommonEvent.loadAd(AdPositionEnum.open, MySessionValue.hopen);
+      CommonEvent.loadAd(AdPositionEnum.open, ThingSourceEnum.hp);
       final sp = await SharedPreferences.getInstance();
       final canShow = sp.getBool(SharedStoreKey.firstInstall.name);
       if (canShow != null) {
-        CommonEvent.showAd(AdPositionEnum.open, MySessionValue.hopen);
+        CommonEvent.showAd(AdPositionEnum.open, ThingSourceEnum.hp);
       }
     }
   }

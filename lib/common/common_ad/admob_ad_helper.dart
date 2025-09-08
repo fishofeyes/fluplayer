@@ -101,19 +101,19 @@ class AdmobAdHelper {
   }
 
   void loadAll() {
-    loadOpenAd(value: MySessionValue.copen);
-    loadDetail(value: MySessionValue.copen);
-    loadMedia(value: MySessionValue.copen);
-    loadNative(value: MySessionValue.copen);
+    loadOpenAd(value: ThingSourceEnum.cp);
+    loadDetail(value: ThingSourceEnum.cp);
+    loadMedia(value: ThingSourceEnum.cp);
+    loadNative(value: ThingSourceEnum.cp);
   }
 
   Future<BaseAdModel?> _loadAd(
     List<BaseAdModel> models, {
     CommAdLoadListener? load,
-    required MySessionValue value,
+    required ThingSourceEnum value,
   }) async {
-    CommonReport.myEvent(
-      MySessionEvent.adReqPlR1Kacement,
+    CommonReport.eventThings(
+      ThingEnum.adReqPlR1Kacement,
       data: {"PuUTVimak": value.value, "gNAuA": 1},
     );
     for (final model in models) {
@@ -127,8 +127,8 @@ class AdmobAdHelper {
 
   Future<bool> _showAD(
     BaseAdModel? model, {
-    required MySessionValue value,
-    Future<bool> Function({required MySessionValue value})? adLoader,
+    required ThingSourceEnum value,
+    Future<bool> Function({required ThingSourceEnum value})? adLoader,
     ValueChanged<bool>? onReward,
   }) async {
     if (adShowing) {
@@ -142,8 +142,8 @@ class AdmobAdHelper {
       debugPrint('间隔时间不够不展示 all $selfInterval');
       return false;
     }
-    CommonReport.myEvent(
-      MySessionEvent.adNee8aQdShow,
+    CommonReport.eventThings(
+      ThingEnum.adNee8aQdShow,
       data: {"PuUTVimak": value.value, "gNAuA": 1},
     );
 
@@ -206,7 +206,7 @@ class AdmobAdHelper {
   }
 
   ///开屏位置
-  Future<bool> loadOpenAd({required MySessionValue value}) async {
+  Future<bool> loadOpenAd({required ThingSourceEnum value}) async {
     if (_openLoading) {
       debugPrint('开屏请求中不请求');
       return false;
@@ -237,12 +237,12 @@ class AdmobAdHelper {
     return _openAd != null;
   }
 
-  Future<bool> showOpenAd({required MySessionValue value}) async {
+  Future<bool> showOpenAd({required ThingSourceEnum value}) async {
     return _showAD(_openAd, value: value, adLoader: loadOpenAd);
   }
 
   ///播放位置
-  Future<bool> loadMedia({required MySessionValue value}) async {
+  Future<bool> loadMedia({required ThingSourceEnum value}) async {
     if (_playerLoading) {
       debugPrint('竖屏播放请求中不请求');
       return false;
@@ -272,11 +272,11 @@ class AdmobAdHelper {
     return _playerAd != null;
   }
 
-  Future<bool> showMediaAd({required MySessionValue value}) async {
+  Future<bool> showMediaAd({required ThingSourceEnum value}) async {
     return await _showAD(_playerAd, value: value, adLoader: loadMedia);
   }
 
-  Future<bool> loadDetail({required MySessionValue value}) async {
+  Future<bool> loadDetail({required ThingSourceEnum value}) async {
     if (_channelLoading) {
       return false;
     }
@@ -301,11 +301,11 @@ class AdmobAdHelper {
     return _channelAd != null;
   }
 
-  Future<bool> showDetail({required MySessionValue value}) async {
+  Future<bool> showDetail({required ThingSourceEnum value}) async {
     return _showAD(_channelAd, value: value, adLoader: loadDetail);
   }
 
-  Future<bool> loadNative({required MySessionValue value}) async {
+  Future<bool> loadNative({required ThingSourceEnum value}) async {
     if (_nativeLoading) return false;
     if (_nativeAd?.isCacheAvailable() ?? false) return false;
     final list = adDataMap[AdPositionEnum.native];

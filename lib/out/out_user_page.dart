@@ -49,10 +49,10 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
     //   from: widget.model.from,
     //   value: MySessionValue.chpage,
     // );
-    CommonEvent.loadAd(AdPositionEnum.detail, MySessionValue.chpage);
+    CommonEvent.loadAd(AdPositionEnum.detail, ThingSourceEnum.chpage);
     CommonEvent.showAd(
       AdPositionEnum.detail,
-      MySessionValue.chpage,
+      ThingSourceEnum.chpage,
       source: CommonReportSourceEnum.userpage,
     );
   }

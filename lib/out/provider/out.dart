@@ -97,7 +97,7 @@ class Out extends _$Out {
         state = state.copyWith(isMore: true);
       }
     } catch (e) {
-      CommonReport.myEvent(MySessionEvent.landpa6EQy5geFail);
+      CommonReport.eventThings(ThingEnum.landpa6EQy5geFail);
     }
   }
 
@@ -142,13 +142,13 @@ class Out extends _$Out {
       final sp = await SharedPreferences.getInstance();
       await sp.setString(SharedStoreKey.userId.name, user.id);
       await sp.setBool(SharedStoreKey.isMiddle.name, model.isMiddle);
+      CommonReport.adCreateEvent(user: user);
       if (sp.getString(SharedStoreKey.userEmail.name) == null) {
         CommonReport.backEvent(
           CommonReportEnum.commonDownload,
           isMiddle: model.isMiddle,
           outUrl: model.outUrl,
         );
-        CommonReport.adCreateEvent(user: user);
       }
       await sp.setString(SharedStoreKey.userEmail.name, user.email ?? "");
     }

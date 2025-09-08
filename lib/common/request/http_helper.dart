@@ -27,9 +27,19 @@ enum HttpHelperApi {
 
 class HttpHelper {
   static final Dio _dio = Dio();
+  static final Dio dio2 = Dio();
 
   static void log() {
     _dio.interceptors.add(
+      LogInterceptor(
+        request: true,
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+      ),
+    );
+
+    dio2.interceptors.add(
       LogInterceptor(
         request: true,
         requestHeader: true,

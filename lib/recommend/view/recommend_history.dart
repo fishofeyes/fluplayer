@@ -25,8 +25,8 @@ class RecommendHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        CommonReport.myEvent(
-          MySessionEvent.channellqZkdlistClick,
+        CommonReport.eventThings(
+          ThingEnum.channellqZkdlistClick,
           data: {
             "PuUTVimak": "LhtQBrCkMh",
             "gNAuA": isHome ? "WFZcIkYdR" : "TXM",
@@ -37,13 +37,13 @@ class RecommendHistory extends StatelessWidget {
           context,
           OutUserPage(
             user: OutUserModel(
-              id: model.uid!,
+              id: model.uid,
               name: model.uname,
               corver: model.cover,
             ),
             model: OutModel(
               outUrl: "",
-              userId: model.uid!,
+              userId: model.uid,
               isMiddle: model.isMiddle,
             ),
           ),
