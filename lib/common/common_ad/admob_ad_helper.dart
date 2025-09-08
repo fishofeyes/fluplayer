@@ -139,6 +139,7 @@ class AdmobAdHelper {
     final selfInterval = nowDate - lastShowTime;
 
     if (selfInterval < _adInterval * 1000) {
+      CommonEvent.changePlayStatus(true);
       debugPrint('间隔时间不够不展示 all $selfInterval');
       return false;
     }
