@@ -1,4 +1,5 @@
 import 'package:easy_refresh/easy_refresh.dart';
+import 'package:fluplayer/common/common_report/common_event.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:fluplayer/out/out_dir_page.dart';
@@ -37,20 +38,16 @@ class _PresentPageState extends ConsumerState<OutPage> {
     SchedulerBinding.instance.addPostFrameCallback((e) {
       ref.read(outProvider(widget.model).notifier).initData();
     });
+    CommonEvent.changePlayStatus(false);
     CommonReport.outUrl = widget.model.outUrl;
     CommonReport.eventThings(ThingEnum.landpagMJFlMeExpose);
-    // isLinkPagePop = true;
   }
 
   @override
   void dispose() {
     CommonReport.outUrl = null;
-    // alertIds.remove(widget.model.outUrl);
-    // DeepLinkService.deepLink = null;
-    // BackReportService.presentUrl = null;
     CommonAfHelper().dismiss();
     _refreshController.dispose();
-    // globalVipPage?.call(false);
     super.dispose();
   }
 
