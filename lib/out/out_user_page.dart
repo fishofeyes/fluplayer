@@ -32,7 +32,6 @@ class OutUserPage extends ConsumerStatefulWidget {
 
 class _OutUserPageState extends ConsumerState<OutUserPage> {
   final _refreshController = EasyRefreshController(controlFinishLoad: true);
-  String customKey = "detail";
   int tabIndex = 0;
   @override
   void initState() {

@@ -41,19 +41,19 @@ enum CommonReportSourceEnum {
 }
 
 enum ThingSourceEnum {
-  cp(""),
-  hp(""),
-  play(""),
-  playLast(""),
-  playBk(""),
-  play10(""),
-  chpage(""),
-  chlistpage(""),
-  pause(""),
-  ladHot(""),
-  ladRecent(""),
-  chHot(""),
-  chRect("");
+  cp("FPllZYD"),
+  hp("qJKd"),
+  play("qJKd"),
+  playLast("ysQbouw"),
+  playBk("coTrZylDO"),
+  play10("ZPkzWVp"),
+  chpage("GGbBqDUBbq"),
+  chlistpage("JxaZmHRTwi"),
+  pause("tqXj"),
+  ladHot("KDQeA"),
+  ladRecent("HNLCddwk"),
+  chHot("yTHhCYZLc"),
+  chRect("sDkv");
 
   final String value;
 

@@ -147,6 +147,7 @@ class AdmobAdHelper {
       data: {"PuUTVimak": value.value, "gNAuA": 1},
     );
 
+    CommonEvent.changePlayStatus(false);
     Completer<bool> closeCompleter = Completer();
     final isEnable = model?.isEnable() ?? false;
     if (!isEnable) {

@@ -53,6 +53,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   String? error;
   bool isLoading = true;
   bool isFirstOpen = true;
+  StreamSubscription? playStatus;
   @override
   void initState() {
     super.initState();
@@ -66,6 +67,16 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       ref
           .read(playProvider.notifier)
           .initList(widget.models, model, haveRecommend);
+    });
+
+    playStatus = CommonEvent.videoPlayController.stream.listen((e) {
+      if (e == true) {
+        _controller?.play();
+        showedAd = true;
+      } else {
+        showedAd = false;
+        _controller?.pause();
+      }
     });
   }
 
@@ -82,6 +93,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     CommonReport.fileId = null;
     _loadAd(ThingSourceEnum.playBk);
     _showAd(ThingSourceEnum.playBk);
+    playStatus?.cancel();
     routeObserver.unsubscribe(this);
     WakelockPlus.toggle(enable: false);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);

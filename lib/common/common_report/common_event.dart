@@ -14,11 +14,11 @@ class CommonEvent {
   static String? _fId;
   static CommonReportSourceEnum? _source;
   static bool _isMiddle = true;
-  static final StreamController<bool> adShowController =
+  static final StreamController<bool> videoPlayController =
       StreamController.broadcast();
 
   static void onDismiss() {
-    adShowController.add(false);
+    changePlayStatus(true);
     // Future.delayed(const Duration(milliseconds: 500)).then((e) {
     //   globalAdIsShow = false;
     // });
@@ -30,8 +30,12 @@ class CommonEvent {
     // }
   }
 
+  static void changePlayStatus(bool isPlay) {
+    videoPlayController.add(isPlay);
+  }
+
   static void showSuccessAd(ThingSourceEnum value, {bool isSecond = false}) {
-    adShowController.add(true);
+    changePlayStatus(false);
     CommonReport.eventThings(
       ThingEnum.adShowPqEpOslacement,
       data: {"PuUTVimak": value.value, "gNAuA": isSecond ? 2 : 1},
