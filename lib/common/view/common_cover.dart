@@ -39,8 +39,8 @@ class CommonCover extends StatelessWidget {
                       ),
                       child: ExtendedImage.asset(
                         "assets/video.png",
-                        width: 60,
-                        height: 60,
+                        width: 128,
+                        height: 72,
                       ),
                     );
                   case LoadState.completed:
@@ -71,8 +71,8 @@ class CommonCover extends StatelessWidget {
                       ),
                       child: ExtendedImage.asset(
                         "assets/video.png",
-                        width: 60,
-                        height: 60,
+                        width: 128,
+                        height: 72,
                       ),
                     );
                   case LoadState.completed:
