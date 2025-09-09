@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:fluplayer/common/common_hive.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/request/http_helper.dart';
+import 'package:fluplayer/home/model/recommend_model.dart';
 import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/model/out_user_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -122,6 +124,14 @@ class Out extends _$Out {
     final List? files = res['regrowing'];
     if (u != null) {
       final user = OutUserModel.fromJson(u);
+      CommonHive.recommendBox.put(
+        user.id,
+        RecommendModel(
+          uid: user.id,
+          uname: user.name,
+          createDate: DateTime.now().millisecondsSinceEpoch,
+        ),
+      );
       await ref
           .read(recommendProvider.notifier)
           .requestHistory(
