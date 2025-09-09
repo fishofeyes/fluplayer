@@ -19,6 +19,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../common/common_enum.dart';
+import '../player/img_page.dart';
 import 'model/out_media_model.dart';
 
 class OutUserPage extends ConsumerStatefulWidget {
@@ -308,6 +309,11 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                                                     : CommonReportSourceEnum
                                                           .userpage,
                                               ),
+                                            );
+                                          } else {
+                                            commonPush(
+                                              context,
+                                              ImgPage(model: m),
                                             );
                                           }
                                         },

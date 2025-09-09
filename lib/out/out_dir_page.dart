@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../common/common.dart';
 import '../common/common_enum.dart';
+import '../player/img_page.dart';
 
 class OutDirPage extends ConsumerStatefulWidget {
   final OutModel model;
@@ -175,6 +176,8 @@ class _PresentDirPageState extends ConsumerState<OutDirPage> {
                                     place: widget.place,
                                   ),
                                 );
+                              } else {
+                                commonPush(context, ImgPage(model: m));
                               }
                             },
                             padding: const EdgeInsets.only(top: 12, bottom: 12),
