@@ -92,7 +92,7 @@ class AdmobAdHelper {
         list.add(t);
       }
       list.sort((a, b) {
-        return a.sort.compareTo(b.sort);
+        return b.sort.compareTo(a.sort);
       });
     }
     return list;
