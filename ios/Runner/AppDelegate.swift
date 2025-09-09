@@ -21,4 +21,14 @@ import UIKit
         AppsFlyerAttribution.shared()!.handleOpenUrl(url, options: options)
         return true
     }
+    
+    private func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        AppsFlyerAttribution.shared()!.continueUserActivity(userActivity, restorationHandler: nil)
+        return true
+    }
+
+    override func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        AppsFlyerAttribution.shared()!.continueUserActivity(userActivity, restorationHandler: nil)
+        return true
+     }
 }
