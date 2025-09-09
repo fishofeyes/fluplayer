@@ -51,7 +51,18 @@ class _ImgPageState extends State<ImgPage> {
                     return state.completedWidget;
                   case LoadState.failed:
                     return const Center(
-                      child: Icon(Icons.error_outline, color: Colors.white),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.error_outline, color: Colors.white),
+                          Text(
+                            "image load error",
+                            style: TextStyle(fontSize: 14, color: Colors.white),
+                          ),
+                        ],
+                      ),
                     );
                 }
               },
