@@ -129,6 +129,7 @@ class Out extends _$Out {
         RecommendModel(
           uid: user.id,
           uname: user.name,
+          isMiddle: model.isMiddle,
           createDate: DateTime.now().millisecondsSinceEpoch,
         ),
       );
