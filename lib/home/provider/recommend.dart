@@ -73,10 +73,10 @@ class Recommend extends _$Recommend {
       HttpHelperApi.appUsers,
       isMiddle: isMiddle,
       params: {
-        "uid": uid, //站长id
-        "os": "ios", //系统(android , ios)
-        "language": Platform.localeName, //语言
-        "labels": tags, // 未处理
+        "fenestrae": uid, //站长id
+        "logotype": "ios", //系统(android , ios)
+        "witchbells": Platform.localeName, //语言
+        "lzbbtf7zpa": {"lm3asrinkf": tags}, // 未处理
       },
     );
     if (res is List) {
