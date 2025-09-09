@@ -11,7 +11,13 @@ class MaxAdHelper {
   Map<String, CommAdShowListener> show = {};
 
   Future<void> listen() async {
-    await AppLovinMAX.initialize("");
+    final rel = utf8.decode(
+      base64Decode(
+        "R2ZRbmxhdDBOQk5uQXdlaWZTeHhMNVo1ejhJTEpnMnhBcVdvRENUbkgxTXBrMEhTZVZ0ZkZseklljj8W4RbV4T3UEA5uZ14TTVR3cjdIY0lGdGRPWDZIbUpHVHNmYVVJVl9LT04="
+            .replaceAll("jj8W4RbV4T3UEA5uZ14T", ""),
+      ),
+    );
+    await AppLovinMAX.initialize(rel);
     AppLovinMAX.setMuted(true);
     AppLovinMAX.setInterstitialListener(
       InterstitialListener(
