@@ -33,7 +33,7 @@ class CommonAfHelper {
           isDeep = dp.deepLink?.isDeferred;
           final deep = dp.deepLink?.deepLinkValue ?? '';
           deepLinkValue = Uri.parse(deep).queryParameters;
-          jumpAccept();
+          jumpAccept(sender: deepLinkValue);
           break;
         default:
           print("error deep link ${dp.status}");
