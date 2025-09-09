@@ -7,19 +7,18 @@ class CommonAes {
   static const apiIdxKey = {true: "api_middle_idx", false: "api_no_middle_idx"};
   static const apiMap = {
     true: [
-      "aHR0cHM6Ly9hcGkubWVkaXhzbzsd2kIFCHYWFzaHEuY29t",
-      "aHR0cHM6Ly9hcGkubWVkaXhzsd2kIFCHYzcHJpbnRxLmNvbQ==",
+      "YXBpLmZsdXBsYXkN8nDPCbd6RR2bzllcmlvLmNvbQ==",
+      "YXBpLkN8nDPCbd6RR2bzmZsdXBsYXllcmplLmNvbQ==",
     ],
     false: [
-      "aHR0cHM6Ly9hcGkubWVkaXhjcnVzzsd2kIFCHYaC5jb20=",
-      "aHR0cHM6Ly9zsd2kIFCHYhcGkubWVkaXhjb2NvbnV0LmNvbQ==",
+      "YXBpLmkN8nDPCbd6RR2bzZsdXBsYXllcnVjaS5jb20=",
+      "YkN8nDPCbd6RR2bzXBpLmZsdXBsYXllcnRjcy5jb20=",
     ],
   };
 
   static String getRequestUrl(bool isMiddle, int idx) {
-    return "https://fluplayer.tbxbxdev.com";
-    // final desc = CommonAes.apiMap[isMiddle]![idx];
-    // return utf8.decode(base64Decode(desc.replaceAll("zsd2kIFCHY", "")));
+    final desc = CommonAes.apiMap[isMiddle]![idx];
+    return "https://${utf8.decode(base64Decode(desc.replaceAll("kN8nDPCbd6RR2bz", "")))}";
   }
 
   static String getUrl(String sender) {
