@@ -6,58 +6,58 @@ const contactEmail = 'quinn.snow@mrksoftware.help';
 const testAdConfig =
     'eyJvcGVuIjpbeyJpZCI6ImNhLWFwcC1wdWItNzY2NTExNTI3OTIxOTEwMi83NTE3ODE4NjY1Iiwic29ydCI6MSwic291cmNlIjoiYWRtb2IiLCJuYW1lIjoiaW50ZXJzdGl0aWFsIn0seyJpZCI6IjQ4MzY3NmUxZWRiZDhjMGMiLCJzb3J0IjoxLCJzb3VyY2UiOiJtYXgiLCJuYW1lIjoib3BlbiJ9LHsiaWQiOiI5MGU0NGJhYjQ3YjkzZDcxIiwic29ydCI6MSwic291cmNlIjoibWF4IiwibmFtZSI6ImludGVyc3RpdGlhbCJ9LHsiaWQiOiJlZjRhYTMzMDE4YmViMmEzIiwic29ydCI6MSwic291cmNlIjoibWF4IiwibmFtZSI6InJld2FyZGVkIn1dLCJtZWRpYSI6W3siaWQiOiJjYS1hcHAtcHViLTc2NjUxMTUyNzkyMTkxMDIvNzUxNzgxODY2NSIsInNvcnQiOjEsInNvdXJjZSI6ImFkbW9iIiwibmFtZSI6ImludGVyc3RpdGlhbCJ9LHsiaWQiOiI0ODM2NzZlMWVkYmQ4YzBjIiwic29ydCI6MSwic291cmNlIjoibWF4IiwibmFtZSI6Im9wZW4ifSx7ImlkIjoiOTBlNDRiYWI0N2I5M2Q3MSIsInNvcnQiOjEsInNvdXJjZSI6Im1heCIsIm5hbWUiOiJpbnRlcnN0aXRpYWwifSx7ImlkIjoiZWY0YWEzMzAxOGJlYjJhMyIsInNvcnQiOjEsInNvdXJjZSI6Im1heCIsIm5hbWUiOiJyZXdhcmRlZCJ9XSwiZGV0YWlsIjpbeyJpZCI6ImNhLWFwcC1wdWItNzY2NTExNTI3OTIxOTEwMi83NTE3ODE4NjY1Iiwic29ydCI6MSwic291cmNlIjoiYWRtb2IiLCJuYW1lIjoiaW50ZXJzdGl0aWFsIn0seyJpZCI6IjQ4MzY3NmUxZWRiZDhjMGMiLCJzb3J0IjoxLCJzb3VyY2UiOiJtYXgiLCJuYW1lIjoib3BlbiJ9LHsiaWQiOiI5MGU0NGJhYjQ3YjkzZDcxIiwic29ydCI6MSwic291cmNlIjoibWF4IiwibmFtZSI6ImludGVyc3RpdGlhbCJ9LHsiaWQiOiJlZjRhYTMzMDE4YmViMmEzIiwic29ydCI6MSwic291cmNlIjoibWF4IiwibmFtZSI6InJld2FyZGVkIn1dfQ==';
 
-final a = {
-  "adInterval": 60,
-  "mediaPlayPoint": 600,
-  "launchTime": 7,
-  "nativeMayClick": 0.5,
-  "nativeShowTime": 3,
-  "open": [
-    {
-      "id": "ca-app-pub-7665115279219102/7517818665",
-      "sort": 1,
-      "source": "admob",
-      "name": "interstitial",
-    },
-    {"id": "483676e1edbd8c0c", "sort": 1, "source": "max", "name": "open"},
-    {
-      "id": "90e44bab47b93d71",
-      "sort": 1,
-      "source": "max",
-      "name": "interstitial",
-    },
-    {"id": "ef4aa33018beb2a3", "sort": 1, "source": "max", "name": "rewarded"},
-  ],
-  "media": [
-    {
-      "id": "ca-app-pub-7665115279219102/7517818665",
-      "sort": 1,
-      "source": "admob",
-      "name": "interstitial",
-    },
-    {"id": "483676e1edbd8c0c", "sort": 1, "source": "max", "name": "open"},
-    {
-      "id": "90e44bab47b93d71",
-      "sort": 1,
-      "source": "max",
-      "name": "interstitial",
-    },
-    {"id": "ef4aa33018beb2a3", "sort": 1, "source": "max", "name": "rewarded"},
-  ],
-  "detail": [
-    {
-      "id": "ca-app-pub-7665115279219102/7517818665",
-      "sort": 1,
-      "source": "admob",
-      "name": "interstitial",
-    },
-    {"id": "483676e1edbd8c0c", "sort": 1, "source": "max", "name": "open"},
-    {
-      "id": "90e44bab47b93d71",
-      "sort": 1,
-      "source": "max",
-      "name": "interstitial",
-    },
-    {"id": "ef4aa33018beb2a3", "sort": 1, "source": "max", "name": "rewarded"},
-  ],
-};
+// final testAdConfigJson = {
+//   "adInterval": 60,
+//   "mediaPlayPoint": 600,
+//   "launchTime": 7,
+//   "nativeMayClick": 0.5,
+//   "nativeShowTime": 3,
+//   "open": [
+//     {
+//       "id": "ca-app-pub-7665115279219102/7517818665",
+//       "sort": 1,
+//       "source": "admob",
+//       "name": "interstitial",
+//     },
+//     {"id": "483676e1edbd8c0c", "sort": 2, "source": "max", "name": "open"},
+//     {
+//       "id": "90e44bab47b93d71",
+//       "sort": 2,
+//       "source": "max",
+//       "name": "interstitial",
+//     },
+//     {"id": "ef4aa33018beb2a3", "sort": 2, "source": "max", "name": "rewarded"},
+//   ],
+//   "media": [
+//     {
+//       "id": "ca-app-pub-7665115279219102/7517818665",
+//       "sort": 1,
+//       "source": "admob",
+//       "name": "interstitial",
+//     },
+//     {"id": "483676e1edbd8c0c", "sort": 1, "source": "max", "name": "open"},
+//     {
+//       "id": "90e44bab47b93d71",
+//       "sort": 1,
+//       "source": "max",
+//       "name": "interstitial",
+//     },
+//     {"id": "ef4aa33018beb2a3", "sort": 1, "source": "max", "name": "rewarded"},
+//   ],
+//   "detail": [
+//     {
+//       "id": "ca-app-pub-7665115279219102/7517818665",
+//       "sort": 1,
+//       "source": "admob",
+//       "name": "interstitial",
+//     },
+//     {"id": "483676e1edbd8c0c", "sort": 1, "source": "max", "name": "open"},
+//     {
+//       "id": "90e44bab47b93d71",
+//       "sort": 1,
+//       "source": "max",
+//       "name": "interstitial",
+//     },
+//     {"id": "ef4aa33018beb2a3", "sort": 1, "source": "max", "name": "rewarded"},
+//   ],
+// };
