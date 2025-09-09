@@ -22,7 +22,7 @@ class AdmobAdHelper2 {
   void refreshADConfig() {
     try {
       final config = FirebaseRemoteConfig.instance;
-      final adRemoteJson = config.getString('_remoteConfigKey_second');
+      final adRemoteJson = config.getString('adConfigTime');
       if (adRemoteJson.isEmpty) {
         adList.clear();
         return;
