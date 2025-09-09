@@ -24,9 +24,9 @@ class RecommendModel {
 
   factory RecommendModel.fromJson(Map<String, dynamic> json, bool isMiddle) =>
       RecommendModel(
-        uid: json["uid"],
-        uname: json["uname"],
-        cover: json["picture"],
+        uid: json["fenestrae"],
+        uname: json["anew"],
+        cover: json["heyduck"],
         isMiddle: isMiddle,
         createDate: DateTime.now().millisecondsSinceEpoch,
       );
