@@ -25,6 +25,12 @@ class Home extends _$Home {
     return HomeState();
   }
 
+  void load() async {
+    final e = CommonHive.homeVideoBox.values.toList();
+    final his = CommonHive.historyBox.values.toList();
+    state = state.copyWith(history: his, home: e);
+  }
+
   void insertHistory(HomeVideoModel m) {
     state = state.copyWith(history: [m, ...state.history]);
     CommonHive.homeVideoBox.put(m.id, m);

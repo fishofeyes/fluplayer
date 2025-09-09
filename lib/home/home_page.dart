@@ -12,6 +12,7 @@ import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/out_page.dart';
 import 'package:fluplayer/player/player_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../common/common_enum.dart';
@@ -24,6 +25,14 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((e) {
+      ref.read(homeProvider.notifier).load();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(homeProvider);
