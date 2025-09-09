@@ -34,13 +34,14 @@ class Recommend extends _$Recommend {
   RecommendModel? getOne({String? uid}) {
     final random = Random();
     if (uid != null) {
-      final l = state.list.where((e) => e.uid != uid).toList();
+      final t = state.list.isEmpty ? state.history : state.list;
+      final l = t.where((e) => e.uid != uid).toList();
       if (l.isEmpty) return null;
       final randomIndex = random.nextInt(l.length);
       if (randomIndex < 0 || randomIndex > l.length) return null;
       return l[randomIndex];
     } else {
-      final l = state.list;
+      final l = state.list.isEmpty ? state.history : state.list;
       if (l.isEmpty) return null;
       final randomIndex = random.nextInt(l.length);
       if (randomIndex < 0 || randomIndex > l.length) return null;

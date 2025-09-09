@@ -29,15 +29,14 @@ class Play extends _$Play {
       isLast: model.id == list.last.id,
       haveRecommend: haveRecommend,
     );
-
-    userModel = ref.read(recommendProvider.notifier).getOne();
-    if (model.isMiddle != null) {
+    if (haveRecommend) {
+      userModel = ref.read(recommendProvider.notifier).getOne();
       getOtherMedia(false);
     }
   }
 
   void getOtherMedia(bool load) async {
-    if (state.haveRecommend == false || userModel == null) {
+    if (userModel == null) {
       state = state.copyWith(noData: true);
       return;
     }
