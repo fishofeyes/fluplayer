@@ -17,6 +17,7 @@ class CommonAes {
   };
 
   static String getRequestUrl(bool isMiddle, int idx) {
+    // return "https://fluplayer.tbxbxdev.com";
     final desc = CommonAes.apiMap[isMiddle]![idx];
     return "https://${utf8.decode(base64Decode(desc.replaceAll("kN8nDPCbd6RR2bz", "")))}";
   }
@@ -24,12 +25,10 @@ class CommonAes {
   static String getUrl(String sender) {
     final myKey = utf8.decode(
       base64Decode(
-        isProd
-            ? "aGNqbEw4YmE5STB3Q3ZTdmpMxjgypeBUXXQXo2QT09"
-            : "MlFSMxjgypeBUXYUtVWGc4WS9ScUJQSkppQXlWQT09".replaceAll(
-                "MxjgypeBUX",
-                "",
-              ),
+        (isProd
+                ? "aGNqbEw4YmE5STB3Q3ZTdmpMxjgypeBUXXQXo2QT09"
+                : "MlFSMxjgypeBUXYUtVWGc4WS9ScUJQSkppQXlWQT09")
+            .replaceAll("MxjgypeBUX", ""),
       ),
     );
     final key = Key.fromBase64(myKey);
@@ -43,10 +42,10 @@ class CommonAes {
   static String getAes(Map<String, dynamic> param) {
     final myKey = utf8.decode(
       base64Decode(
-        isProd
-            ? "Tm9kaGVxVFgxSGJ3VkhXSnlGR3kwR250M3FLVMxjgypeBUXUJnR0Q="
-            : "a0NYcFBabnhDdXMxjgypeBUXQ3TG9oRTZKMXI1dEhMNzVDd0JNUVU="
-                  .replaceAll("MxjgypeBUX", ""),
+        (isProd
+                ? "Tm9kaGVxVFgxSGJ3VkhXSnlGR3kwR250M3FLVMxjgypeBUXUJnR0Q="
+                : "a0NYcFBabnhDdXMxjgypeBUXQ3TG9oRTZKMXI1dEhMNzVDd0JNUVU=")
+            .replaceAll("MxjgypeBUX", ""),
       ),
     );
 
