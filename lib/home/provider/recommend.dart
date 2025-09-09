@@ -24,7 +24,7 @@ class Recommend extends _$Recommend {
   Future<void> requestHistory({
     String? uid,
     List<Map<String, dynamic>>? tags,
-    bool isMiddle = true,
+    required bool isMiddle,
   }) async {
     final h = CommonHive.recommendBox.values.toList();
     state = state.copyWith(history: h, showHistory: h);
