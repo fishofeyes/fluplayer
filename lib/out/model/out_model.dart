@@ -23,17 +23,10 @@ class OutModel extends Equatable {
   }
 
   factory OutModel.fromMap(Map<String, dynamic> query) {
-    if (query["media_id"] != null) {
-      return OutModel(
-        outUrl: query["media_kind"],
-        userId: query["media_id"],
-        isMiddle: false,
-      );
-    }
     return OutModel(
-      outUrl: query['redeploys'] ?? '',
-      userId: query['qifmmwoyob'] ?? '',
-      isMiddle: true,
+      outUrl: query['rosalind'] ?? '',
+      userId: query['3y5tvrvgsp'] ?? '',
+      isMiddle: query['3y5tvrvgsp'] == 'reciprocal',
     );
   }
 

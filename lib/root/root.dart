@@ -3,6 +3,7 @@ import 'package:fluplayer/choose/choose_media.dart';
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
+import 'package:fluplayer/common/common_af_helper.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/home/home_page.dart';
 import 'package:fluplayer/home/model/home.dart';
@@ -54,6 +55,7 @@ class _RootPageState extends ConsumerState<RootPage>
     Future.delayed(
       const Duration(seconds: 5),
     ).then((e) => CommonReport.reportFail());
+    CommonAfHelper().init();
   }
 
   void _track() async {
