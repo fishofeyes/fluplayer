@@ -63,10 +63,8 @@ class AdmobAdHelper {
   void refreshADConfig() {
     try {
       final config = FirebaseRemoteConfig.instance;
-      final adRemoteJson = config.getString('_remoteConfigKey');
-      String adBase64String = adRemoteJson.isEmpty
-          ? testAdConfig
-          : adRemoteJson;
+      final configJson = config.getString('adConfigJson');
+      String adBase64String = configJson.isEmpty ? testAdConfig : configJson;
       final adText = utf8.decode(base64Decode(adBase64String));
       showText = adText;
 
