@@ -56,7 +56,7 @@ class OutMediaModel {
     bool isRecommend = false,
     String? outUrl,
   }) => OutMediaModel(
-    id: json["sygfxrhws3"],
+    id: json["thiazole"],
     createTime: json["hunyak"],
     qty: json["hollin"],
     directory: json["stright"],
