@@ -6,10 +6,12 @@ import 'package:fluplayer/root/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'common/common_report/common_report.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  CommonReport.uniqueId();
   HttpHelper.log();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await CommonHive.init();

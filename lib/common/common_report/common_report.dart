@@ -45,8 +45,9 @@ class CommonReport {
     String? uniqueId = await _storage.read(key: "S.uniqueId.name");
     if (uniqueId == null) {
       uniqueId = _uuid.v4();
-      _storage.write(key: "s.uniqueId.name", value: uniqueId);
+      await _storage.write(key: "s.uniqueId.name", value: uniqueId);
     }
+    debugPrint("uniqu id = $uniqueId"); //f36c0578-1a40-46cc-b40d-3a47765a4972
     return uniqueId;
   }
 
