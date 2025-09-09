@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-7665115279219102~8751009286</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -42,7 +44,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>To make sure that the photo and video import feature in the media library works properly, you need to give access permissions to your photos and videos. You can adjust these permissions in "Settings."</string>
+	<string>To make sure that the photo and video import feature in the media library works properly, you need to give access permissions to your photos and videos. You can adjust these permissions in &quot;Settings.&quot;</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>Allowing tracking helps us support our apps by showing you ads that might be of interest to you. You can turn it off later in settings.</string>
 	<key>SKAdNetworkItems</key>
