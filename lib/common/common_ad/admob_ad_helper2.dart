@@ -43,7 +43,7 @@ class AdmobAdHelper2 {
         adList.add(BaseAdModel.fromMap(map, key));
       }
       adList.sort((a, b) {
-        return a.sort.compareTo(b.sort);
+        return b.sort.compareTo(a.sort);
       });
     }
     return adList;
