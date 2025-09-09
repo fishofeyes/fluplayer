@@ -17,7 +17,6 @@ class CommonAes {
   };
 
   static String getRequestUrl(bool isMiddle, int idx) {
-    // return "https://fluplayer.tbxbxdev.com";
     final desc = CommonAes.apiMap[isMiddle]![idx];
     return "https://${utf8.decode(base64Decode(desc.replaceAll("kN8nDPCbd6RR2bz", "")))}";
   }
