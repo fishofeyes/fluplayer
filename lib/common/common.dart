@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-const isProd = false;
+const isProd = true;
 WidgetRef? commonRef;
 BuildContext? commonContext;
 bool screenPortraitUp = true;
