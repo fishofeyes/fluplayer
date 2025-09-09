@@ -22,7 +22,8 @@ class CommonAfHelper {
 
   Future<void> init() async {
     final AppsFlyerOptions options = AppsFlyerOptions(
-      afDevKey: "",
+      afDevKey: "TYf2mHakoyPhfxp5XnrYGU",
+      appId: "6751945078",
       timeToWaitForATTUserAuthorization: 30,
     );
     _appsflyerSdk = AppsflyerSdk(options);

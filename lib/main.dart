@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
+import 'package:fluplayer/common/common_af_helper.dart';
 import 'package:fluplayer/common/common_hive.dart';
 import 'package:fluplayer/common/request/http_helper.dart';
 import 'package:fluplayer/root/app.dart';
@@ -16,6 +17,5 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await CommonHive.init();
   await admobHelper.init();
-
   runApp(ProviderScope(child: RootApp()));
 }
