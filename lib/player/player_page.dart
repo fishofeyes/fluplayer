@@ -61,9 +61,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     model = widget.model;
     SchedulerBinding.instance.addPostFrameCallback((e) {
-      final haveRecommend =
-          widget.place != CommonReportSourceEnum.history &&
-          widget.model.isMiddle != null;
+      final haveRecommend = widget.model.isMiddle != null;
       ref
           .read(playProvider.notifier)
           .initList(widget.models, model, haveRecommend);
