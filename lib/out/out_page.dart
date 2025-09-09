@@ -9,6 +9,7 @@ import 'package:fluplayer/out/view/out_cover.dart';
 import 'package:fluplayer/out/view/out_header.dart';
 import 'package:fluplayer/out/view/out_item.dart';
 import 'package:fluplayer/out/view/out_section_group.dart';
+import 'package:fluplayer/player/img_page.dart';
 import 'package:fluplayer/player/player_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -249,6 +250,8 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                           models: res ?? [],
                                         ),
                                       );
+                                    } else {
+                                      commonPush(context, ImgPage(model: m));
                                     }
                                   },
                                 ),
