@@ -69,6 +69,7 @@ class PlayerController extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 12, left: 12),
                     colors: VideoProgressColors(
                       backgroundColor: Color(0xffbbbbbb),
+                      playedColor: Color(0xffED9647),
                     ),
                   ),
                 ),

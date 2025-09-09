@@ -1,6 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
+import 'package:fluplayer/common/common_ad/base_ad.dart';
+import 'package:fluplayer/common/common_enum.dart';
+import 'package:fluplayer/common/common_report/common_event.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/view/common_button.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:fluplayer/home/provider/home.dart';
@@ -20,11 +25,18 @@ import 'package:video_player/video_player.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../common/common.dart';
+import '../common/common_af_helper.dart';
 
 class PlayerPage extends ConsumerStatefulWidget {
   final List<HomeVideoModel> models;
   final HomeVideoModel model;
-  const PlayerPage({super.key, required this.models, required this.model});
+  final CommonReportSourceEnum place;
+  const PlayerPage({
+    super.key,
+    required this.models,
+    required this.model,
+    required this.place,
+  });
 
   @override
   ConsumerState<PlayerPage> createState() => _VideoScreenState();
@@ -39,6 +51,9 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   double progress = 0.0;
   bool showedAd = false;
   String? error;
+  bool isLoading = true;
+  bool isFirstOpen = true;
+  StreamSubscription? playStatus;
   @override
   void initState() {
     super.initState();
@@ -46,7 +61,21 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     model = widget.model;
     SchedulerBinding.instance.addPostFrameCallback((e) {
-      ref.read(playProvider.notifier).initList(widget.models, model);
+      final haveRecommend =
+          widget.place != CommonReportSourceEnum.history &&
+          widget.model.isMiddle != null;
+      ref
+          .read(playProvider.notifier)
+          .initList(widget.models, model, haveRecommend);
+    });
+
+    playStatus = CommonEvent.videoPlayController.stream.listen((e) {
+      if (e == true) {
+        _controller?.play();
+      } else {
+        showedAd = true;
+        _controller?.pause();
+      }
     });
   }
 
@@ -60,6 +89,10 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
 
   @override
   void dispose() {
+    CommonReport.fileId = null;
+    _loadAd(ThingSourceEnum.playBk);
+    _showAd(ThingSourceEnum.playBk);
+    playStatus?.cancel();
     routeObserver.unsubscribe(this);
     WakelockPlus.toggle(enable: false);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -82,15 +115,76 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     super.didPop();
   }
 
+  void _backReport() async {
+    if (model.isMiddle != null) {
+      await CommonReport.backEvent(
+        CommonReportEnum.commonPlay,
+        source: widget.place,
+        isMiddle: model.isMiddle,
+        uid: model.uid,
+        fid: model.id,
+        outUrl: model.uidUrl,
+      );
+    } else {
+      final res = await CommonReport.backEvent(
+        CommonReportEnum.commLocalPlay,
+        isMiddle: model.isMiddle,
+        source: widget.place,
+      );
+    }
+    if (CommonAfHelper().isDeep == true) {
+      await CommonReport.backEvent(
+        CommonReportEnum.commUserActive,
+        isMiddle: model.isMiddle,
+        source: widget.place,
+        uid: model.uid,
+        outUrl: model.uidUrl,
+      );
+      CommonAfHelper().isDeep = false;
+    }
+  }
+
+  void _loadAd(ThingSourceEnum session) {
+    CommonEvent.loadAd(AdPositionEnum.media, session);
+  }
+
+  void _showAd(ThingSourceEnum value) {
+    if (model.isMiddle == null) {
+      CommonEvent.showAd(AdPositionEnum.media, value);
+    } else {
+      CommonEvent.showAd(
+        AdPositionEnum.media,
+        value,
+        fId: model.id,
+        outUrl: model.uidUrl,
+        isMiddle: model.isMiddle,
+        source: widget.place,
+      );
+    }
+  }
+
   void _initVideo() async {
     _controller?.dispose();
     _controller = null;
     error = null;
+    isLoading = true;
+    _isVisible = true;
     setState(() {});
     try {
-      _controller = VideoPlayerController.file(File(model.path));
-      ref.read(homeProvider.notifier).updatePosition(model, progress);
+      if (model.isMiddle == null) {
+        CommonReport.fileId = null;
+        _controller = VideoPlayerController.file(File(model.path));
+      } else {
+        CommonReport.fileId = widget.model.id;
+        final r = await model.getRealLink();
+        _controller = VideoPlayerController.networkUrl(Uri.parse(r));
+      }
+      _loadAd(ThingSourceEnum.play);
+      _showAd(ThingSourceEnum.play);
       await _controller!.initialize();
+      ref.read(homeProvider.notifier).updatePosition(model, progress);
+      isLoading = false;
+      error = null;
       _controller?.addListener(() {
         if (!mounted) return;
         setState(() {});
@@ -104,9 +198,14 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           progress =
               _controller!.value.position.inMilliseconds /
               _controller!.value.duration.inMilliseconds;
+          if (_controller!.value.position.inSeconds ==
+              admobHelper.mediaPlayPoint) {
+            _loadAd(ThingSourceEnum.play10);
+            _loadAd(ThingSourceEnum.play10);
+          }
         }
       });
-      if (model.position > 0) {
+      if (model.position > 0 && model.position < 0.9) {
         await _controller!.seekTo(
           Duration(
             milliseconds:
@@ -119,10 +218,13 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         _controller!.play();
       }
       _resetTimer();
+      _backReport();
     } catch (e) {
       _controller?.dispose();
       _controller = null;
       setState(() {
+        isLoading = false;
+        _isVisible = true;
         error = "Failed to load video";
       });
       print("video play err: $e");
@@ -156,8 +258,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         backgroundColor: Colors.transparent,
         duration: Duration(milliseconds: 300),
         animationCurve: Curves.easeInOut,
-        builder: (e) =>
-            AlertPlayList(list: widget.models, controller: _scrollController),
+        builder: (e) => AlertPlayList(controller: _scrollController),
       );
     } else {
       showGeneralDialog(
@@ -183,7 +284,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           );
         },
         pageBuilder: (context, animation, secondaryAnimation) =>
-            AlertPlayList(list: widget.models, controller: _scrollController),
+            AlertPlayList(controller: _scrollController),
       );
     }
     await Future.delayed(const Duration(milliseconds: 200));
@@ -232,10 +333,12 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   Widget build(BuildContext context) {
     final state = ref.watch(playProvider);
     ref.listen(playProvider, (old, newValue) {
-      model = ref.read(playProvider.notifier).getModel();
-      _initVideo();
+      if (newValue.id != model.id || isFirstOpen) {
+        isFirstOpen = false;
+        model = ref.read(playProvider.notifier).getModel();
+        _initVideo();
+      }
     });
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -259,7 +362,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
               visible: _isVisible,
               child: IgnorePointer(
                 ignoring: true,
-                child: Container(color: Colors.black.withOpacity(0.35)),
+                child: Container(color: Colors.black.withValues(alpha: 0.35)),
               ),
             ),
           ),
@@ -310,6 +413,30 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
                       ),
                     ),
                   ],
+                ),
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: Visibility(
+              visible: isLoading,
+              child: CupertinoActivityIndicator(color: Colors.white),
+            ),
+          ),
+          Positioned.fill(
+            child: Visibility(
+              visible: error != null,
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  error ?? '',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),

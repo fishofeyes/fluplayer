@@ -1,4 +1,5 @@
 import 'package:fluplayer/common/common.dart';
+import 'package:fluplayer/common/common_enum.dart';
 import 'package:fluplayer/home/provider/home.dart';
 import 'package:fluplayer/home/view/history_item.dart';
 import 'package:fluplayer/player/player_page.dart';
@@ -97,7 +98,11 @@ class _HistoryMorePageState extends ConsumerState<HistoryPage> {
                       onTap: (e) {
                         commonPush(
                           context,
-                          PlayerPage(model: e, models: state.history),
+                          PlayerPage(
+                            model: e,
+                            models: state.history,
+                            place: CommonReportSourceEnum.history,
+                          ),
                         );
                       },
                     );
