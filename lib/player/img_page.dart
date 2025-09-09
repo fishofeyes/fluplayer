@@ -15,17 +15,16 @@ class _ImgPageState extends State<ImgPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: GestureDetector(
-        onTap: () {
-          // 点击图片退出全屏
-          Navigator.pop(context);
-        },
-        child: Center(
-          child: Hero(
-            tag: widget.model.id,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          GestureDetector(
+            onTap: () {
+              // 点击图片退出全屏
+              Navigator.pop(context);
+            },
             child: ExtendedImage.network(
               widget.model.cover ?? "",
-              fit: BoxFit.contain,
               mode: ExtendedImageMode.gesture, // 启用手势模式
               initGestureConfigHandler: (state) {
                 // 配置手势参数
@@ -45,7 +44,9 @@ class _ImgPageState extends State<ImgPage> {
                 // 加载状态处理
                 switch (state.extendedImageLoadState) {
                   case LoadState.loading:
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    );
                   case LoadState.completed:
                     return state.completedWidget;
                   case LoadState.failed:
@@ -56,7 +57,45 @@ class _ImgPageState extends State<ImgPage> {
               },
             ),
           ),
-        ),
+          Positioned(
+            top: 12,
+            left: 0,
+            right: 0,
+            child: SafeArea(
+              child: Stack(
+                children: [
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    width: double.infinity,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      behavior: HitTestBehavior.translucent,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Image.asset(
+                          "assets/player/back.png",
+                          width: 24,
+                          height: 24,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    left: 60,
+                    right: 60,
+                    child: Text(
+                      widget.model.name * 100,
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

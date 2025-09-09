@@ -164,7 +164,7 @@ class _PresentDirPageState extends ConsumerState<OutDirPage> {
                                     place: widget.place,
                                   ),
                                 );
-                              } else if (m.video) {
+                              } else if (!m.video) {
                                 commonPush(
                                   context,
                                   PlayerPage(
