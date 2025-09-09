@@ -109,7 +109,7 @@ class OutUser extends _$OutUser {
       HttpHelperApi.openData,
       isMiddle: model.isMiddle,
       params: {
-        "fishbones": uid,
+        "fishbones": model.userId,
         "phenyls": "v2",
         "spirogram": page, //页码
         "unfealty": pageSize, //分页大小
