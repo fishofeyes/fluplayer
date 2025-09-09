@@ -8,6 +8,7 @@ import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/home/home_page.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:fluplayer/home/provider/home.dart';
+import 'package:fluplayer/home/provider/recommend.dart';
 import 'package:fluplayer/mine/mine_page.dart';
 import 'package:fluplayer/root/provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,15 @@ class _RootPageState extends ConsumerState<RootPage>
       const Duration(seconds: 5),
     ).then((e) => CommonReport.reportFail());
     CommonAfHelper().init();
+    SharedPreferences.getInstance().then((e) {
+      if (e.getString(SharedStoreKey.userEmail.name) != null) {
+        ref
+            .read(recommendProvider.notifier)
+            .requestHistory(
+              isMiddle: e.getBool(SharedStoreKey.isMiddle.name) ?? true,
+            );
+      }
+    });
   }
 
   void _track() async {
