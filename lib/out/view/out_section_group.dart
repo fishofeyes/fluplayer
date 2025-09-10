@@ -10,10 +10,6 @@ class OutSectionGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 60,
-      decoration: BoxDecoration(
-        color: Color(0xff282018),
-        borderRadius: BorderRadius.circular(16),
-      ),
       padding: EdgeInsets.symmetric(horizontal: 40),
       child: Row(
         children: [

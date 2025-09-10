@@ -91,25 +91,31 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
             left: 0,
             right: 0,
             height: 230,
-            child: ClipRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
-                child: Container(color: Colors.black45),
-              ),
-            ),
+            child: Container(color: Colors.black45),
           ),
+
           Positioned(
-            top: 49 + 20 + 52,
+            top: 0,
             left: 0,
             right: 0,
-            child: SafeArea(
-              child: Container(
-                height: 229,
-                decoration: BoxDecoration(
-                  color: Color(0xff282018),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
+            height: 230,
+            child: ExtendedImage.network(
+              widget.user?.corver ?? "",
+              fit: BoxFit.cover,
+              loadStateChanged: (state) {
+                switch (state.extendedImageLoadState) {
+                  case LoadState.loading:
+                  case LoadState.failed:
+                    return Container(color: Colors.black45);
+                  case LoadState.completed:
+                    return ExtendedRawImage(
+                      image: state.extendedImageInfo?.image,
+                      width: double.infinity,
+                      height: 230,
+                      fit: BoxFit.cover,
+                    );
+                }
+              },
             ),
           ),
           Column(
@@ -158,205 +164,233 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              OutSectionGroup(
-                index: tabIndex,
-                onTap: (e) {
-                  setState(() {
-                    tabIndex = e;
-                  });
-                },
-              ),
               Expanded(
-                child: Consumer(
-                  builder: (context, ref, child) {
-                    final state = ref.watch(outUserProvider(widget.model));
-                    ref.listen(outUserProvider(widget.model), (
-                      oldValue,
-                      newValue,
-                    ) {
-                      SchedulerBinding.instance.addPostFrameCallback((e) {
-                        _refreshController.finishLoad(
-                          newValue.isMore
-                              ? IndicatorResult.noMore
-                              : IndicatorResult.success,
-                        );
-                      });
-                    });
-
-                    List<OutMediaModel> list;
-                    int commendLength = 0;
-                    if (tabIndex == 0) {
-                      list = state.files ?? [];
-                    } else if (tabIndex == 1) {
-                      list = state.tops ?? [];
-                    } else {
-                      list = state.recents ?? [];
-                    }
-                    int length = list.length;
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Color(0xff1C150F),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xff282018),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    children: [
+                      OutSectionGroup(
+                        index: tabIndex,
+                        onTap: (e) {
+                          setState(() {
+                            tabIndex = e;
+                          });
+                        },
                       ),
-                      margin: EdgeInsets.symmetric(horizontal: 12),
-                      child: Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          EasyRefresh(
-                            controller: _refreshController,
-                            header: const CupertinoHeader(
-                              triggerOffset: 20,
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.transparent,
-                            ),
-                            footer: const CupertinoFooter(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.white,
-                              emptyWidget: SizedBox(),
-                            ),
-                            onRefresh: () async {
-                              return ref
-                                  .read(outUserProvider(widget.model).notifier)
-                                  .initData();
-                            },
-                            onLoad: () async {
-                              return ref
-                                  .read(outUserProvider(widget.model).notifier)
-                                  .load();
-                            },
-                            child: ListView.builder(
-                              itemCount: length + commendLength,
-                              padding: EdgeInsets.zero,
-                              itemBuilder: (ctx, idx) {
-                                OutMediaModel m = list[idx];
-                                bool showHeader = false;
-                                if (idx > 0) {
-                                  if (list[idx].isRecommend &&
-                                      !list[idx - 1].isRecommend) {
-                                    showHeader = true;
-                                  }
-                                }
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Visibility(
-                                      visible: showHeader,
-                                      child: Container(
-                                        padding:
-                                            const EdgeInsetsDirectional.only(
-                                              start: 10,
-                                              top: 16,
-                                            ),
-                                        color: const Color(0xff1C150F),
-                                        width: double.infinity,
-                                        child: const Text(
-                                          "Recommend",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ),
+                      Expanded(
+                        child: Consumer(
+                          builder: (context, ref, child) {
+                            final state = ref.watch(
+                              outUserProvider(widget.model),
+                            );
+                            ref.listen(outUserProvider(widget.model), (
+                              oldValue,
+                              newValue,
+                            ) {
+                              SchedulerBinding.instance.addPostFrameCallback((
+                                e,
+                              ) {
+                                _refreshController.finishLoad(
+                                  newValue.isMore
+                                      ? IndicatorResult.noMore
+                                      : IndicatorResult.success,
+                                );
+                              });
+                            });
+
+                            List<OutMediaModel> list;
+                            int commendLength = 0;
+                            if (tabIndex == 0) {
+                              list = state.files ?? [];
+                            } else if (tabIndex == 1) {
+                              list = state.tops ?? [];
+                            } else {
+                              list = state.recents ?? [];
+                            }
+                            int length = list.length;
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Color(0xff1C150F),
+                              ),
+                              margin: EdgeInsets.symmetric(horizontal: 12),
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  EasyRefresh(
+                                    controller: _refreshController,
+                                    header: const CupertinoHeader(
+                                      triggerOffset: 20,
+                                      foregroundColor: Colors.white,
+                                      backgroundColor: Colors.transparent,
                                     ),
-                                    ClipRRect(
-                                      borderRadius: idx == 0
-                                          ? const BorderRadius.vertical(
-                                              top: Radius.circular(8),
-                                            )
-                                          : BorderRadius.zero,
-                                      child: OutItem(
-                                        model: m,
-                                        padding: const EdgeInsets.only(
-                                          left: 10,
-                                          right: 10,
-                                          bottom: 12,
-                                          top: 12,
-                                        ),
-                                        onTap: () {
-                                          final r = ref.read(
+                                    footer: const CupertinoFooter(
+                                      foregroundColor: Colors.white,
+                                      backgroundColor: Colors.white,
+                                      emptyWidget: SizedBox(),
+                                    ),
+                                    onRefresh: () async {
+                                      return ref
+                                          .read(
                                             outUserProvider(
                                               widget.model,
                                             ).notifier,
-                                          );
-                                          if (m.directory) {
-                                            commonPush(
-                                              context,
-                                              OutDirPage(
-                                                model: widget.model,
-                                                mediaModel: m,
-                                                place: m.isRecommend
-                                                    ? CommonReportSourceEnum
-                                                          .userPageRecommend
-                                                    : CommonReportSourceEnum
-                                                          .userpage,
-                                              ),
-                                            );
-                                          } else if (m.video) {
-                                            commonPush(
-                                              context,
-                                              PlayerPage(
-                                                model: m.convertModel(),
-                                                models: list
-                                                    .where((e) => e.video)
-                                                    .map(
-                                                      (e) => e.convertModel(),
-                                                    )
-                                                    .toList(),
-                                                place: m.isRecommend
-                                                    ? CommonReportSourceEnum
-                                                          .userPageRecommend
-                                                    : CommonReportSourceEnum
-                                                          .userpage,
-                                              ),
-                                            );
-                                          } else {
-                                            commonPush(
-                                              context,
-                                              ImgPage(model: m),
-                                            );
+                                          )
+                                          .initData();
+                                    },
+                                    onLoad: () async {
+                                      return ref
+                                          .read(
+                                            outUserProvider(
+                                              widget.model,
+                                            ).notifier,
+                                          )
+                                          .load();
+                                    },
+                                    child: ListView.builder(
+                                      itemCount: length + commendLength,
+                                      padding: EdgeInsets.zero,
+                                      itemBuilder: (ctx, idx) {
+                                        OutMediaModel m = list[idx];
+                                        bool showHeader = false;
+                                        if (idx > 0) {
+                                          if (list[idx].isRecommend &&
+                                              !list[idx - 1].isRecommend) {
+                                            showHeader = true;
                                           }
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                          ),
-                          Positioned.fill(
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Visibility(
-                                  visible: state.isLoading,
-                                  child: const Align(
-                                    alignment: Alignment.center,
-                                    child: CupertinoActivityIndicator(
-                                      color: Colors.white,
+                                        }
+                                        return Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Visibility(
+                                              visible: showHeader,
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsetsDirectional.only(
+                                                      start: 10,
+                                                      top: 16,
+                                                    ),
+                                                color: const Color(0xff1C150F),
+                                                width: double.infinity,
+                                                child: const Text(
+                                                  "Recommend",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            ClipRRect(
+                                              borderRadius: idx == 0
+                                                  ? const BorderRadius.vertical(
+                                                      top: Radius.circular(8),
+                                                    )
+                                                  : BorderRadius.zero,
+                                              child: OutItem(
+                                                model: m,
+                                                padding: const EdgeInsets.only(
+                                                  left: 10,
+                                                  right: 10,
+                                                  bottom: 12,
+                                                  top: 12,
+                                                ),
+                                                onTap: () {
+                                                  final r = ref.read(
+                                                    outUserProvider(
+                                                      widget.model,
+                                                    ).notifier,
+                                                  );
+                                                  if (m.directory) {
+                                                    commonPush(
+                                                      context,
+                                                      OutDirPage(
+                                                        model: widget.model,
+                                                        mediaModel: m,
+                                                        place: m.isRecommend
+                                                            ? CommonReportSourceEnum
+                                                                  .userPageRecommend
+                                                            : CommonReportSourceEnum
+                                                                  .userpage,
+                                                      ),
+                                                    );
+                                                  } else if (m.video) {
+                                                    commonPush(
+                                                      context,
+                                                      PlayerPage(
+                                                        model: m.convertModel(),
+                                                        models: list
+                                                            .where(
+                                                              (e) => e.video,
+                                                            )
+                                                            .map(
+                                                              (e) => e
+                                                                  .convertModel(),
+                                                            )
+                                                            .toList(),
+                                                        place: m.isRecommend
+                                                            ? CommonReportSourceEnum
+                                                                  .userPageRecommend
+                                                            : CommonReportSourceEnum
+                                                                  .userpage,
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    commonPush(
+                                                      context,
+                                                      ImgPage(model: m),
+                                                    );
+                                                  }
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     ),
                                   ),
-                                ),
-                                Visibility(
-                                  visible: state.noData,
-                                  child: const Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "No data",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.white70,
-                                      ),
+                                  Positioned.fill(
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Visibility(
+                                          visible: state.isLoading,
+                                          child: const Align(
+                                            alignment: Alignment.center,
+                                            child: CupertinoActivityIndicator(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        Visibility(
+                                          visible: state.noData,
+                                          child: const Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "No data",
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.white70,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                    );
-                  },
+                    ],
+                  ),
                 ),
               ),
             ],

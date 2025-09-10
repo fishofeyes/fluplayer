@@ -106,7 +106,7 @@ class _RecommendPageState extends State<RecommendPage> {
                             padding: const EdgeInsets.only(top: 16),
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                colors: [const Color(0xff3E2309), Colors.black],
+                                colors: [const Color(0xff391f09), Colors.black],
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                               ),
