@@ -93,31 +93,6 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
             height: 230,
             child: Container(color: Colors.black45),
           ),
-
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 230,
-            child: ExtendedImage.network(
-              widget.user?.corver ?? "",
-              fit: BoxFit.cover,
-              loadStateChanged: (state) {
-                switch (state.extendedImageLoadState) {
-                  case LoadState.loading:
-                  case LoadState.failed:
-                    return Container(color: Colors.black45);
-                  case LoadState.completed:
-                    return ExtendedRawImage(
-                      image: state.extendedImageInfo?.image,
-                      width: double.infinity,
-                      height: 230,
-                      fit: BoxFit.cover,
-                    );
-                }
-              },
-            ),
-          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
