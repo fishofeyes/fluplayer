@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:applovin_max/applovin_max.dart';
+import 'package:fluplayer/common/common.dart';
 import 'base_ad.dart';
 
 final maxHelper = MaxAdHelper();
@@ -11,6 +12,7 @@ class MaxAdHelper {
   Map<String, CommAdShowListener> show = {};
 
   Future<void> listen() async {
+    if (!isProd) return;
     final rel = utf8.decode(
       base64Decode(
         "R2ZRbmxhdDBOQk5uQXdlaWZTeHhMNVo1ejhJTEpnMnhBcVdvRENUbkgxTXBrMEhTZVZ0ZkZseklljj8W4RbV4T3UEA5uZ14TTVR3cjdIY0lGdGRPWDZIbUpHVHNmYVVJVl9LT04="
