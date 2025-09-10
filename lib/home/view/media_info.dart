@@ -60,9 +60,13 @@ class MediaInfo extends StatelessWidget {
                     GestureDetector(
                       onTap: () => Navigator.pop(context),
                       behavior: HitTestBehavior.translucent,
-                      child: const Padding(
+                      child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Icon(Icons.close, color: Colors.white, size: 20),
+                        // child: Icon(Icons.close, color: Colors.white, size: 20),
+                        child: Image.asset(
+                          "assets/player/close.png",
+                          width: 20,
+                        ),
                       ),
                     ),
                   ],

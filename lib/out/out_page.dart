@@ -84,20 +84,6 @@ class _PresentPageState extends ConsumerState<OutPage> {
             child: Image.asset("assets/home/bg.png"),
           ),
           Positioned(
-            top: 56,
-            left: 0,
-            right: 0,
-            child: SafeArea(
-              child: Container(
-                height: 229,
-                decoration: BoxDecoration(
-                  color: Color(0xff282018),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
             top: 0,
             left: 0,
             right: 0,
@@ -117,149 +103,170 @@ class _PresentPageState extends ConsumerState<OutPage> {
                   },
                 ),
                 const SizedBox(height: 24),
-                OutSectionGroup(
-                  index: tabIndex,
-                  onTap: (i) {
-                    if (i == 2) {
-                      CommonReport.eventThings(
-                        ThingEnum.landpageUplhpnoadedExpose,
-                      );
-                    }
-                    setState(() {
-                      tabIndex = i;
-                    });
-                  },
-                ),
                 Expanded(
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 12),
                     decoration: BoxDecoration(
-                      color: Color(0xff1C150F),
-                      borderRadius: BorderRadius.circular(8),
+                      color: Color(0xff282018),
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                    child: EasyRefresh(
-                      controller: _refreshController,
-                      header: const CupertinoHeader(
-                        foregroundColor: Colors.white,
-                        triggerOffset: 20,
-                        backgroundColor: Colors.transparent,
-                      ),
-                      footer: const CupertinoFooter(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.white,
-                        emptyWidget: SizedBox(),
-                      ),
-                      onRefresh: () async {
-                        return ref
-                            .read(outProvider(widget.model).notifier)
-                            .initData();
-                      },
-                      onLoad: () async {
-                        return ref
-                            .read(outProvider(widget.model).notifier)
-                            .load();
-                      },
-                      child: ListView.builder(
-                        itemCount: length,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (ctx, idx) {
-                          OutMediaModel m = list[idx];
-                          bool showHeader = false;
-                          if (idx > 0) {
-                            if (list[idx].isRecommend &&
-                                !list[idx - 1].isRecommend) {
-                              showHeader = true;
+                    child: Column(
+                      children: [
+                        OutSectionGroup(
+                          index: tabIndex,
+                          onTap: (i) {
+                            if (i == 2) {
+                              CommonReport.eventThings(
+                                ThingEnum.landpageUplhpnoadedExpose,
+                              );
                             }
-                          }
-
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Visibility(
-                                visible: showHeader,
-                                child: Container(
-                                  padding: const EdgeInsetsDirectional.only(
-                                    start: 10,
-                                    top: 16,
-                                  ),
-                                  color: const Color(0xff1C150F),
-                                  width: double.infinity,
-                                  child: const Text(
-                                    "Recommend",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
+                            setState(() {
+                              tabIndex = i;
+                            });
+                          },
+                        ),
+                        Expanded(
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 12),
+                            decoration: BoxDecoration(
+                              color: Color(0xff1C150F),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: EasyRefresh(
+                              controller: _refreshController,
+                              header: const CupertinoHeader(
+                                foregroundColor: Colors.white,
+                                triggerOffset: 20,
+                                backgroundColor: Colors.transparent,
                               ),
-                              ClipRRect(
-                                borderRadius: idx == 0
-                                    ? const BorderRadius.vertical(
-                                        top: Radius.circular(8),
-                                      )
-                                    : BorderRadius.zero,
-                                child: OutItem(
-                                  model: m,
-                                  padding: const EdgeInsets.only(
-                                    left: 10,
-                                    right: 10,
-                                    bottom: 12,
-                                    top: 12,
-                                  ),
-                                  onTap: () {
-                                    final r = ref
-                                        .read(
-                                          outProvider(widget.model).notifier,
-                                        )
-                                        .model;
-                                    if (m.directory) {
-                                      commonPush(
-                                        context,
-                                        OutDirPage(
-                                          model: widget.model,
-                                          mediaModel: m,
-                                          place: m.isRecommend
-                                              ? CommonReportSourceEnum
-                                                    .outPageRecommend
-                                              : CommonReportSourceEnum.outpage,
-                                        ),
-                                      );
-                                    } else if (m.video) {
-                                      final res = list
-                                          .where((e) => e.video)
-                                          .map((e) => e.convertModel())
-                                          .toList();
-                                      CommonReport.eventThings(
-                                        ThingEnum.playST5Xource,
-                                        data: {
-                                          "PuUTVimak": m.isRecommend
-                                              ? "Rqq"
-                                              : "ZBH",
-                                        },
-                                      );
-                                      commonPush(
-                                        context,
-                                        PlayerPage(
-                                          model: m.convertModel(),
-                                          place: m.isRecommend
-                                              ? CommonReportSourceEnum
-                                                    .outPageRecommend
-                                              : CommonReportSourceEnum.outpage,
-                                          models: res ?? [],
-                                        ),
-                                      );
-                                    } else {
-                                      commonPush(context, ImgPage(model: m));
+                              footer: const CupertinoFooter(
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.white,
+                                emptyWidget: SizedBox(),
+                              ),
+                              onRefresh: () async {
+                                return ref
+                                    .read(outProvider(widget.model).notifier)
+                                    .initData();
+                              },
+                              onLoad: () async {
+                                return ref
+                                    .read(outProvider(widget.model).notifier)
+                                    .load();
+                              },
+                              child: ListView.builder(
+                                itemCount: length,
+                                padding: EdgeInsets.zero,
+                                itemBuilder: (ctx, idx) {
+                                  OutMediaModel m = list[idx];
+                                  bool showHeader = false;
+                                  if (idx > 0) {
+                                    if (list[idx].isRecommend &&
+                                        !list[idx - 1].isRecommend) {
+                                      showHeader = true;
                                     }
-                                  },
-                                ),
+                                  }
+
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Visibility(
+                                        visible: showHeader,
+                                        child: Container(
+                                          padding:
+                                              const EdgeInsetsDirectional.only(
+                                                start: 10,
+                                                top: 16,
+                                              ),
+                                          color: const Color(0xff1C150F),
+                                          width: double.infinity,
+                                          child: const Text(
+                                            "Recommend",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      ClipRRect(
+                                        borderRadius: idx == 0
+                                            ? const BorderRadius.vertical(
+                                                top: Radius.circular(8),
+                                              )
+                                            : BorderRadius.zero,
+                                        child: OutItem(
+                                          model: m,
+                                          padding: const EdgeInsets.only(
+                                            left: 10,
+                                            right: 10,
+                                            bottom: 12,
+                                            top: 12,
+                                          ),
+                                          onTap: () {
+                                            final r = ref
+                                                .read(
+                                                  outProvider(
+                                                    widget.model,
+                                                  ).notifier,
+                                                )
+                                                .model;
+                                            if (m.directory) {
+                                              commonPush(
+                                                context,
+                                                OutDirPage(
+                                                  model: widget.model,
+                                                  mediaModel: m,
+                                                  place: m.isRecommend
+                                                      ? CommonReportSourceEnum
+                                                            .outPageRecommend
+                                                      : CommonReportSourceEnum
+                                                            .outpage,
+                                                ),
+                                              );
+                                            } else if (m.video) {
+                                              final res = list
+                                                  .where((e) => e.video)
+                                                  .map((e) => e.convertModel())
+                                                  .toList();
+                                              CommonReport.eventThings(
+                                                ThingEnum.playST5Xource,
+                                                data: {
+                                                  "PuUTVimak": m.isRecommend
+                                                      ? "Rqq"
+                                                      : "ZBH",
+                                                },
+                                              );
+                                              commonPush(
+                                                context,
+                                                PlayerPage(
+                                                  model: m.convertModel(),
+                                                  place: m.isRecommend
+                                                      ? CommonReportSourceEnum
+                                                            .outPageRecommend
+                                                      : CommonReportSourceEnum
+                                                            .outpage,
+                                                  models: res ?? [],
+                                                ),
+                                              );
+                                            } else {
+                                              commonPush(
+                                                context,
+                                                ImgPage(model: m),
+                                              );
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
                               ),
-                            ],
-                          );
-                        },
-                      ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
