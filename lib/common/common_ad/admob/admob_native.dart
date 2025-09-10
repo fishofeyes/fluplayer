@@ -10,6 +10,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 class AdmobNativeLoader extends BaseAd {
   NativeAd? ad;
   CommAdShowListener? showListener;
+  NativeAdListener? nativeListener;
   AdmobNativeLoader();
 
   @override
@@ -36,6 +37,7 @@ class AdmobNativeLoader extends BaseAd {
   @override
   Future<void> dispose() async {
     ad?.dispose();
+    ad = null;
     isADShowProcess = false;
   }
 
@@ -46,55 +48,53 @@ class AdmobNativeLoader extends BaseAd {
 
   Future<NativeLoadResponse> _loadOneAd(String adId) async {
     Completer<NativeLoadResponse> completer = Completer();
+    nativeListener = NativeAdListener(
+      onAdLoaded: (e) async {
+        ad = e as NativeAd;
+        completer.complete(NativeLoadResponse());
+      },
+      onAdFailedToLoad: (ad, error) {
+        ad.dispose();
+        completer.complete(
+          NativeLoadResponse(
+            hasError: true,
+            error: CommonAdLoadError('${error.code}', error.message),
+          ),
+        );
+      },
+      onAdImpression: (ad) {
+        showListener?.success?.call();
+      },
+      onAdClicked: (ad) {
+        nativeAdCloseAction?.call();
+        showListener?.onClick?.call();
+      },
+      onAdClosed: (e) {
+        dispose();
+      },
+      onAdWillDismissScreen: (ad) {},
+      onAdOpened: (ad) {},
+      onPaidEvent:
+          (
+            Ad ad,
+            double valueMicros,
+            PrecisionType precision,
+            String currencyCode,
+          ) {
+            final adSourceName =
+                ad.responseInfo?.loadedAdapterResponseInfo?.adSourceName;
+            final networkName = adSourceName ?? 'admob';
+            showListener?.onPaidCallback?.call(
+              valueMicros,
+              precision,
+              currencyCode,
+              networkName,
+            );
+          },
+    );
     final t = NativeAd(
       adUnitId: adId,
-      listener: NativeAdListener(
-        onAdLoaded: (e) async {
-          ad = e as NativeAd;
-          completer.complete(NativeLoadResponse());
-          // commRef?.read(refreshProvider.notifier).state =
-          //     DateTime.now().millisecondsSinceEpoch;
-        },
-        onAdFailedToLoad: (ad, error) {
-          ad.dispose();
-          completer.complete(
-            NativeLoadResponse(
-              hasError: true,
-              error: CommonAdLoadError('${error.code}', error.message),
-            ),
-          );
-        },
-        onAdImpression: (ad) {
-          ad.dispose();
-          showListener?.success?.call();
-        },
-        onAdClicked: (ad) {
-          showListener?.onClick?.call();
-        },
-        onAdClosed: (e) {
-          ad?.dispose();
-          showListener?.onClick?.call();
-        },
-        onAdWillDismissScreen: (ad) {},
-        onAdOpened: (ad) {},
-        onPaidEvent:
-            (
-              Ad ad,
-              double valueMicros,
-              PrecisionType precision,
-              String currencyCode,
-            ) {
-              final adSourceName =
-                  ad.responseInfo?.loadedAdapterResponseInfo?.adSourceName;
-              final networkName = adSourceName ?? 'admob';
-              showListener?.onPaidCallback?.call(
-                valueMicros,
-                precision,
-                currencyCode,
-                networkName,
-              );
-            },
-      ),
+      listener: nativeListener!,
       request: const AdRequest(),
       nativeTemplateStyle: NativeTemplateStyle(
         // Required: Choose a template.
@@ -126,9 +126,9 @@ class AdmobNativeLoader extends BaseAd {
         useSafeArea: false,
         builder: (ctx) => NativeAdPage(ad: ad!),
       );
+      dispose();
       await Future.delayed(const Duration(milliseconds: 300));
       showListener?.onClose?.call();
-      dispose();
     }
   }
 }

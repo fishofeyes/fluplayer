@@ -75,7 +75,7 @@ class _SplashPageState extends ConsumerState<LoadPage> {
     await Future.delayed(Duration(seconds: time.clamp(0, time)));
     final canShow = sp.getBool(SharedStoreKey.firstInstall.name);
     if (canShow != null) {
-      CommonEvent.showAd(AdPositionEnum.open, ThingSourceEnum.cp);
+      await CommonEvent.showAd(AdPositionEnum.open, ThingSourceEnum.cp);
     }
     sp.setBool(SharedStoreKey.firstInstall.name, true);
     await Future.delayed(const Duration(seconds: 1));
