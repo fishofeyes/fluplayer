@@ -220,11 +220,13 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     } catch (e) {
       _controller?.dispose();
       _controller = null;
-      setState(() {
-        isLoading = false;
-        _isVisible = true;
-        error = "Failed to load video";
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+          _isVisible = true;
+          error = "Failed to load video";
+        });
+      }
       print("video play err: $e");
     }
   }
