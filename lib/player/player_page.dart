@@ -170,6 +170,8 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     _isVisible = true;
     setState(() {});
     try {
+      _controller?.pause();
+      _controller?.dispose();
       if (model.isMiddle == null) {
         CommonReport.fileId = null;
         _controller = VideoPlayerController.file(File(model.path));
@@ -419,9 +421,13 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
             ),
           ),
           Positioned.fill(
+            top: 100,
             child: Visibility(
               visible: isLoading,
-              child: CupertinoActivityIndicator(color: Colors.white),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 100.0),
+                child: CupertinoActivityIndicator(color: Colors.white),
+              ),
             ),
           ),
           Positioned.fill(

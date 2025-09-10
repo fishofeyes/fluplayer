@@ -11,6 +11,7 @@ import 'package:fluplayer/home/view/recommend_history_group.dart';
 import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/out_page.dart';
 import 'package:fluplayer/player/player_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,7 +25,8 @@ class HomePage extends ConsumerStatefulWidget {
   ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends ConsumerState<HomePage> {
+class _HomePageState extends ConsumerState<HomePage>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
@@ -58,16 +60,20 @@ class _HomePageState extends ConsumerState<HomePage> {
                 const RecommendHistoryGroup(),
                 InkWell(
                   onTap: () {
-                    commonPush(
-                      context,
-                      OutPage(
-                        model: OutModel(
-                          outUrl: "1877183185180434434",
-                          userId: "1752309402129666049",
-                          isMiddle: true,
+                    if (kDebugMode) {
+                      showDialog(
+                        context: commonContext!,
+                        barrierDismissible: false,
+                        useSafeArea: false,
+                        builder: (ctx) => OutPage(
+                          model: OutModel(
+                            outUrl: "1877183185180434434",
+                            userId: "1752309402129666049",
+                            isMiddle: true,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   },
                   child: const BackgroundTitleView(title: 'All videos'),
                 ),
@@ -102,4 +108,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

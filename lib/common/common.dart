@@ -9,6 +9,7 @@ bool screenPortraitUp = true;
 int playerForward = 0;
 double playerBrightness = 0;
 double playerVolume = 0;
+Function()? nativeAdCloseAction;
 RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
 enum SharedStoreKey {

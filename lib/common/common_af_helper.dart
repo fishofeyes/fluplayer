@@ -21,6 +21,7 @@ class CommonAfHelper {
   Function()? onDismiss;
 
   Future<void> init() async {
+    if (!isProd) return;
     final AppsFlyerOptions options = AppsFlyerOptions(
       afDevKey: "",
       timeToWaitForATTUserAuthorization: 30,
@@ -53,9 +54,10 @@ class CommonAfHelper {
       await Future.delayed(const Duration(milliseconds: 300));
     }
     _isShowAccept = true;
-    showModalBottomSheet(
+    showDialog(
       context: commonContext!,
-      isScrollControlled: true,
+      barrierDismissible: false,
+      useSafeArea: false,
       builder: (ctx) => OutPage(model: model),
     );
   }

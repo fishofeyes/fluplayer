@@ -1,12 +1,15 @@
 import 'dart:async';
 
 import 'package:extended_image/extended_image.dart' as my;
+import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
+import 'package:fluplayer/common/common_ad/native_ad_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdmobNativeLoader extends BaseAd {
-  NativeAd? nativeAd;
+  NativeAd? ad;
+  CommAdShowListener? showListener;
   AdmobNativeLoader();
 
   @override
@@ -32,24 +35,22 @@ class AdmobNativeLoader extends BaseAd {
 
   @override
   Future<void> dispose() async {
+    ad?.dispose();
     isADShowProcess = false;
   }
 
   @override
   bool isAvailable() {
-    return nativeAd != null;
+    return ad != null;
   }
 
-  Future<NativeLoadResponse> _loadOneAd(
-    String adId, {
-    CommAdShowListener? showCallback,
-  }) async {
+  Future<NativeLoadResponse> _loadOneAd(String adId) async {
     Completer<NativeLoadResponse> completer = Completer();
     final t = NativeAd(
       adUnitId: adId,
       listener: NativeAdListener(
-        onAdLoaded: (ad) async {
-          nativeAd = ad as NativeAd;
+        onAdLoaded: (e) async {
+          ad = e as NativeAd;
           completer.complete(NativeLoadResponse());
           // commRef?.read(refreshProvider.notifier).state =
           //     DateTime.now().millisecondsSinceEpoch;
@@ -64,15 +65,15 @@ class AdmobNativeLoader extends BaseAd {
           );
         },
         onAdImpression: (ad) {
-          nativeAd?.dispose();
-          showCallback?.success?.call();
+          ad.dispose();
+          showListener?.success?.call();
         },
         onAdClicked: (ad) {
-          showCallback?.onClick?.call();
+          showListener?.onClick?.call();
         },
-        onAdClosed: (ad) {
-          nativeAd?.dispose();
-          showCallback?.onClick?.call();
+        onAdClosed: (e) {
+          ad?.dispose();
+          showListener?.onClick?.call();
         },
         onAdWillDismissScreen: (ad) {},
         onAdOpened: (ad) {},
@@ -86,7 +87,7 @@ class AdmobNativeLoader extends BaseAd {
               final adSourceName =
                   ad.responseInfo?.loadedAdapterResponseInfo?.adSourceName;
               final networkName = adSourceName ?? 'admob';
-              showCallback?.onPaidCallback?.call(
+              showListener?.onPaidCallback?.call(
                 valueMicros,
                 precision,
                 currencyCode,
@@ -110,6 +111,25 @@ class AdmobNativeLoader extends BaseAd {
     );
     t.load();
     return completer.future;
+  }
+
+  @override
+  Future<void> show({CommAdShowListener? listener}) async {
+    if (!isAvailable()) {
+      return;
+    }
+    showListener = listener;
+    if (commonContext != null) {
+      await showDialog(
+        context: commonContext!,
+        barrierDismissible: false,
+        useSafeArea: false,
+        builder: (ctx) => NativeAdPage(ad: ad!),
+      );
+      await Future.delayed(const Duration(milliseconds: 300));
+      showListener?.onClose?.call();
+      dispose();
+    }
   }
 }
 
