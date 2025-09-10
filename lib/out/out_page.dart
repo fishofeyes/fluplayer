@@ -84,7 +84,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
             child: Image.asset("assets/home/bg.png"),
           ),
           Positioned(
-            top: 56 + 84,
+            top: 56,
             left: 0,
             right: 0,
             child: SafeArea(

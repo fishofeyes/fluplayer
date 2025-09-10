@@ -25,7 +25,8 @@ class HomePage extends ConsumerStatefulWidget {
   ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends ConsumerState<HomePage> {
+class _HomePageState extends ConsumerState<HomePage>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
@@ -59,10 +60,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                 const RecommendHistoryGroup(),
                 InkWell(
                   onTap: () {
-                    if(kDebugMode) {
-                      commonPush(
-                        context,
-                        OutPage(
+                    if (kDebugMode) {
+                      showDialog(
+                        context: commonContext!,
+                        barrierDismissible: false,
+                        useSafeArea: false,
+                        builder: (ctx) => OutPage(
                           model: OutModel(
                             outUrl: "1955514254387986434",
                             userId: "1745334294672449537",
@@ -105,4 +108,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

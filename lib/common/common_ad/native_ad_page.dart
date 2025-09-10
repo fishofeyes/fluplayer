@@ -1,0 +1,153 @@
+import 'dart:async';
+import 'dart:math';
+
+import 'package:fluplayer/common/common.dart';
+import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
+import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+class NativeAdPage extends StatefulWidget {
+  final NativeAd ad;
+  const NativeAdPage({super.key, required this.ad});
+
+  @override
+  State<NativeAdPage> createState() => _NativeAdPageState();
+}
+
+class _NativeAdPageState extends State<NativeAdPage>
+    with AutomaticKeepAliveClientMixin {
+  Timer? _timer;
+  int total = 10;
+  bool mayClickAd = false;
+  @override
+  void initState() {
+    super.initState();
+    total = admobHelper.nativeShowTime;
+    mayClickAd = Random().nextDouble() < admobHelper.nativeMayClick;
+    _beginTimer();
+  }
+
+  void _beginTimer() {
+    if (total != 0) {
+      _timer?.cancel();
+      _timer = Timer.periodic(const Duration(seconds: 1), (e) {
+        if (total == 0) {
+          _timer?.cancel();
+        } else {
+          setState(() {
+            total -= 1;
+          });
+        }
+      });
+    }
+  }
+
+  void _initClose() {
+    nativeAdCloseAction = () {
+      if (mounted) {
+        setState(() {
+          mayClickAd = false;
+        });
+      }
+    };
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _initClose();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _timer = null;
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    double adWidth = 300;
+    if (!screenPortraitUp) adWidth = 250;
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Stack(
+              children: [
+                Container(
+                  width: adWidth,
+                  height: adWidth,
+                  alignment: Alignment.bottomCenter,
+                  child: AdWidget(
+                    ad: widget.ad,
+                    key: ValueKey(widget.ad.adUnitId),
+                  ),
+                ),
+                Positioned(
+                  child: Visibility(
+                    visible: total == 0,
+                    child: mayClickAd
+                        ? IgnorePointer(
+                            ignoring: true,
+                            child: Container(
+                              color: Colors.black45,
+                              child: const Icon(
+                                Icons.close,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        : InkWell(
+                            onTap: () => Navigator.pop(context),
+                            child: Container(
+                              color: Colors.black45,
+                              child: const Icon(
+                                Icons.close,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                  ),
+                ),
+                Positioned(
+                  right: 4,
+                  top: 4,
+                  child: Visibility(
+                    visible: total != 0,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.black45,
+                      ),
+                      child: Text(
+                        "$total",
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 24),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => false;
+}
