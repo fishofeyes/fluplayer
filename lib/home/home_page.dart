@@ -11,6 +11,7 @@ import 'package:fluplayer/home/view/recommend_history_group.dart';
 import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/out_page.dart';
 import 'package:fluplayer/player/player_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -58,16 +59,18 @@ class _HomePageState extends ConsumerState<HomePage> {
                 const RecommendHistoryGroup(),
                 InkWell(
                   onTap: () {
-                    commonPush(
-                      context,
-                      OutPage(
-                        model: OutModel(
-                          outUrl: "1955514254387986434",
-                          userId: "1745334294672449537",
-                          isMiddle: true,
+                    if(kDebugMode) {
+                      commonPush(
+                        context,
+                        OutPage(
+                          model: OutModel(
+                            outUrl: "1955514254387986434",
+                            userId: "1745334294672449537",
+                            isMiddle: true,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   },
                   child: const BackgroundTitleView(title: 'All videos'),
                 ),
