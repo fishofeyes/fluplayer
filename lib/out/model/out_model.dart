@@ -3,15 +3,11 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class OutModel extends Equatable {
-  final String outUrl;
+  final String? outUrl;
   final String userId;
   final bool isMiddle;
 
-  const OutModel({
-    required this.outUrl,
-    required this.userId,
-    required this.isMiddle,
-  });
+  const OutModel({this.outUrl, required this.userId, required this.isMiddle});
 
   factory OutModel.fromStr(String str) {
     final arg = Uri.parse(str).queryParameters;

@@ -37,6 +37,7 @@ class _HomePageState extends ConsumerState<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final state = ref.watch(homeProvider);
     return Scaffold(
       body: Stack(

@@ -301,7 +301,9 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                                                         model: m.convertModel(),
                                                         models: list
                                                             .where(
-                                                              (e) => e.video,
+                                                              (e) =>
+                                                                  e.video &&
+                                                                  m.isRecommend,
                                                             )
                                                             .map(
                                                               (e) => e

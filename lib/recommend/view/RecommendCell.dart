@@ -20,15 +20,11 @@ class ReCommendCell extends StatelessWidget {
           context,
           OutUserPage(
             user: OutUserModel(
-              id: model.uid!,
+              id: model.uid,
               name: model.uname,
               corver: model.cover,
             ),
-            model: OutModel(
-              outUrl: "",
-              userId: model.uid!,
-              isMiddle: model.isMiddle,
-            ),
+            model: OutModel(userId: model.uid, isMiddle: model.isMiddle),
           ),
         );
       },
