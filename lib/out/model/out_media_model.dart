@@ -108,6 +108,7 @@ class OutMediaModel {
     cover: meta["liparite"],
     size: meta["atkyl_7v_y"],
     userId: userId,
+    outUrl: outUrl,
     isMiddle: isMiddle,
     isRecommend: isRecommend,
   );
