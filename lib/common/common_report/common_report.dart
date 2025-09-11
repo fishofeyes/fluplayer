@@ -71,7 +71,14 @@ class CommonReport {
   }
 
   // tba event
-  static void eventThings(ThingEnum e, {Map<String, dynamic>? data}) async {}
+  static void eventThings(ThingEnum e, {Map<String, dynamic>? data}) async {
+    final p = await otherParams();
+    _commonPost({
+      ...p,
+      "hello": e.value,
+      if (data != null) "samson": {...data},
+    });
+  }
 
   // back event
   static Future<void> backEvent(
