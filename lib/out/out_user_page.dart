@@ -303,7 +303,8 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                                                             .where(
                                                               (e) =>
                                                                   e.video &&
-                                                                  m.isRecommend,
+                                                                  m.isRecommend ==
+                                                                      e.isRecommend,
                                                             )
                                                             .map(
                                                               (e) => e

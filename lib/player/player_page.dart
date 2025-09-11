@@ -147,11 +147,12 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     CommonEvent.loadAd(AdPositionEnum.media, session);
   }
 
-  void _showAd(ThingSourceEnum value) {
+  Future<bool> _showAd(ThingSourceEnum value) async {
+    late bool res;
     if (model.isMiddle == null) {
-      CommonEvent.showAd(AdPositionEnum.media, value);
+      res = await CommonEvent.showAd(AdPositionEnum.media, value);
     } else {
-      CommonEvent.showAd(
+      res = await CommonEvent.showAd(
         AdPositionEnum.media,
         value,
         fId: model.id,
@@ -160,6 +161,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         source: widget.place,
       );
     }
+    return res;
   }
 
   void _initVideo() async {
@@ -170,8 +172,6 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     _isVisible = true;
     setState(() {});
     try {
-      _controller?.pause();
-      _controller?.dispose();
       if (model.isMiddle == null) {
         CommonReport.fileId = null;
         _controller = VideoPlayerController.file(File(model.path));
@@ -181,7 +181,15 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         _controller = VideoPlayerController.networkUrl(Uri.parse(r));
       }
       _loadAd(ThingSourceEnum.play);
-      _showAd(ThingSourceEnum.play);
+      _showAd(ThingSourceEnum.play).then((e) {
+        if (e == false) {
+          showedAd = false;
+          _controller?.play();
+        } else {
+          showedAd = true;
+          _controller?.pause();
+        }
+      });
       await _controller!.initialize();
       ref.read(homeProvider.notifier).updatePosition(model, progress);
       isLoading = false;
