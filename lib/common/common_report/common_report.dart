@@ -42,12 +42,12 @@ class CommonReport {
   }
 
   static Future<String> uniqueId() async {
-    String? uniqueId = await _storage.read(key: "S.uniqueId.name");
+    String? uniqueId = await _storage.read(key: "device_uniqueId_name");
     if (uniqueId == null) {
       uniqueId = _uuid.v4();
-      await _storage.write(key: "s.uniqueId.name", value: uniqueId);
+      await _storage.write(key: "device_uniqueId_name", value: uniqueId);
     }
-    debugPrint("uniqu id = $uniqueId"); //f36c0578-1a40-46cc-b40d-3a47765a4972
+    debugPrint("uniqu id = $uniqueId"); //9e93b073-8b12-41b6-92e7-9a6f5b9211d0
     return uniqueId;
   }
 
