@@ -172,6 +172,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     _isVisible = true;
     setState(() {});
     try {
+      CommonReport.eventThings(ThingEnum.playStaZuartAll);
       if (model.isMiddle == null) {
         CommonReport.fileId = null;
         _controller = VideoPlayerController.file(File(model.path));
@@ -228,6 +229,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       }
       _resetTimer();
       _backReport();
+      CommonReport.eventThings(ThingEnum.pla5djkhySuc);
     } catch (e) {
       _controller?.dispose();
       _controller = null;
@@ -238,6 +240,10 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           error = "Failed to load video";
         });
       }
+      CommonReport.eventThings(
+        ThingEnum.playrrXujFail,
+        data: {"PuUTVimak": "$e"},
+      );
       print("video play err: $e");
     }
   }

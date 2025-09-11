@@ -65,7 +65,6 @@ class HomeVideoModel {
       isMiddle: isMiddle,
       uid: uid,
       uidUrl: uidUrl,
-      recommend: recommend,
     );
   }
 
