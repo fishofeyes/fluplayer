@@ -45,6 +45,7 @@ class OutDir extends _$OutDir {
               e["paratypic"],
               model.userId,
               model.isMiddle,
+              outUrl: model.outUrl,
             ),
           )
           .toList();

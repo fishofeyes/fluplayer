@@ -226,8 +226,14 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                                 ),
                                               );
                                             } else if (m.video) {
+                                              bool isRecommend = m.isRecommend;
                                               final res = list
-                                                  .where((e) => e.video)
+                                                  .where(
+                                                    (e) =>
+                                                        e.video &&
+                                                        e.isRecommend ==
+                                                            isRecommend,
+                                                  )
                                                   .map((e) => e.convertModel())
                                                   .toList();
                                               CommonReport.eventThings(
