@@ -17,7 +17,7 @@ class HomeHistoryView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final state = ref.watch(homeProvider);
-    final list = state.history.take(4).toList();
+    final list = state.history.toList();
     return Column(
       children: [
         Row(
