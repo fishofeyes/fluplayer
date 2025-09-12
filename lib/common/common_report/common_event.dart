@@ -79,7 +79,7 @@ class CommonEvent {
     AdPositionEnum position,
     ThingSourceEnum value,
   ) async {
-    Future.delayed(const Duration(seconds: 5)).then((e) {
+    Future.delayed(const Duration(seconds: 2)).then((e) {
       admobHelper2.loadOpenAd(value: value);
     });
     switch (position) {
