@@ -103,6 +103,7 @@ class AdmobAdHelper {
     loadDetail(value: ThingSourceEnum.cp);
     loadMedia(value: ThingSourceEnum.cp);
     loadNative(value: ThingSourceEnum.cp);
+    admobHelper2.loadOpenAd(value: ThingSourceEnum.cp);
   }
 
   Future<BaseAdModel?> _loadAd(
