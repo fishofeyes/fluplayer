@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
+import 'package:fluplayer/common/common_ad/admob_ad_helper2.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -78,6 +79,9 @@ class CommonEvent {
     AdPositionEnum position,
     ThingSourceEnum value,
   ) async {
+    Future.delayed(const Duration(seconds: 5)).then((e) {
+      admobHelper2.loadOpenAd(value: value);
+    });
     switch (position) {
       case AdPositionEnum.open:
         return admobHelper.loadOpenAd(value: value);
