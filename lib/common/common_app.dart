@@ -13,9 +13,13 @@ class CommonApp {
   static bool isVip = true; // 是否开启vpn
   static bool isPad = true; // 是否是pad
   static Future<void> init() async {
-    List<dynamic>? simCardInfo = await _simCardInfoPlugin.getSimInfo();
-    if (simCardInfo != null && simCardInfo.isNotEmpty) {
-      haveSim = true;
+    try {
+      List<dynamic>? simCardInfo = await _simCardInfoPlugin.getSimInfo();
+      if (simCardInfo != null && simCardInfo.isNotEmpty) {
+        haveSim = true;
+      }
+    } catch (e) {
+      print("get sim info error $e");
     }
     if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
