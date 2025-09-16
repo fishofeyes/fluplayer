@@ -1,5 +1,7 @@
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:fluplayer/common/common.dart';
+import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
+import 'package:fluplayer/common/common_app.dart';
 import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/out_page.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +50,8 @@ class CommonAfHelper {
   }
 
   void jumpAccept({Map<String, String>? sender}) async {
+    bool canJump = CommonApp.jumpEnable(admobHelper.appConfigModel);
+    if (!canJump) return;
     if (sender == null) return;
     final model = OutModel.fromMap(sender);
     if (_isShowAccept) {

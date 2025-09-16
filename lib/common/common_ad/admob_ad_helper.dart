@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper2.dart';
+import 'package:fluplayer/common/common_ad/app_config.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/common/common_ad/max_ad_helper.dart';
 import 'package:fluplayer/common/common_val.dart';
@@ -38,7 +39,7 @@ class AdmobAdHelper {
   int launchTime = 7; //首次打开广告延迟展示时间 秒
   double nativeMayClick = 0.5; //原生广告关闭率
   int nativeShowTime = 3; //原生广告展示时间 秒
-
+  AppConfigModel appConfigModel = AppConfigModel();
   int lastShowTime = 0;
 
   Future<void> init() async {
@@ -67,6 +68,12 @@ class AdmobAdHelper {
       String adBase64String = configJson.isEmpty ? testAdConfig : configJson;
       final adText = utf8.decode(base64Decode(adBase64String));
       showText = adText;
+      final temConfig = json.decode(
+        utf8.decode(base64Decode(config.getString("appConfigs"))),
+      );
+      if (temConfig != null) {
+        appConfigModel = AppConfigModel.fromJson(temConfig);
+      }
 
       Map cloakJson = json.decode(adText);
       _adInterval = cloakJson[RemoteConfigEnum.adInterval.name] ?? 60;
