@@ -65,6 +65,13 @@ class _RootPageState extends ConsumerState<RootPage>
               isMiddle: e.getBool(SharedStoreKey.isMiddle.name) ?? true,
             );
       }
+      if (e.getBool(SharedStoreKey.firstTimeOpen.name) == true) {
+        CommonReport.backEvent(
+          CommonReportEnum.commFirstOpen,
+          isMiddle: e.getBool(SharedStoreKey.isMiddle.name) ?? true,
+        );
+        e.setBool(SharedStoreKey.firstTimeOpen.name, true);
+      }
     });
   }
 
