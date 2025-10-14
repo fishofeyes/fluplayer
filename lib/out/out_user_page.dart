@@ -5,6 +5,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/common/common_report/common_event.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/model/out_user_model.dart';
 import 'package:fluplayer/out/out_dir_page.dart';
@@ -295,6 +296,21 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                                                       ),
                                                     );
                                                   } else if (m.video) {
+                                                    String value = m.isRecommend
+                                                        ? "ZjlADBa"
+                                                        : "vuzovEtMu";
+                                                    if (idx == 1) {
+                                                      value = "yTHhCYZLc";
+                                                    }
+                                                    if (idx == 2) {
+                                                      value = "sDkv";
+                                                    }
+                                                    CommonReport.eventThings(
+                                                      ThingEnum.playST5Xource,
+                                                      data: {
+                                                        "PuUTVimak": value,
+                                                      },
+                                                    );
                                                     commonPush(
                                                       context,
                                                       PlayerPage(

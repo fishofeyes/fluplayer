@@ -21,7 +21,7 @@ class CommonAfHelper {
   late AppsflyerSdk _appsflyerSdk;
 
   // 是否是延迟深链
-  bool? isDeep;
+  bool isDeep = false;
   Map<String, String>? deepLinkValue;
   Function()? onDismiss;
 
@@ -35,7 +35,7 @@ class CommonAfHelper {
     _appsflyerSdk.onDeepLinking((DeepLinkResult dp) {
       switch (dp.status) {
         case Status.FOUND:
-          isDeep = dp.deepLink?.isDeferred;
+          isDeep = dp.deepLink?.isDeferred ?? false;
           final deep = dp.deepLink?.deepLinkValue ?? '';
           deepLinkValue = Uri.parse(deep).queryParameters;
           jumpAccept();

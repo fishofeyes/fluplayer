@@ -14,7 +14,7 @@ class PlayListItem extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final id = ref.watch(playProvider).id;
     return InkWell(
-      onTap: () => ref.read(playProvider.notifier).tapModel(data),
+      onTap: () => ref.read(playProvider.notifier).tapModel(data, true),
       child: Container(
         decoration: BoxDecoration(
           color: id == data.id

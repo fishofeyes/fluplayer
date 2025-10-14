@@ -1,6 +1,7 @@
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
 import 'package:fluplayer/common/common_report/common_event.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/view/background_title.dart';
 import 'package:fluplayer/common/view/custom_list_view.dart';
 import 'package:fluplayer/home/provider/home.dart';
@@ -33,6 +34,7 @@ class _HomePageState extends ConsumerState<HomePage>
     SchedulerBinding.instance.addPostFrameCallback((e) {
       ref.read(homeProvider.notifier).load();
     });
+    CommonReport.eventThings(ThingEnum.homeEJ6gQHxpose);
   }
 
   @override
@@ -90,6 +92,10 @@ class _HomePageState extends ConsumerState<HomePage>
                           return HomeVideoView(
                             model: state.home[index],
                             onTap: (e) {
+                              CommonReport.eventThings(
+                                ThingEnum.playST5Xource,
+                                data: {"PuUTVimak": "YVEQPmBnm"},
+                              );
                               commonPush(
                                 context,
                                 PlayerPage(

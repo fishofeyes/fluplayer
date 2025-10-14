@@ -1,5 +1,6 @@
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_enum.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/home/provider/home.dart';
 import 'package:fluplayer/home/view/history_item.dart';
 import 'package:fluplayer/player/player_page.dart';
@@ -96,6 +97,10 @@ class _HistoryMorePageState extends ConsumerState<HistoryPage> {
                         ref.read(homeProvider.notifier).deleteSingle(e);
                       },
                       onTap: (e) {
+                        CommonReport.eventThings(
+                          ThingEnum.playST5Xource,
+                          data: {"PuUTVimak": "LhtQBrCkMh"},
+                        );
                         commonPush(
                           context,
                           PlayerPage(

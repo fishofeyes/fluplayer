@@ -202,7 +202,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           setState(() {
             _isVisible = true;
           });
-          ref.read(playProvider.notifier).nextModel(true);
+          ref.read(playProvider.notifier).nextModel(true, false);
         }
         if (_controller != null) {
           progress =
@@ -394,7 +394,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
               onRotate: _onRotate,
               isLast: state.isLast,
               onLast: () {
-                ref.read(playProvider.notifier).nextModel(true);
+                ref.read(playProvider.notifier).nextModel(true, true);
               },
             ),
           ),

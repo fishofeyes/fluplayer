@@ -1,4 +1,5 @@
 import 'package:easy_refresh/easy_refresh.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/out/model/out_media_model.dart';
 import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/provider/out_dir.dart';
@@ -165,6 +166,18 @@ class _PresentDirPageState extends ConsumerState<OutDirPage> {
                                   ),
                                 );
                               } else if (m.video) {
+                                final mp = {
+                                  CommonReportSourceEnum.outPageRecommend:
+                                      "Rqq",
+                                  CommonReportSourceEnum.outpage: "ZBH",
+                                  CommonReportSourceEnum.userpage: "vuzovEtMu",
+                                  CommonReportSourceEnum.userPageRecommend:
+                                      "ZjlADBa",
+                                };
+                                CommonReport.eventThings(
+                                  ThingEnum.playST5Xource,
+                                  data: {"PuUTVimak": mp[widget.place]},
+                                );
                                 commonPush(
                                   context,
                                   PlayerPage(
