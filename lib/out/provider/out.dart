@@ -99,7 +99,10 @@ class Out extends _$Out {
         state = state.copyWith(isMore: true);
       }
     } catch (e) {
-      CommonReport.eventThings(ThingEnum.landpa6EQy5geFail);
+      CommonReport.eventThings(
+        ThingEnum.landpa6EQy5geFail,
+        data: {"PuUTVimak": "$e"},
+      );
     }
   }
 

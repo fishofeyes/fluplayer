@@ -6,6 +6,9 @@ import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/out_page.dart';
 import 'package:flutter/material.dart';
 
+import 'common_enum.dart';
+import 'common_report/common_report.dart';
+
 bool _isShowAccept = false;
 
 class CommonAfHelper {
@@ -49,10 +52,14 @@ class CommonAfHelper {
   }
 
   void jumpAccept({Map<String, String>? sender}) async {
-    bool canJump = CommonApp.jumpEnable(admobHelper.appConfigModel);
-    if (!canJump) return;
     if (sender == null) return;
     final model = OutModel.fromMap(sender);
+    CommonReport.eventThings(ThingEnum.deepliJgyZHnkOpen);
+    bool canJump = CommonApp.jumpEnable(
+      admobHelper.appConfigModel,
+      model.outUrl,
+    );
+    if (!canJump) return;
     if (_isShowAccept) {
       onDismiss?.call();
       await Future.delayed(const Duration(milliseconds: 300));

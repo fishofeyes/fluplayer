@@ -5,6 +5,9 @@ import 'package:fluplayer/common/common_ad/app_config.dart';
 import 'package:flutter/services.dart';
 import 'package:vpn_connection_detector/vpn_connection_detector.dart';
 
+import 'common_enum.dart';
+import 'common_report/common_report.dart';
+
 class CommonApp {
   static final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   static const MethodChannel _channel = MethodChannel(
@@ -31,16 +34,32 @@ class CommonApp {
     isVip = isConnected;
   }
 
-  static bool jumpEnable(AppConfigModel model) {
+  static bool jumpEnable(AppConfigModel model, String? id) {
     bool canJump = true;
     if (model.haveSim && !haveSim) {
       canJump = false;
+      CommonReport.eventThings(
+        ThingEnum.landpa6EQy5geFail,
+        data: {"PuUTVimak": "RqxmLFdTO", "pSEsS": id},
+      );
     } else if (model.haveSimulator && isSimulator) {
       canJump = false;
+      CommonReport.eventThings(
+        ThingEnum.landpa6EQy5geFail,
+        data: {"PuUTVimak": "hEWmQ", "pSEsS": id},
+      );
     } else if (model.haveVip && isVip) {
       canJump = false;
+      CommonReport.eventThings(
+        ThingEnum.landpa6EQy5geFail,
+        data: {"PuUTVimak": "XIWzzPLm", "pSEsS": id},
+      );
     } else if (model.pad && isPad) {
       canJump = false;
+      CommonReport.eventThings(
+        ThingEnum.landpa6EQy5geFail,
+        data: {"PuUTVimak": "VHQoGulpp", "pSEsS": id},
+      );
     }
     return canJump;
   }
