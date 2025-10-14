@@ -20,6 +20,7 @@ enum CommonReportEnum {
   commonDownload("whatkin"),
   commLocalAd("decubital"),
   commLocalPlay("wedlocks"),
+  commFirstOpen("acine"),
   commUserActive("azine");
 
   final String key;

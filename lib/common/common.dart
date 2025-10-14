@@ -22,6 +22,7 @@ enum SharedStoreKey {
   newUser,
   userDistinctId,
   isInstall,
+  firstTimeOpen,
 }
 
 Future<dynamic> commonPush(BuildContext context, Widget page) {
