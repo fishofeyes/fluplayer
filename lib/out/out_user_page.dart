@@ -26,7 +26,13 @@ import 'model/out_media_model.dart';
 class OutUserPage extends ConsumerStatefulWidget {
   final OutUserModel? user;
   final OutModel model;
-  const OutUserPage({super.key, this.user, required this.model});
+  final String sourch;
+  const OutUserPage({
+    super.key,
+    this.user,
+    required this.model,
+    required this.sourch,
+  });
 
   @override
   ConsumerState<OutUserPage> createState() => _OutUserPageState();
@@ -50,10 +56,10 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
     //   from: widget.model.from,
     //   value: MySessionValue.chpage,
     // );
-    // CommonReport.eventThings(
-    //   ThingEnum.deepliJgyZHnkOpen,
-    //   data: {"vgJDrflFt": isDeep ? "HBYSNoNAil" : "yJWTu"},
-    // );
+    CommonReport.eventThings(
+      ThingEnum.channelpsMQ3HageExpose,
+      data: {"bqaKMIx": widget.sourch},
+    );
     CommonEvent.loadAd(AdPositionEnum.detail, ThingSourceEnum.chpage);
     CommonEvent.showAd(
       AdPositionEnum.detail,

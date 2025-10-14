@@ -32,6 +32,7 @@ class ReCommendCell extends StatelessWidget {
               corver: model.cover,
             ),
             model: OutModel(userId: model.uid, isMiddle: model.isMiddle),
+            sourch: "oQWnnODAYl",
           ),
         );
       },
