@@ -6,6 +6,7 @@ import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/common/common_report/common_event.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
+import 'package:fluplayer/common/view/subscribe_icon.dart';
 import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/model/out_user_model.dart';
 import 'package:fluplayer/out/out_dir_page.dart';
@@ -124,7 +125,8 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                   ),
                   const Spacer(),
                   // const VipEnterItem(from: VipEnterValue.clpage),
-                  // const SizedBox(width: 12),
+                  SubscribeIcon(),
+                  const SizedBox(width: 12),
                 ],
               ),
               Padding(

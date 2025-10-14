@@ -8,12 +8,14 @@ class PlayerController extends StatelessWidget {
   final Function()? onRotate;
   final bool isLast;
   final Function()? onLast;
+  final Function()? onList;
   const PlayerController({
     super.key,
     this.controller,
     this.onRotate,
     this.isLast = false,
     this.onLast,
+    this.onList,
   });
 
   @override
@@ -76,7 +78,6 @@ class PlayerController extends StatelessWidget {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
@@ -85,6 +86,19 @@ class PlayerController extends StatelessWidget {
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
+                  ),
+                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: onList,
+                  behavior: HitTestBehavior.translucent,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Image.asset(
+                      "assets/player/list.png",
+                      width: 24,
+                      height: 24,
+                    ),
                   ),
                 ),
                 GestureDetector(

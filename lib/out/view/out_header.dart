@@ -1,4 +1,5 @@
 import 'package:extended_image/extended_image.dart';
+import 'package:fluplayer/common/view/subscribe_icon.dart';
 import 'package:fluplayer/out/model/out_user_model.dart';
 import 'package:flutter/material.dart';
 
@@ -75,7 +76,7 @@ class OutHeader extends StatelessWidget {
                 const SizedBox(width: 16),
                 Flexible(
                   child: Text(
-                    model?.name ?? "-",
+                    (model?.name ?? "-"),
                     style: const TextStyle(
                       fontSize: 16,
                       color: Colors.white,
@@ -95,10 +96,7 @@ class OutHeader extends StatelessWidget {
             ),
           ),
         ),
-        // Positioned(
-        //   child: const VipEnterItem(from: VipEnterValue.ldpage),
-        //   right: 12,
-        // )
+        Positioned(child: SubscribeIcon(), right: 12),
       ],
     );
   }

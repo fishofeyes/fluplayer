@@ -4,6 +4,7 @@ import 'package:fluplayer/common/common_report/common_event.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/view/background_title.dart';
 import 'package:fluplayer/common/view/custom_list_view.dart';
+import 'package:fluplayer/common/view/subscribe_icon.dart';
 import 'package:fluplayer/home/provider/home.dart';
 import 'package:fluplayer/home/view/empry_view.dart';
 import 'package:fluplayer/home/view/home_history.dart';
@@ -55,7 +56,8 @@ class _HomePageState extends ConsumerState<HomePage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 60),
+                const SizedBox(height: 55),
+                SubscribeIcon(),
                 Visibility(
                   visible: state.history.isNotEmpty,
                   child: const HomeHistoryView(),
