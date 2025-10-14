@@ -239,11 +239,11 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           _isVisible = true;
           error = "Failed to load video";
         });
+        CommonReport.eventThings(
+          ThingEnum.playrrXujFail,
+          data: {"PuUTVimak": "$e"},
+        );
       }
-      CommonReport.eventThings(
-        ThingEnum.playrrXujFail,
-        data: {"PuUTVimak": "$e"},
-      );
       print("video play err: $e");
     }
   }
