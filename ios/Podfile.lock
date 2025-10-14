@@ -60,6 +60,8 @@ PODS:
   - BidMachine/Static (3.4.0):
     - StackModules/Static (~> 3.3.0)
   - BigoADS (4.9.3)
+  - connectivity_plus (0.0.1):
+    - Flutter
   - device_info_plus (0.0.1):
     - Flutter
   - DKImagePickerController/Core (4.3.9):
@@ -427,6 +429,7 @@ DEPENDENCIES:
   - AppLovinMediationUnityAdsAdapter
   - AppLovinMediationVungleAdapter
   - appsflyer_sdk (from `.symlinks/plugins/appsflyer_sdk/ios`)
+  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
@@ -538,6 +541,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/applovin_max/ios"
   appsflyer_sdk:
     :path: ".symlinks/plugins/appsflyer_sdk/ios"
+  connectivity_plus:
+    :path: ".symlinks/plugins/connectivity_plus/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
   file_picker:
@@ -603,6 +608,7 @@ SPEC CHECKSUMS:
   AppsFlyerFramework: 96bfcef9e433f3b887d1b0e49bc6c1c37325f646
   BidMachine: aae28c0331dbcec42d63a71b25b0470990b87fe7
   BigoADS: 42cdec736eb8084a6658f3efd34345cc3f753ab8
+  connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
   device_info_plus: 21fcca2080fbcd348be798aa36c3e5ed849eefbe
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
