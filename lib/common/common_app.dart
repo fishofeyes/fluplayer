@@ -40,25 +40,25 @@ class CommonApp {
       canJump = false;
       CommonReport.eventThings(
         ThingEnum.landpa6EQy5geFail,
-        data: {"PuUTVimak": "RqxmLFdTO", "pSEsS": id},
+        data: {"PuUTVimak": "RqxmLFdTO", "tExnF2": id},
       );
     } else if (model.haveSimulator && isSimulator) {
       canJump = false;
       CommonReport.eventThings(
         ThingEnum.landpa6EQy5geFail,
-        data: {"PuUTVimak": "hEWmQ", "pSEsS": id},
+        data: {"PuUTVimak": "hEWmQ", "tExnF2": id},
       );
     } else if (model.haveVip && isVip) {
       canJump = false;
       CommonReport.eventThings(
         ThingEnum.landpa6EQy5geFail,
-        data: {"PuUTVimak": "XIWzzPLm", "pSEsS": id},
+        data: {"PuUTVimak": "XIWzzPLm", "tExnF2": id},
       );
     } else if (model.pad && isPad) {
       canJump = false;
       CommonReport.eventThings(
         ThingEnum.landpa6EQy5geFail,
-        data: {"PuUTVimak": "VHQoGulpp", "pSEsS": id},
+        data: {"PuUTVimak": "VHQoGulpp", "tExnF2": id},
       );
     }
     return canJump;
