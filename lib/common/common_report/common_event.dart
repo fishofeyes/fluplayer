@@ -61,10 +61,14 @@ class CommonEvent {
     );
   }
 
-  static void loadFail(ThingSourceEnum value, bool isSecond) {
+  static void loadFail(ThingSourceEnum value, bool isSecond, String code) {
     CommonReport.eventThings(
       ThingEnum.adRe7aTtqFail,
-      data: {"PuUTVimak": value.value, "gNAuA": isSecond ? 2 : 1},
+      data: {
+        "PuUTVimak": value.value,
+        "gNAuA": isSecond ? 2 : 1,
+        "pAoJksW": code,
+      },
     );
   }
 

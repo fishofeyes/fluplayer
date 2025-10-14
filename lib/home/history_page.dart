@@ -18,6 +18,7 @@ class _HistoryMorePageState extends ConsumerState<HistoryPage> {
   @override
   void initState() {
     super.initState();
+    CommonReport.eventThings(ThingEnum.historlGwOyyExpose);
   }
 
   @override

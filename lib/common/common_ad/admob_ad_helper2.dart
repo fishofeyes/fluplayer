@@ -139,7 +139,7 @@ class AdmobAdHelper2 {
       value: value,
       load: CommAdLoadListener(
         error: (error) {
-          CommonEvent.loadFail(value, true);
+          CommonEvent.loadFail(value, true, error.code);
         },
       ),
     );

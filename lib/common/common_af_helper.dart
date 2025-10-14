@@ -54,7 +54,10 @@ class CommonAfHelper {
   void jumpAccept({Map<String, String>? sender}) async {
     if (sender == null) return;
     final model = OutModel.fromMap(sender);
-    CommonReport.eventThings(ThingEnum.deepliJgyZHnkOpen);
+    CommonReport.eventThings(
+      ThingEnum.deepliJgyZHnkOpen,
+      data: {"vgJDrflFt": isDeep ? "HBYSNoNAil" : "yJWTu"},
+    );
     bool canJump = CommonApp.jumpEnable(
       admobHelper.appConfigModel,
       model.outUrl,

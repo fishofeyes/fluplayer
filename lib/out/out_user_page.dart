@@ -50,6 +50,10 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
     //   from: widget.model.from,
     //   value: MySessionValue.chpage,
     // );
+    // CommonReport.eventThings(
+    //   ThingEnum.deepliJgyZHnkOpen,
+    //   data: {"vgJDrflFt": isDeep ? "HBYSNoNAil" : "yJWTu"},
+    // );
     CommonEvent.loadAd(AdPositionEnum.detail, ThingSourceEnum.chpage);
     CommonEvent.showAd(
       AdPositionEnum.detail,
