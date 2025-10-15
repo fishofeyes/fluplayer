@@ -438,7 +438,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           ),
           Positioned.fill(
             top: 100,
-            child: Visibility(visible: true, child: VideoLoading()),
+            child: Visibility(visible: isLoading, child: VideoLoading()),
           ),
           Positioned.fill(
             child: Visibility(

@@ -36,27 +36,29 @@ class VideoLoading extends StatelessWidget {
                 child: Text("Current line congestion... 78kb/s"),
               ),
             ),
-            Stack(
-              alignment: AlignmentGeometry.center,
-              children: [
-                Image.asset("assets/hat_bg.png", height: 31),
-                Positioned(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: vip
-                        ? [Text("Exclusive acceleration line")]
-                        : [
-                            Image.asset(
-                              "assets/hat.png",
-                              width: 22,
-                              height: 22,
-                            ),
-                            SizedBox(width: 4),
-                            Text("Exclusive acceleration line"),
-                          ],
+            InkWell(
+              child: Stack(
+                alignment: AlignmentGeometry.center,
+                children: [
+                  Image.asset("assets/hat_bg.png", height: 31),
+                  Positioned(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: vip
+                          ? [Text("Exclusive acceleration line")]
+                          : [
+                              Image.asset(
+                                "assets/hat.png",
+                                width: 22,
+                                height: 22,
+                              ),
+                              SizedBox(width: 4),
+                              Text("Exclusive acceleration line"),
+                            ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
