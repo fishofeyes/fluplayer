@@ -21,7 +21,7 @@ class CommonAfHelper {
   late AppsflyerSdk _appsflyerSdk;
 
   // 是否是延迟深链
-  bool? isDeep;
+  bool isDeep = false;
   Map<String, String>? deepLinkValue;
   Function()? onDismiss;
 
@@ -36,7 +36,7 @@ class CommonAfHelper {
     _appsflyerSdk.onDeepLinking((DeepLinkResult dp) {
       switch (dp.status) {
         case Status.FOUND:
-          isDeep = dp.deepLink?.isDeferred;
+          isDeep = dp.deepLink?.isDeferred ?? false;
           final deep = dp.deepLink?.deepLinkValue ?? '';
           deepLinkValue = Uri.parse(deep).queryParameters;
           jumpAccept(sender: deepLinkValue);
@@ -55,7 +55,10 @@ class CommonAfHelper {
   void jumpAccept({Map<String, String>? sender}) async {
     if (sender == null) return;
     final model = OutModel.fromMap(sender);
-    CommonReport.eventThings(ThingEnum.deepliJgyZHnkOpen);
+    CommonReport.eventThings(
+      ThingEnum.deepliJgyZHnkOpen,
+      data: {"vgJDrflFt": isDeep ? "HBYSNoNAil" : "yJWTu"},
+    );
     bool canJump = CommonApp.jumpEnable(
       admobHelper.appConfigModel,
       model.outUrl,

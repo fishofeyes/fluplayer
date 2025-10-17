@@ -14,6 +14,7 @@ import 'package:fluplayer/player/view/play_list.dart';
 import 'package:fluplayer/player/view/player_controller.dart';
 import 'package:fluplayer/player/view/player_forward.dart';
 import 'package:fluplayer/player/view/player_media.dart';
+import 'package:fluplayer/player/view/video_loading.dart';
 import 'package:fluplayer/player/view/video_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -202,7 +203,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           setState(() {
             _isVisible = true;
           });
-          ref.read(playProvider.notifier).nextModel(true);
+          ref.read(playProvider.notifier).nextModel(true, false);
         }
         if (_controller != null) {
           progress =
@@ -385,7 +386,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           ),
           Visibility(
             visible: _isVisible,
-            child: VideoTitle(name: model.name, onList: _showList),
+            child: VideoTitle(name: model.name),
           ),
           Visibility(
             visible: _isVisible,
@@ -393,8 +394,9 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
               controller: _controller,
               onRotate: _onRotate,
               isLast: state.isLast,
+              onList: _showList,
               onLast: () {
-                ref.read(playProvider.notifier).nextModel(true);
+                ref.read(playProvider.notifier).nextModel(true, true);
               },
             ),
           ),
@@ -436,13 +438,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           ),
           Positioned.fill(
             top: 100,
-            child: Visibility(
-              visible: isLoading,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 100.0),
-                child: CupertinoActivityIndicator(color: Colors.white),
-              ),
-            ),
+            child: Visibility(visible: isLoading, child: VideoLoading()),
           ),
           Positioned.fill(
             child: Visibility(

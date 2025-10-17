@@ -1,4 +1,5 @@
 import 'package:fluplayer/common/common.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/view/background_title.dart';
 import 'package:fluplayer/home/history_page.dart';
 import 'package:fluplayer/home/provider/home.dart';
@@ -56,6 +57,10 @@ class HomeHistoryView extends ConsumerWidget {
               return HomeHistoryItem(
                 model: list[index],
                 onTap: (e) {
+                  CommonReport.eventThings(
+                    ThingEnum.playST5Xource,
+                    data: {"PuUTVimak": "LhtQBrCkMh"},
+                  );
                   commonPush(
                     context,
                     PlayerPage(

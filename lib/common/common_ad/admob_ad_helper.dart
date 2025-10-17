@@ -234,7 +234,7 @@ class AdmobAdHelper {
       value: value,
       load: CommAdLoadListener(
         error: (error) {
-          CommonEvent.loadFail(value, false);
+          CommonEvent.loadFail(value, false, error.code);
         },
       ),
     );
@@ -269,7 +269,7 @@ class AdmobAdHelper {
       value: value,
       load: CommAdLoadListener(
         error: (error) {
-          CommonEvent.loadFail(value, false);
+          CommonEvent.loadFail(value, false, error.code);
         },
       ),
     );
@@ -298,7 +298,7 @@ class AdmobAdHelper {
       value: value,
       load: CommAdLoadListener(
         error: (error) {
-          CommonEvent.loadFail(value, false);
+          CommonEvent.loadFail(value, false, error.code);
         },
       ),
     );
@@ -324,7 +324,7 @@ class AdmobAdHelper {
       value: value,
       load: CommAdLoadListener(
         error: (e) {
-          CommonEvent.loadFail(value, false);
+          CommonEvent.loadFail(value, false, e.code);
         },
       ),
     );

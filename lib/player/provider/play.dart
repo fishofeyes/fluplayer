@@ -1,3 +1,5 @@
+import 'package:fluplayer/common/common_enum.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/request/http_helper.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:fluplayer/home/model/recommend_model.dart';
@@ -74,7 +76,13 @@ class Play extends _$Play {
     }
   }
 
-  void tapModel(HomeVideoModel sender) {
+  void tapModel(HomeVideoModel sender, bool isReport) {
+    if (isReport) {
+      CommonReport.eventThings(
+        ThingEnum.playST5Xource,
+        data: {"PuUTVimak": "kDiwrEWeWG"},
+      );
+    }
     state = state.copyWith(
       id: sender.id,
       isFirst: sender.id == state.list.first.id,
@@ -82,17 +90,17 @@ class Play extends _$Play {
     );
   }
 
-  void nextModel(bool isNext) {
+  void nextModel(bool isNext, bool isReport) {
     int idx = state.list.indexWhere((e) => e.id == state.id);
     if (isNext) {
       idx += 1;
       if (idx < state.list.length) {
-        tapModel(state.list[idx]);
+        tapModel(state.list[idx], isReport);
       }
     } else {
       idx -= 1;
       if (idx >= 0) {
-        tapModel(state.list[idx]);
+        tapModel(state.list[idx], isReport);
       }
     }
   }

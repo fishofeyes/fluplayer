@@ -5,6 +5,8 @@ import 'package:extended_image/extended_image.dart';
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/common/common_report/common_event.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
+import 'package:fluplayer/common/view/subscribe_icon.dart';
 import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/model/out_user_model.dart';
 import 'package:fluplayer/out/out_dir_page.dart';
@@ -25,7 +27,13 @@ import 'model/out_media_model.dart';
 class OutUserPage extends ConsumerStatefulWidget {
   final OutUserModel? user;
   final OutModel model;
-  const OutUserPage({super.key, this.user, required this.model});
+  final String sourch;
+  const OutUserPage({
+    super.key,
+    this.user,
+    required this.model,
+    required this.sourch,
+  });
 
   @override
   ConsumerState<OutUserPage> createState() => _OutUserPageState();
@@ -49,6 +57,10 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
     //   from: widget.model.from,
     //   value: MySessionValue.chpage,
     // );
+    CommonReport.eventThings(
+      ThingEnum.channelpsMQ3HageExpose,
+      data: {"bqaKMIx": widget.sourch},
+    );
     CommonEvent.loadAd(AdPositionEnum.detail, ThingSourceEnum.chpage);
     CommonEvent.showAd(
       AdPositionEnum.detail,
@@ -113,7 +125,8 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                   ),
                   const Spacer(),
                   // const VipEnterItem(from: VipEnterValue.clpage),
-                  // const SizedBox(width: 12),
+                  SubscribeIcon(),
+                  const SizedBox(width: 12),
                 ],
               ),
               Padding(
@@ -295,6 +308,21 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                                                       ),
                                                     );
                                                   } else if (m.video) {
+                                                    String value = m.isRecommend
+                                                        ? "ZjlADBa"
+                                                        : "vuzovEtMu";
+                                                    if (idx == 1) {
+                                                      value = "yTHhCYZLc";
+                                                    }
+                                                    if (idx == 2) {
+                                                      value = "sDkv";
+                                                    }
+                                                    CommonReport.eventThings(
+                                                      ThingEnum.playST5Xource,
+                                                      data: {
+                                                        "PuUTVimak": value,
+                                                      },
+                                                    );
                                                     commonPush(
                                                       context,
                                                       PlayerPage(

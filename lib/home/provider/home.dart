@@ -2,7 +2,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:fluplayer/common/common_enum.dart';
 import 'package:fluplayer/common/common_hive.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:fluplayer/root/provider/provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,6 +21,7 @@ const _uuid = Uuid();
 
 @Riverpod(keepAlive: true)
 class Home extends _$Home {
+  bool isReport = false;
   final ImagePicker _imagePicker = ImagePicker();
   @override
   HomeState build() {
@@ -29,6 +32,7 @@ class Home extends _$Home {
     final e = CommonHive.homeVideoBox.values.toList();
     final his = CommonHive.historyBox.values.toList();
     state = state.copyWith(history: his, home: e);
+    historyExpose();
   }
 
   void insertHistory(HomeVideoModel m) {
@@ -74,6 +78,14 @@ class Home extends _$Home {
     } else {
       state = state.copyWith(history: [m, ...state.history]);
       CommonHive.historyBox.put(m.id, m);
+    }
+    historyExpose();
+  }
+
+  void historyExpose() {
+    if (!isReport && state.history.isNotEmpty) {
+      isReport = true;
+      CommonReport.eventThings(ThingEnum.homeHistyQOoryExpose);
     }
   }
 

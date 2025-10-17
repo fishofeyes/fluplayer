@@ -80,16 +80,6 @@ class Out extends _$Out {
             isMore: f.length < pageSize,
           );
         } else {
-          if (f.isEmpty && isRequest) {
-            isRequest = false;
-            final one = ref
-                .read(recommendProvider.notifier)
-                .getOne(uid: model.userId);
-            if (one != null) {
-              uid = one.uid ?? '';
-            }
-            requestRecommend(false);
-          }
           state = state.copyWith(
             files: [...?state.files, ...f],
             isMore: f.length < pageSize,
@@ -99,135 +89,144 @@ class Out extends _$Out {
         state = state.copyWith(isMore: true);
       }
     } catch (e) {
-      CommonReport.eventThings(
-        ThingEnum.landpa6EQy5geFail,
-        data: {"PuUTVimak": "$e"},
-      );
+      print("recommend error = $e");
     }
   }
 
   Future<void> requestData({bool isLoad = false}) async {
-    final res = await HttpHelper.request(
-      HttpHelperApi.openData,
-      isMiddle: model.isMiddle,
-      params: {
-        "douzainier": {"stemhcjx4m": model.outUrl}, // 未处理
-        "phenyls": "v2",
-        "spirogram": page, //页码
-        "unfealty": pageSize, //分页大小
-      },
-    );
-    if (res == null) {
-      print("open data request err");
-      return;
-    }
-    final u = res["sanbenito"];
-    final List? rect = res['ariocarpus'];
-    final List? top = res['rlzdve3axx'];
-    final List? files = res['regrowing'];
-    if (u != null) {
-      final user = OutUserModel.fromJson(u);
-      CommonHive.recommendBox.put(
-        user.id,
-        RecommendModel(
-          uid: user.id,
-          uname: user.name,
-          cover: user.corver,
-          isMiddle: model.isMiddle,
-          createDate: DateTime.now().millisecondsSinceEpoch,
-        ),
+    try {
+      final res = await HttpHelper.request(
+        HttpHelperApi.openData,
+        isMiddle: model.isMiddle,
+        params: {
+          "douzainier": {"stemhcjx4m": model.outUrl}, // 未处理
+          "phenyls": "v2",
+          "spirogram": page, //页码
+          "unfealty": pageSize, //分页大小
+        },
       );
-      await ref
-          .read(recommendProvider.notifier)
-          .requestHistory(
+      if (res == null) {
+        print("open data request err");
+        return;
+      }
+      final u = res["sanbenito"];
+      final List? rect = res['ariocarpus'];
+      final List? top = res['rlzdve3axx'];
+      final List? files = res['regrowing'];
+      if (u != null) {
+        final user = OutUserModel.fromJson(u);
+        CommonHive.recommendBox.put(
+          user.id,
+          RecommendModel(
             uid: user.id,
-            tags: user.getTags(),
+            uname: user.name,
+            cover: user.corver,
             isMiddle: model.isMiddle,
+            createDate: DateTime.now().millisecondsSinceEpoch,
+          ),
+        );
+        await ref
+            .read(recommendProvider.notifier)
+            .requestHistory(
+              uid: user.id,
+              tags: user.getTags(),
+              isMiddle: model.isMiddle,
+            );
+        state = state.copyWith(user: user, isLoading: false);
+        if (isReport == false) {
+          // 拿到数据之后上报view_app
+          isReport = true;
+          CommonReport.backEvent(
+            CommonReportEnum.commonView,
+            isMiddle: model.isMiddle,
+            outUrl: model.outUrl,
           );
-      state = state.copyWith(user: user, isLoading: false);
-      if (isReport == false) {
-        // 拿到数据之后上报view_app
-        isReport = true;
-        CommonReport.backEvent(
-          CommonReportEnum.commonView,
-          isMiddle: model.isMiddle,
-          outUrl: model.outUrl,
-        );
-      }
-      final sp = await SharedPreferences.getInstance();
-      await sp.setString(SharedStoreKey.userId.name, user.id);
-      await sp.setBool(SharedStoreKey.isMiddle.name, model.isMiddle);
-      CommonReport.adCreateEvent(user: user);
-      if (sp.getString(SharedStoreKey.userEmail.name) == null) {
-        CommonReport.backEvent(
-          CommonReportEnum.commonDownload,
-          isMiddle: model.isMiddle,
-          outUrl: model.outUrl,
-        );
-      }
-      await sp.setString(SharedStoreKey.userEmail.name, user.email ?? "");
-    }
-    if (rect != null) {
-      state = state.copyWith(
-        recents: rect
-            .map(
-              (e) => OutMediaModel.fromJson(
-                e,
-                e['unholiness'],
-                model.userId,
-                model.isMiddle,
-                outUrl: model.outUrl,
-              ),
-            )
-            .toList(),
-        isLoading: false,
-      );
-    }
-    if (top != null) {
-      state = state.copyWith(
-        tops: top
-            .map(
-              (e) => OutMediaModel.fromJson(
-                e,
-                e['unholiness'],
-                model.userId,
-                model.isMiddle,
-                outUrl: model.outUrl,
-              ),
-            )
-            .toList(),
-        isLoading: false,
-      );
-    }
-    if (files != null) {
-      final f = files
-          .map(
-            (e) => OutMediaModel.fromJson(
-              e,
-              e['unholiness'],
-              model.userId,
-              model.isMiddle,
-              outUrl: model.outUrl,
-            ),
-          )
-          .toList();
-      loadMore = files.length < pageSize;
-      if (isLoad) {
-        state = state.copyWith(files: [...?state.files, ...f]);
-      } else {
-        if (f.length > 5) {
-          final one = ref
-              .read(recommendProvider.notifier)
-              .getOne(uid: model.userId);
-          if (one != null) {
-            uid = one.uid ?? '';
-          }
         }
-        state = state.copyWith(files: f);
+        final sp = await SharedPreferences.getInstance();
+        await sp.setString(SharedStoreKey.userId.name, user.id);
+        await sp.setBool(SharedStoreKey.isMiddle.name, model.isMiddle);
+        CommonReport.adCreateEvent(user: user);
+        if (sp.getString(SharedStoreKey.userEmail.name) == null) {
+          CommonReport.backEvent(
+            CommonReportEnum.commonDownload,
+            isMiddle: model.isMiddle,
+            outUrl: model.outUrl,
+          );
+        }
+        await sp.setString(SharedStoreKey.userEmail.name, user.email ?? "");
       }
-      if (loadMore) {
-        requestRecommend(false);
+      if (rect != null) {
+        state = state.copyWith(
+          recents: rect
+              .map(
+                (e) => OutMediaModel.fromJson(
+                  e,
+                  e['unholiness'],
+                  model.userId,
+                  model.isMiddle,
+                  outUrl: model.outUrl,
+                ),
+              )
+              .toList(),
+          isLoading: false,
+        );
       }
+      if (top != null) {
+        state = state.copyWith(
+          tops: top
+              .map(
+                (e) => OutMediaModel.fromJson(
+                  e,
+                  e['unholiness'],
+                  model.userId,
+                  model.isMiddle,
+                  outUrl: model.outUrl,
+                ),
+              )
+              .toList(),
+          isLoading: false,
+        );
+      }
+      if (files != null) {
+        final f = files
+            .map(
+              (e) => OutMediaModel.fromJson(
+                e,
+                e['unholiness'],
+                model.userId,
+                model.isMiddle,
+                outUrl: model.outUrl,
+              ),
+            )
+            .toList();
+        loadMore = files.length < pageSize;
+        if (isLoad) {
+          state = state.copyWith(files: [...?state.files, ...f]);
+        } else {
+          if (uid.isEmpty) {
+            if (f.length > 5) {
+              final one = ref
+                  .read(recommendProvider.notifier)
+                  .getOne(uid: model.userId);
+              if (one != null) {
+                uid = one.uid ?? '';
+              }
+            } else {
+              uid = model.userId;
+            }
+          }
+          state = state.copyWith(files: f);
+        }
+        if (loadMore) {
+          requestRecommend(false);
+        }
+      }
+    } catch (e) {
+      print("error = $e");
+      CommonReport.eventThings(
+        ThingEnum.landpa6EQy5geFail,
+        data: {"PuUTVimak": "$e"},
+      );
     }
   }
 }

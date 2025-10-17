@@ -1,10 +1,10 @@
 import 'package:fluplayer/common/common.dart';
+import 'package:fluplayer/common/view/subscribe_icon.dart';
 import 'package:flutter/material.dart';
 
 class VideoTitle extends StatelessWidget {
   final String name;
-  final Function()? onList;
-  const VideoTitle({super.key, required this.name, this.onList});
+  const VideoTitle({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +39,9 @@ class VideoTitle extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            GestureDetector(
-              onTap: onList,
-              behavior: HitTestBehavior.translucent,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Image.asset(
-                  "assets/player/list.png",
-                  width: 24,
-                  height: 24,
-                ),
-              ),
+            Padding(
+              padding: const EdgeInsets.only(left: 12.0),
+              child: SubscribeIcon(),
             ),
           ],
         ),
