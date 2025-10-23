@@ -71,6 +71,7 @@ dependencies:
   firebase_remote_config: ^6.0.0
   advertising_id: ^2.7.1
   vpn_connection_detector: ^1.0.10
+  in_app_purchase: 3.2.2
 
 dev_dependencies:
   flutter_test:
@@ -101,6 +102,7 @@ flutter:
     - assets/
     - assets/home/
     - assets/player/
+    - assets/vip/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

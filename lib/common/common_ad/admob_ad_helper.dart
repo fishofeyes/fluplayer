@@ -6,6 +6,7 @@ import 'package:fluplayer/common/common_ad/app_config.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/common/common_ad/max_ad_helper.dart';
 import 'package:fluplayer/common/common_val.dart';
+import 'package:fluplayer/vip/provider/vip.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -41,6 +42,7 @@ class AdmobAdHelper {
   int nativeShowTime = 3; //原生广告展示时间 秒
   AppConfigModel appConfigModel = AppConfigModel();
   int lastShowTime = 0;
+  String _currentVipConfig = '';
 
   Future<void> init() async {
     refreshADConfig();
@@ -61,12 +63,19 @@ class AdmobAdHelper {
 
   int currentTime() => DateTime.now().millisecondsSinceEpoch;
 
+  void updateVipModels() {
+    commonRef?.read(vipProvider.notifier).init(_currentVipConfig);
+  }
+
   void refreshADConfig() {
     try {
       final config = FirebaseRemoteConfig.instance;
       final configJson = config.getString('adConfigJson');
+      String vipJson = config.getString('vipJson');
       String adBase64String = configJson.isEmpty ? testAdConfig : configJson;
+      vipJson = vipJson.isEmpty ? testVipJson : vipJson;
       final adText = utf8.decode(base64Decode(adBase64String));
+      _currentVipConfig = utf8.decode(base64Decode(vipJson));
       showText = adText;
       final temConfig = json.decode(
         utf8.decode(base64Decode(config.getString("appConfigs"))),
@@ -74,7 +83,6 @@ class AdmobAdHelper {
       if (temConfig != null) {
         appConfigModel = AppConfigModel.fromJson(temConfig);
       }
-
       Map cloakJson = json.decode(adText);
       _adInterval = cloakJson[RemoteConfigEnum.adInterval.name] ?? 60;
       mediaPlayPoint = cloakJson[RemoteConfigEnum.mediaPlayPoint.name] ?? 600;

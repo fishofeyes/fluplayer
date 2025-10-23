@@ -57,7 +57,7 @@ class _HomePageState extends ConsumerState<HomePage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 55),
-                SubscribeIcon(),
+                SubscribeIcon(padding: EdgeInsets.only(bottom: 16)),
                 Visibility(
                   visible: state.history.isNotEmpty,
                   child: const HomeHistoryView(),

@@ -37,9 +37,9 @@ class CommonReport {
     return _iosDevice;
   }
 
-  static Future<PackageInfo?> package() async {
+  static Future<PackageInfo> package() async {
     _package ??= await PackageInfo.fromPlatform();
-    return _package;
+    return _package!;
   }
 
   static Future<String> uniqueId() async {
