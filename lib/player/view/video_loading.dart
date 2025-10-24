@@ -1,11 +1,14 @@
 import 'package:fluplayer/common/common.dart';
+import 'package:fluplayer/player/provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class VideoLoading extends StatelessWidget {
+class VideoLoading extends ConsumerWidget {
   const VideoLoading({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final speed = ref.watch(mediaSpeedProvider).value ?? 0;
     final vip = commAppVip;
     return DefaultTextStyle(
       style: TextStyle(
@@ -33,7 +36,7 @@ class VideoLoading extends StatelessWidget {
               replacement: SizedBox(height: 24),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: Text("Current line congestion... 78kb/s"),
+                child: Text("Current line congestion... ${speed}kb/s"),
               ),
             ),
             InkWell(

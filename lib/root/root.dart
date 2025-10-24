@@ -11,6 +11,7 @@ import 'package:fluplayer/home/provider/home.dart';
 import 'package:fluplayer/home/provider/recommend.dart';
 import 'package:fluplayer/mine/mine_page.dart';
 import 'package:fluplayer/root/provider/provider.dart';
+import 'package:fluplayer/vip/provider/vip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -73,6 +74,8 @@ class _RootPageState extends ConsumerState<RootPage>
         e.setBool(SharedStoreKey.firstTimeOpen.name, true);
       }
     });
+
+    ref.read(vipProvider.notifier).redeem(false);
   }
 
   void _track() async {

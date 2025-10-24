@@ -5,7 +5,34 @@ const commTerm =
 const contactEmail = 'quinn.snow@mrksoftware.help';
 const testAdConfig =
     'eyJvcGVuIjpbeyJpZCI6ImNhLWFwcC1wdWItNzY2NTExNTI3OTIxOTEwMi83NTE3ODE4NjY1Iiwic29ydCI6MSwic291cmNlIjoiYWRtb2IiLCJuYW1lIjoiaW50ZXJzdGl0aWFsIn0seyJpZCI6IjQ4MzY3NmUxZWRiZDhjMGMiLCJzb3J0IjoxLCJzb3VyY2UiOiJtYXgiLCJuYW1lIjoib3BlbiJ9LHsiaWQiOiI5MGU0NGJhYjQ3YjkzZDcxIiwic29ydCI6MSwic291cmNlIjoibWF4IiwibmFtZSI6ImludGVyc3RpdGlhbCJ9LHsiaWQiOiJlZjRhYTMzMDE4YmViMmEzIiwic29ydCI6MSwic291cmNlIjoibWF4IiwibmFtZSI6InJld2FyZGVkIn1dLCJtZWRpYSI6W3siaWQiOiJjYS1hcHAtcHViLTc2NjUxMTUyNzkyMTkxMDIvNzUxNzgxODY2NSIsInNvcnQiOjEsInNvdXJjZSI6ImFkbW9iIiwibmFtZSI6ImludGVyc3RpdGlhbCJ9LHsiaWQiOiI0ODM2NzZlMWVkYmQ4YzBjIiwic29ydCI6MSwic291cmNlIjoibWF4IiwibmFtZSI6Im9wZW4ifSx7ImlkIjoiOTBlNDRiYWI0N2I5M2Q3MSIsInNvcnQiOjEsInNvdXJjZSI6Im1heCIsIm5hbWUiOiJpbnRlcnN0aXRpYWwifSx7ImlkIjoiZWY0YWEzMzAxOGJlYjJhMyIsInNvcnQiOjEsInNvdXJjZSI6Im1heCIsIm5hbWUiOiJyZXdhcmRlZCJ9XSwiZGV0YWlsIjpbeyJpZCI6ImNhLWFwcC1wdWItNzY2NTExNTI3OTIxOTEwMi83NTE3ODE4NjY1Iiwic29ydCI6MSwic291cmNlIjoiYWRtb2IiLCJuYW1lIjoiaW50ZXJzdGl0aWFsIn0seyJpZCI6IjQ4MzY3NmUxZWRiZDhjMGMiLCJzb3J0IjoxLCJzb3VyY2UiOiJtYXgiLCJuYW1lIjoib3BlbiJ9LHsiaWQiOiI5MGU0NGJhYjQ3YjkzZDcxIiwic29ydCI6MSwic291cmNlIjoibWF4IiwibmFtZSI6ImludGVyc3RpdGlhbCJ9LHsiaWQiOiJlZjRhYTMzMDE4YmViMmEzIiwic29ydCI6MSwic291cmNlIjoibWF4IiwibmFtZSI6InJld2FyZGVkIn1dfQ==';
-
+final testVipJson =
+    "eyJkZWZhdWx0SWQiOiJ5ZWFybHlfZnB5ciIsIm1vZGVscyI6W3siaWQiOiJsaWZldGltZV9mcHlyIiwibmFtZSI6IlBlcm1hbmVudCIsInR5cGUiOjMsImRlc2MiOiIyOS45OSIsInRhZyI6dHJ1ZX0seyJpZCI6IndlZWtseV9mcHlyIiwibmFtZSI6IldlZWtseSIsInR5cGUiOjEsImRlc2MiOiIyLjk5IiwidGFnIjpmYWxzZX0seyJpZCI6InllYXJseV9mcHlyIiwibmFtZSI6IlllYXJseSIsInR5cGUiOjIsImRlc2MiOiIxOS45OSIsInRhZyI6ZmFsc2V9XX0=";
+// final vipJson = {
+//   "defaultId": "yearly_fpyr",
+//   "models": [
+//     {
+//       "id": "lifetime_fpyr",
+//       "name": "Permanent",
+//       "type": 3, // 1: week, 2: year, 3: lifetime
+//       "desc": "29.99",
+//       "tag": true,
+//     },
+//     {
+//       "id": "weekly_fpyr",
+//       "name": "Weekly",
+//       "type": 1, // 1: week, 2: year, 3: lifetime
+//       "desc": "2.99",
+//       "tag": false,
+//     },
+//     {
+//       "id": "yearly_fpyr",
+//       "name": "Yearly",
+//       "type": 2, // 1: week, 2: year, 3: lifetime
+//       "desc": "19.99",
+//       "tag": false,
+//     },
+//   ],
+// };
 // final testAdConfigJson = {
 //   "adInterval": 60,
 //   "mediaPlayPoint": 600,

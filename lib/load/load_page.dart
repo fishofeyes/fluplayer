@@ -71,7 +71,6 @@ class _SplashPageState extends ConsumerState<LoadPage> {
     _width = 200;
     setState(() {});
     final time = admobHelper.launchTime - 1;
-    // ref.read(noAdProviderProvider.notifier).restore();
     await Future.delayed(Duration(seconds: time.clamp(0, time)));
     final canShow = sp.getBool(SharedStoreKey.firstInstall.name);
     if (canShow != null) {
@@ -79,6 +78,7 @@ class _SplashPageState extends ConsumerState<LoadPage> {
     }
     sp.setBool(SharedStoreKey.firstInstall.name, true);
     await Future.delayed(const Duration(seconds: 1));
+    admobHelper.updateVipModels();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (t) => const RootPage()),
