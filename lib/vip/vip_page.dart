@@ -1,6 +1,6 @@
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/view/background_title.dart';
-import 'package:fluplayer/vip/model/vip_model.dart';
+import 'package:collection/collection.dart';
 import 'package:fluplayer/vip/provider/provider.dart';
 import 'package:fluplayer/vip/provider/vip.dart';
 import 'package:fluplayer/vip/view/alert_vip.dart';
@@ -9,6 +9,7 @@ import 'package:fluplayer/vip/view/vip_pot.dart';
 import 'package:fluplayer/vip/view/vip_privacy.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,9 +24,11 @@ class _VipPageState extends ConsumerState<VipPage> {
   @override
   void initState() {
     super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((e) {
+      ref.read(vipChooseProvider.notifier).state = globalDefaultVipId;
+    });
     EasyLoading.instance.userInteractions = false;
     Future.delayed(const Duration(milliseconds: 50)).then((e) {
-      ref.read(vipChooseProvider.notifier).state = globalDefaultVipId;
       ref.read(vipProvider.notifier).getGoods();
     });
   }
@@ -42,7 +45,10 @@ class _VipPageState extends ConsumerState<VipPage> {
     final choose = ref.watch(vipChooseProvider);
     final vips = state.models;
     final bool isVip = state.isVip;
-    final desc = "Lifetime validity upon purchase. No renewal required.";
+    final gd = vips.firstWhereOrNull((e) => e.id == choose);
+    final desc = isVip
+        ? state.desc
+        : vipPriceMap[gd?.type ?? 3]?.replaceAll("##", gd?.desc ?? "");
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -217,12 +223,13 @@ As a new member, you can now enjoy all premium features.''',
                     ),
                   ),
                   Text(
-                    desc,
+                    desc ?? "-",
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w500,
                       color: Colors.white.withValues(alpha: 0.85),
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 8),
                   Visibility(

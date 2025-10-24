@@ -6,6 +6,7 @@ import 'package:fluplayer/common/common_ad/app_config.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/common/common_ad/max_ad_helper.dart';
 import 'package:fluplayer/common/common_val.dart';
+import 'package:fluplayer/vip/provider/provider.dart';
 import 'package:fluplayer/vip/provider/vip.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -43,6 +44,7 @@ class AdmobAdHelper {
   AppConfigModel appConfigModel = AppConfigModel();
   int lastShowTime = 0;
   String _currentVipConfig = '';
+  int showAdTag = 0;
 
   Future<void> init() async {
     refreshADConfig();
@@ -64,6 +66,7 @@ class AdmobAdHelper {
   int currentTime() => DateTime.now().millisecondsSinceEpoch;
 
   void updateVipModels() {
+    if (_currentVipConfig.isEmpty) return;
     commonRef?.read(vipProvider.notifier).init(_currentVipConfig);
   }
 
@@ -72,6 +75,7 @@ class AdmobAdHelper {
       final config = FirebaseRemoteConfig.instance;
       final configJson = config.getString('adConfigJson');
       String vipJson = config.getString('vipJson');
+      updateVipModels();
       String adBase64String = configJson.isEmpty ? testAdConfig : configJson;
       vipJson = vipJson.isEmpty ? testVipJson : vipJson;
       final adText = utf8.decode(base64Decode(adBase64String));
@@ -145,7 +149,7 @@ class AdmobAdHelper {
     Future<bool> Function({required ThingSourceEnum value})? adLoader,
     ValueChanged<bool>? onReward,
   }) async {
-    if (adShowing) {
+    if (adShowing || globalOpenVip) {
       debugPrint('ad is showing');
       return false;
     }
@@ -196,6 +200,18 @@ class AdmobAdHelper {
         onClose: () async {
           if (model.adType != ADType.rewarded) {
             await admobHelper2.showOpenAd(value: value);
+          }
+          if (value == ThingSourceEnum.playBk ||
+              value == ThingSourceEnum.chpage) {
+            autoJumpVip?.call(true);
+          }
+          if (value == ThingSourceEnum.play ||
+              ThingSourceEnum.play10 == value ||
+              ThingSourceEnum.playLast == value) {
+            showAdTag += 1;
+            if (showAdTag % 2 == 0) {
+              autoJumpVip?.call(false);
+            }
           }
           adShowing = false;
           lastShowTime = currentTime();

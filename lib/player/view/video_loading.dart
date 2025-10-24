@@ -1,5 +1,6 @@
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/player/provider/provider.dart';
+import 'package:fluplayer/vip/vip_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -40,6 +41,10 @@ class VideoLoading extends ConsumerWidget {
               ),
             ),
             InkWell(
+              onTap: () {
+                if (vip) return;
+                commonPush(context, VipPage());
+              },
               child: Stack(
                 alignment: AlignmentGeometry.center,
                 children: [
