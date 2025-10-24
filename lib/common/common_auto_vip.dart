@@ -5,6 +5,8 @@ import 'package:fluplayer/vip/vip_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'common_report/common_event.dart';
+
 class CommonAutoVip {
   static SharedPreferences? share;
 
@@ -61,6 +63,7 @@ class CommonAutoVip {
     }
 
     if (go) {
+      CommonEvent.changePlayStatus(false);
       if (autoPage) {
         commonPush(context, VipPage());
       } else {

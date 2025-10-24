@@ -13,6 +13,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../common/common_report/common_event.dart';
+
 class VipPage extends ConsumerStatefulWidget {
   const VipPage({super.key});
 
@@ -24,6 +26,7 @@ class _VipPageState extends ConsumerState<VipPage> {
   @override
   void initState() {
     super.initState();
+    CommonEvent.changePlayStatus(false);
     SchedulerBinding.instance.addPostFrameCallback((e) {
       ref.read(vipChooseProvider.notifier).state = globalDefaultVipId;
     });
@@ -31,10 +34,12 @@ class _VipPageState extends ConsumerState<VipPage> {
     Future.delayed(const Duration(milliseconds: 50)).then((e) {
       ref.read(vipProvider.notifier).getGoods();
     });
+    isInVipPage = true;
   }
 
   @override
   void dispose() {
+    isInVipPage = false;
     EasyLoading.instance.userInteractions = true;
     super.dispose();
   }
@@ -82,6 +87,7 @@ class _VipPageState extends ConsumerState<VipPage> {
                       ),
                       GestureDetector(
                         onTap: () {
+                          if (isVip) return;
                           ref.read(vipProvider.notifier).redeem(true);
                         },
                         child: Container(

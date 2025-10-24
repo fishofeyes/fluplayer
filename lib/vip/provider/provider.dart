@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 String globalDefaultVipId = "";
 bool globalOpenVip = false;
+bool isInVipPage = false;
+bool isInVipAlertPage = false;
 final vipChooseProvider = StateProvider.autoDispose<String>((ref) => "-");
 
 // 1: week, 2: year, 3: lifetime

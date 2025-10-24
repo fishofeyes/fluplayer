@@ -14,6 +14,18 @@ class AlertVip extends ConsumerStatefulWidget {
 
 class _AlertVipState extends ConsumerState<AlertVip> {
   @override
+  void initState() {
+    super.initState();
+    isInVipAlertPage = true;
+  }
+
+  @override
+  void dispose() {
+    isInVipAlertPage = false;
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final choose = ref.watch(vipChooseProvider);
     final state = ref.watch(vipProvider);

@@ -149,7 +149,7 @@ class AdmobAdHelper {
     Future<bool> Function({required ThingSourceEnum value})? adLoader,
     ValueChanged<bool>? onReward,
   }) async {
-    if (adShowing || globalOpenVip) {
+    if (adShowing || globalOpenVip || isInVipAlertPage || isInVipPage) {
       debugPrint('ad is showing');
       return false;
     }
