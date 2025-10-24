@@ -7,6 +7,7 @@ import 'package:fluplayer/vip/model/vip_model.dart';
 import 'package:fluplayer/vip/provider/provider.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:collection/collection.dart';
 part 'vip.g.dart';
@@ -15,8 +16,18 @@ part 'vip.g.dart';
 class Vip extends _$Vip {
   final instance = InAppPurchase.instance;
   List<ProductDetails> details = [];
+  bool isLoading = false;
   @override
   VipState build() {
+    _listener();
+    return VipState();
+  }
+
+  void _listener() async {
+    if (!(await instance.isAvailable())) {
+      print("appstore is not use");
+      return;
+    }
     instance.purchaseStream.listen((data) async {
       if (data.isEmpty) {
         clear();
@@ -43,10 +54,11 @@ class Vip extends _$Vip {
           EasyLoading.dismiss();
       }
     });
-    return VipState();
   }
 
   void buyVip() {
+    if (isLoading) return;
+    isLoading = true;
     EasyLoading.show();
     final curr = ref.read(vipChooseProvider);
     final model = state.models.firstWhereOrNull((e) => e.id == curr);
@@ -59,6 +71,7 @@ class Vip extends _$Vip {
         InAppPurchase.instance.buyNonConsumable(purchaseParam: p);
       }
     } else {
+      isLoading = false;
       EasyLoading.showError("Product unavailable");
     }
   }
@@ -82,12 +95,22 @@ class Vip extends _$Vip {
       final rf = r['delthyrium'][0];
       final time = rf['gabbais'] ?? 0;
       final id = rf['pn2id44xb_'];
-      final p = state.models.firstWhere((e) => e.id == id).desc;
-      state = state.copyWith(isVip: true, expired: time, vipPrice: p);
+      final p = state.models.firstWhere((e) => e.id == id);
+      final desc = vipPriceMap[p.type]!;
+      state = state.copyWith(
+        isVip: true,
+        expired: p.type == 3
+            ? "Lifetime"
+            : DateFormat(
+                "yyyy/MM/dd",
+              ).format(DateTime.fromMillisecondsSinceEpoch(time)),
+        desc: p.type == 3 ? desc : desc.replaceAll("##", p.desc),
+      );
       globalOpenVip = true;
     } else {
       clear();
     }
+    isLoading = false;
   }
 
   void clear() {
@@ -108,6 +131,10 @@ class Vip extends _$Vip {
   }
 
   void getGoods() async {
+    if (await instance.isAvailable()) {
+      print("app store is available");
+      return;
+    }
     final res = await instance.queryProductDetails(
       state.models.map((e) => e.id).toSet(),
     );
@@ -126,14 +153,20 @@ class Vip extends _$Vip {
   }
 
   void redeem(bool showStatus) async {
-    if (showStatus) {
-      EasyLoading.show();
-    }
-    try {
-      await instance.restorePurchases();
-    } catch (e) {
-      print("error = $e");
-      EasyLoading.dismiss();
+    if (isLoading) return;
+    if (await instance.isAvailable()) {
+      isLoading = true;
+      if (showStatus) {
+        EasyLoading.show();
+      }
+      try {
+        await instance.restorePurchases();
+        isLoading = false;
+      } catch (e) {
+        print("error = $e");
+        isLoading = false;
+        EasyLoading.dismiss();
+      }
     }
   }
 }
@@ -141,26 +174,26 @@ class Vip extends _$Vip {
 class VipState {
   final List<VipModel> models;
   final String? expired;
-  final String? vipPrice;
+  final String? desc;
   final bool isVip;
 
   VipState({
     this.models = const [],
     this.expired,
-    this.vipPrice,
+    this.desc,
     this.isVip = false,
   });
 
   VipState copyWith({
     List<VipModel>? models,
     String? expired,
-    String? vipPrice,
+    String? desc,
     bool? isVip,
   }) {
     return VipState(
       models: models ?? this.models,
       expired: expired ?? this.expired,
-      vipPrice: vipPrice ?? this.vipPrice,
+      desc: desc ?? this.desc,
       isVip: isVip ?? this.isVip,
     );
   }

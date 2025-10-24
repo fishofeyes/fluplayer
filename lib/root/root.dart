@@ -4,6 +4,7 @@ import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/common/common_af_helper.dart';
+import 'package:fluplayer/common/common_auto_vip.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/home/home_page.dart';
 import 'package:fluplayer/home/model/home.dart';
@@ -76,6 +77,10 @@ class _RootPageState extends ConsumerState<RootPage>
     });
 
     ref.read(vipProvider.notifier).redeem(false);
+
+    autoJumpVip = (isPage) {
+      CommonAutoVip.jumpVip(context, isPage);
+    };
   }
 
   void _track() async {

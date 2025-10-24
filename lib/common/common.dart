@@ -6,11 +6,11 @@ const isProd = true;
 WidgetRef? commonRef;
 BuildContext? commonContext;
 bool screenPortraitUp = true;
-bool commAppVip = false;
 int playerForward = 0;
 double playerBrightness = 0;
 double playerVolume = 0;
 Function()? nativeAdCloseAction;
+Function(bool isPage)? autoJumpVip;
 RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
 enum SharedStoreKey {
