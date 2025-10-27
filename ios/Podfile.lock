@@ -290,6 +290,9 @@ PODS:
   - image_picker_ios (0.0.1):
     - Flutter
   - ImobileSdkAds (2.3.4)
+  - in_app_purchase_storekit (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - InMobiSDK (10.8.6)
   - IronSourceAdQualitySDK (7.26.2)
   - IronSourceSDK (8.11.0.0):
@@ -453,6 +456,7 @@ DEPENDENCIES:
   - GoogleMobileAdsMediationUnity
   - GoogleMobileAdsMediationVungle
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/darwin`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - screen_brightness_ios (from `.symlinks/plugins/screen_brightness_ios/ios`)
@@ -567,6 +571,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_mobile_ads/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  in_app_purchase_storekit:
+    :path: ".symlinks/plugins/in_app_purchase_storekit/darwin"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
@@ -655,6 +661,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   image_picker_ios: 7fe1ff8e34c1790d6fff70a32484959f563a928a
   ImobileSdkAds: e4973cbf33dfd044a7f76ab97238ad5b3bccb72a
+  in_app_purchase_storekit: d1a48cb0f8b29dbf5f85f782f5dd79b21b90a5e6
   InMobiSDK: a6e7bfbecb698c83183f42c5a3cfa1ac52f16bff
   IronSourceAdQualitySDK: 03888a0ac60e1f24ff6277672c3184f00813af64
   IronSourceSDK: 32eeb199f608b590112a8263028a485e50f8d1b7

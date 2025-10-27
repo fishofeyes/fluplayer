@@ -13,8 +13,4 @@ void main() {
   final arr = [1, 3, 2, 5, 4];
   arr.sort((a, b) => b.compareTo(a));
   print(arr);
-  final j = jsonEncode(vipJson);
-  print(j);
-  final r = base64Encode(utf8.encode(j));
-  print(r);
 }
