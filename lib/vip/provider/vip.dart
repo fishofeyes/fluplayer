@@ -131,7 +131,7 @@ class Vip extends _$Vip {
   }
 
   void getGoods() async {
-    if (await instance.isAvailable()) {
+    if (!(await instance.isAvailable())) {
       print("app store is available");
       return;
     }
