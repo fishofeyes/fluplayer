@@ -16,7 +16,6 @@ part 'vip.g.dart';
 class Vip extends _$Vip {
   final instance = InAppPurchase.instance;
   List<ProductDetails> details = [];
-  bool isLoading = false;
   @override
   VipState build() {
     _listener();
@@ -60,8 +59,6 @@ class Vip extends _$Vip {
   }
 
   void buyVip() {
-    if (isLoading) return;
-    isLoading = true;
     EasyLoading.show();
     final curr = ref.read(vipChooseProvider);
     final model = state.models.firstWhereOrNull((e) => e.id == curr);
@@ -74,7 +71,6 @@ class Vip extends _$Vip {
         InAppPurchase.instance.buyNonConsumable(purchaseParam: p);
       }
     } else {
-      isLoading = false;
       EasyLoading.showError("Product unavailable");
     }
   }
@@ -113,7 +109,6 @@ class Vip extends _$Vip {
     } else {
       clear();
     }
-    isLoading = false;
   }
 
   void clear() {
@@ -161,18 +156,14 @@ class Vip extends _$Vip {
   }
 
   void redeem(bool showStatus) async {
-    if (isLoading) return;
     if (await instance.isAvailable()) {
-      isLoading = true;
       if (showStatus) {
         EasyLoading.show();
       }
       try {
         await instance.restorePurchases();
-        isLoading = false;
       } catch (e) {
         print("error = $e");
-        isLoading = false;
         EasyLoading.dismiss();
       }
     }
