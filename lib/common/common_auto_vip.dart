@@ -22,9 +22,16 @@ class CommonAutoVip {
     return share?.getInt(key);
   }
 
-  static bool _checkSpace(String key) {
+  static bool _checkSpace(String key, String key2) {
     bool go = false;
     final t = _getInt(key);
+    final t2 = _getInt(key2) ?? 0;
+    if (DateTime.now()
+            .difference(DateTime.fromMillisecondsSinceEpoch(t2))
+            .inSeconds <
+        24 * 60 * 60) {
+      return false;
+    }
     if (t == null) {
       go = true;
     } else if (DateTime.now()
@@ -43,7 +50,7 @@ class CommonAutoVip {
     String countKey = "autoVipCount_${autoPage ? 'page' : 'pop'}";
     if (globalOpenVip) {
       go = false;
-    } else if (_checkSpace("autoVip_${autoPage ? 'pop' : 'page'}")) {
+    } else if (_checkSpace("autoVip_${autoPage ? 'pop' : 'page'}", timeKey)) {
       final count = _getInt(countKey) ?? 0;
       if (count < 3) {
         go = true;
