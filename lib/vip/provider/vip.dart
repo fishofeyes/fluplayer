@@ -53,6 +53,9 @@ class Vip extends _$Vip {
         case PurchaseStatus.canceled:
           EasyLoading.dismiss();
       }
+      for (final i in data) {
+        instance.completePurchase(i);
+      }
     });
   }
 
@@ -119,7 +122,7 @@ class Vip extends _$Vip {
     EasyLoading.dismiss();
   }
 
-  void init(String vipText) {
+  Future<void> init(String vipText) async {
     final vip = jsonDecode(vipText);
     List<VipModel> models = [];
     final t = vip["models"];
@@ -130,9 +133,12 @@ class Vip extends _$Vip {
     if (state.models.isEmpty) {
       state = state.copyWith(models: models);
     }
+    if (details.isEmpty) {
+      getGoods();
+    }
   }
 
-  void getGoods() async {
+  Future<void> getGoods() async {
     if (!(await instance.isAvailable())) {
       print("app store is available");
       return;
