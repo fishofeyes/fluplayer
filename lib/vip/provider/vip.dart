@@ -127,7 +127,9 @@ class Vip extends _$Vip {
       models.add(VipModel.fromJson(i));
     }
     globalDefaultVipId = vip["defaultId"];
-    state = state.copyWith(models: models);
+    if (state.models.isEmpty) {
+      state = state.copyWith(models: models);
+    }
   }
 
   void getGoods() async {
@@ -144,7 +146,7 @@ class Vip extends _$Vip {
         models: state.models
             .map(
               (e) => e.copyWith(
-                desc: details.firstWhere((e2) => e2.id == e.id).price,
+                desc: details.firstWhereOrNull((e2) => e2.id == e.id)?.price,
               ),
             )
             .toList(),

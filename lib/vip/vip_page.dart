@@ -1,4 +1,5 @@
 import 'package:fluplayer/common/common.dart';
+import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
 import 'package:fluplayer/common/view/background_title.dart';
 import 'package:collection/collection.dart';
 import 'package:fluplayer/vip/provider/provider.dart';
@@ -28,6 +29,7 @@ class _VipPageState extends ConsumerState<VipPage> {
     super.initState();
     CommonEvent.changePlayStatus(false);
     SchedulerBinding.instance.addPostFrameCallback((e) {
+      admobHelper.updateVipModels();
       ref.read(vipChooseProvider.notifier).state = globalDefaultVipId;
     });
     EasyLoading.instance.userInteractions = false;
