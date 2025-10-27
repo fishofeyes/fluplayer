@@ -18,13 +18,13 @@ class VipPrivacy extends StatelessWidget {
             TextSpan(
               text: "Terms of Service",
               recognizer: TapGestureRecognizer()
-                ..onTap = () => commonPush(context, PrivacyPage()),
+                ..onTap = () => commonPush(context, TermsPage()),
             ),
             TextSpan(text: " · "),
             TextSpan(
               text: "Privacy Policy",
               recognizer: TapGestureRecognizer()
-                ..onTap = () => commonPush(context, const TermsPage()),
+                ..onTap = () => commonPush(context, const PrivacyPage()),
             ),
           ],
         ),

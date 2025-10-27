@@ -33,9 +33,6 @@ class _VipPageState extends ConsumerState<VipPage> {
       ref.read(vipChooseProvider.notifier).state = globalDefaultVipId;
     });
     EasyLoading.instance.userInteractions = false;
-    Future.delayed(const Duration(milliseconds: 50)).then((e) {
-      ref.read(vipProvider.notifier).getGoods();
-    });
     isInVipPage = true;
   }
 
