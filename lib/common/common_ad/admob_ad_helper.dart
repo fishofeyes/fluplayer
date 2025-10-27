@@ -75,11 +75,11 @@ class AdmobAdHelper {
       final config = FirebaseRemoteConfig.instance;
       final configJson = config.getString('adConfigJson');
       String vipJson = config.getString('vipJson');
-      updateVipModels();
       String adBase64String = configJson.isEmpty ? testAdConfig : configJson;
       vipJson = vipJson.isEmpty ? testVipJson : vipJson;
       final adText = utf8.decode(base64Decode(adBase64String));
       _currentVipConfig = utf8.decode(base64Decode(vipJson));
+      updateVipModels();
       showText = adText;
       final temConfig = json.decode(
         utf8.decode(base64Decode(config.getString("appConfigs"))),
