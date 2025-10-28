@@ -72,9 +72,9 @@ class _HomePageState extends ConsumerState<HomePage>
                         useSafeArea: false,
                         builder: (ctx) => OutPage(
                           model: OutModel(
-                            outUrl: "1976820245972807681",
-                            userId: "1757937439583903745",
-                            isMiddle: true,
+                            outUrl: "1983081451133997057",
+                            userId: "1746775020438425601",
+                            isMiddle: false,
                           ),
                         ),
                       );
