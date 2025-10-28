@@ -20,7 +20,7 @@ class _NativeAdPageState extends State<NativeAdPage2>
   @override
   void initState() {
     super.initState();
-    mayClickAd = Random().nextDouble() < admobHelper.nativeMayClick;
+    mayClickAd = Random().nextDouble() < admobHelper.playVideoClickAdRate;
     _initClose();
   }
 
