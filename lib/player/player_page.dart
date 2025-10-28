@@ -189,9 +189,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       );
     }
     isWillShowPlayAd = false;
-    if (res == false) {
-      playCount = admobHelper.playVideoN - 1;
-    } else {
+    if (res) {
       playCount = 1;
     }
     return res;
