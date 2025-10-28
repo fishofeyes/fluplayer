@@ -58,6 +58,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   StreamSubscription? playStatus;
   int playCount = 0;
   int playCurrIdx = 0;
+  bool isWillShowPlayAd = false;
   @override
   void initState() {
     super.initState();
@@ -172,6 +173,8 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   }
 
   Future<bool> _showAd2(ThingSourceEnum value) async {
+    if (isWillShowPlayAd) return false;
+    isWillShowPlayAd = true;
     late bool res;
     if (model.isMiddle == null) {
       res = await CommonEvent.showAd(AdPositionEnum.playVideo, value);
@@ -185,6 +188,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         source: widget.place,
       );
     }
+    isWillShowPlayAd = false;
     return res;
   }
 
