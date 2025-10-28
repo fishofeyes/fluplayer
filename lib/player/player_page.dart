@@ -248,7 +248,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           } else {
             final sec = _controller?.value.position.inSeconds ?? 0;
             if (sec >= admobHelper.playVideoY &&
-                playCount == admobHelper.playVideoN) {
+                playCount >= admobHelper.playVideoN) {
               _showAd2(ThingSourceEnum.pause);
             }
           }
