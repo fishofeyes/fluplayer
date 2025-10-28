@@ -190,12 +190,17 @@ class AdmobAdHelper {
     if (!isEnable) {
       CommonEvent.showFailed(value, "no padding", isSecond: false);
       adShowing = true;
-      final r = await admobHelper2.showOpenAd(value: value);
-      if (r) {
-        lastShowTime = currentTime();
+      if (jumpTimeSpace == false) {
+        final r = await admobHelper2.showOpenAd(value: value);
+        if (r) {
+          lastShowTime = currentTime();
+        }
+        adShowing = false;
+        return r;
+      } else {
+        print("admob ad is not ready");
+        return false;
       }
-      adShowing = false;
-      return r;
     }
 
     model?.showAD(
