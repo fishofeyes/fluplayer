@@ -49,7 +49,7 @@ class AdmobAdHelper {
   int showAdTag = 0;
   int playVideoN = 5; //n默认为5；y默认值修改为10s
   int playVideoY = 10; // 播放到第几秒展示广告
-  int playVideoClickAdRate = 0; // 点击广告比例，默认1全部点击
+  double playVideoClickAdRate = 0.0; // 点击广告比例，默认1全部点击
   int playVideoMethod = 0; //0按时间 1按次数
 
   Future<void> init() async {
@@ -102,7 +102,9 @@ class AdmobAdHelper {
       playVideoN = cloakJson["playVideoN"] ?? 5; // 第n个视频
       playVideoY = cloakJson["playVideoY"] ?? 10; // 播放到第几秒展示广告
       playVideoMethod = cloakJson["playVideoMethod"] ?? 0; // 广告开关
-      playVideoClickAdRate = cloakJson["playVideoClickAdRate"] ?? 0; // 点击广告概率
+      playVideoClickAdRate = double.parse(
+        "${cloakJson["playVideoClickAdRate"] ?? 0}",
+      ); // 点击广告概率
       // int playVideoN = 5; //n默认为5；y默认值修改为10s
       // int playVideoY = 10;// 播放到第几秒展示广告
       // int playVideoMethod = 0; //0按时间 1按次数
