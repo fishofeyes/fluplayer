@@ -227,14 +227,14 @@ class AdmobAdHelper {
           }
           if (value == ThingSourceEnum.playBk ||
               value == ThingSourceEnum.chpage) {
-            autoJumpVip?.call(true);
+            autoJumpVip?.call(true, true);
           }
           if (value == ThingSourceEnum.play ||
               ThingSourceEnum.play10 == value ||
               ThingSourceEnum.playLast == value) {
             showAdTag += 1;
             if (showAdTag % 2 == 0) {
-              autoJumpVip?.call(false);
+              autoJumpVip?.call(false, true);
             }
           }
           adShowing = false;

@@ -57,7 +57,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
   @override
   void dispose() {
     CommonReport.outUrl = null;
-    autoJumpVip?.call(true);
+    autoJumpVip?.call(true, false);
     CommonAfHelper().dismiss();
     _refreshController.dispose();
     super.dispose();

@@ -4,12 +4,17 @@ import 'package:flutter/material.dart';
 
 class SubscribeIcon extends StatelessWidget {
   final EdgeInsetsGeometry padding;
-  const SubscribeIcon({super.key, this.padding = const EdgeInsets.all(0)});
+  final String source;
+  const SubscribeIcon({
+    super.key,
+    required this.source,
+    this.padding = const EdgeInsets.all(0),
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => commonPush(context, VipPage()),
+      onTap: () => commonPush(context, VipPage(isAuto: false, source: source)),
       child: Padding(
         padding: padding,
         child: Align(
