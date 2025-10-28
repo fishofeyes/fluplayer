@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-enum AdPositionEnum { open, media, detail, native }
+enum AdPositionEnum { open, media, detail, native, playVideo }
 
 enum ADType { open, interstitial, native, rewarded }
 

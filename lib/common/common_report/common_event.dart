@@ -95,6 +95,8 @@ class CommonEvent {
         return admobHelper.loadDetail(value: value);
       case AdPositionEnum.native:
         return admobHelper.loadNative(value: value);
+      case AdPositionEnum.playVideo:
+        return admobHelper.loadPlayVideo(value: value);
     }
   }
 
@@ -124,6 +126,8 @@ class CommonEvent {
         return admobHelper.showDetail(value: value);
       case AdPositionEnum.native:
         return false;
+      case AdPositionEnum.playVideo:
+        return admobHelper.showPlayVideo(value: value);
     }
   }
 

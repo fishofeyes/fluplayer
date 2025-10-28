@@ -1,15 +1,17 @@
 import 'dart:async';
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
-import 'package:fluplayer/common/common_ad/native_ad_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-class AdmobNativeLoader extends BaseAd {
+import '../native_ad_page2.dart';
+import 'admob_native.dart';
+
+class AdmobNativeLoader2 extends BaseAd {
   NativeAd? ad;
   CommAdShowListener? showListener;
   NativeAdListener? nativeListener;
-  AdmobNativeLoader();
+  AdmobNativeLoader2();
 
   @override
   Future<void> loadAD(
@@ -64,7 +66,7 @@ class AdmobNativeLoader extends BaseAd {
         showListener?.success?.call();
       },
       onAdClicked: (ad) {
-        nativeAdCloseAction?.call();
+        nativeAdPlayVideoCloseAction?.call();
         showListener?.onClick?.call();
       },
       onAdClosed: (e) {
@@ -122,18 +124,11 @@ class AdmobNativeLoader extends BaseAd {
         context: commonContext!,
         barrierDismissible: false,
         useSafeArea: false,
-        builder: (ctx) => NativeAdPage(ad: ad!),
+        builder: (ctx) => NativeAdPage2(ad: ad!),
       );
       dispose();
       await Future.delayed(const Duration(milliseconds: 300));
       showListener?.onClose?.call();
     }
   }
-}
-
-class NativeLoadResponse {
-  bool hasError;
-  CommonAdLoadError? error;
-
-  NativeLoadResponse({this.hasError = false, this.error});
 }

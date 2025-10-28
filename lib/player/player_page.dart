@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
+import 'package:fluplayer/common/common_ad/native_ad_page2.dart';
 import 'package:fluplayer/common/common_enum.dart';
 import 'package:fluplayer/common/common_report/common_event.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
@@ -55,6 +56,8 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   bool isLoading = true;
   bool isFirstOpen = true;
   StreamSubscription? playStatus;
+  int playCount = 0;
+  int playCurrIdx = 0;
   @override
   void initState() {
     super.initState();
@@ -77,6 +80,9 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         _controller?.pause();
       }
     });
+    if (admobHelper.playVideoMethod == 1) {
+      admobHelper.loadPlayVideo(value: ThingSourceEnum.play);
+    }
   }
 
   @override
@@ -165,6 +171,23 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     return res;
   }
 
+  Future<bool> _showAd2(ThingSourceEnum value) async {
+    late bool res;
+    if (model.isMiddle == null) {
+      res = await CommonEvent.showAd(AdPositionEnum.playVideo, value);
+    } else {
+      res = await CommonEvent.showAd(
+        AdPositionEnum.playVideo,
+        value,
+        fId: model.id,
+        outUrl: model.uidUrl,
+        isMiddle: model.isMiddle,
+        source: widget.place,
+      );
+    }
+    return res;
+  }
+
   void _initVideo() async {
     _controller?.dispose();
     _controller = null;
@@ -206,17 +229,25 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           ref.read(playProvider.notifier).nextModel(true, false);
         }
         if (_controller != null) {
-          progress =
-              _controller!.value.position.inMilliseconds /
-              _controller!.value.duration.inMilliseconds;
-          if (_controller!.value.position.inSeconds ==
-              admobHelper.mediaPlayPoint) {
-            _loadAd(ThingSourceEnum.play10);
-            _loadAd(ThingSourceEnum.play10);
+          if (admobHelper.playVideoMethod == 0) {
+            progress =
+                _controller!.value.position.inMilliseconds /
+                _controller!.value.duration.inMilliseconds;
+            if (_controller!.value.position.inSeconds ==
+                admobHelper.mediaPlayPoint) {
+              _loadAd(ThingSourceEnum.play10);
+              _showAd(ThingSourceEnum.play10);
+            }
+          }
+        } else {
+          final sec = _controller?.value.position.inSeconds ?? 0;
+          if (sec >= admobHelper.playVideoY &&
+              playCount == admobHelper.playVideoN) {
+            _showAd2(ThingSourceEnum.pause);
           }
         }
       });
-      if (model.position > 0 && model.position < 0.9) {
+      if (model.position > 0 && model.position < 0.8) {
         await _controller!.seekTo(
           Duration(
             milliseconds:
@@ -354,6 +385,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       if (newValue.id != model.id || isFirstOpen) {
         isFirstOpen = false;
         model = ref.read(playProvider.notifier).getModel();
+        playCount = ref.read(playProvider.notifier).getIdx();
         _initVideo();
       }
     });
