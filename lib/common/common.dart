@@ -10,6 +10,7 @@ int playerForward = 0;
 double playerBrightness = 0;
 double playerVolume = 0;
 Function()? nativeAdCloseAction;
+Function()? nativeAdPlayVideoCloseAction;
 Function(bool isPage)? autoJumpVip;
 RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 

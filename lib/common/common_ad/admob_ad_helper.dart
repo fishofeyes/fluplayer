@@ -28,11 +28,13 @@ class AdmobAdHelper {
   BaseAdModel? _playerAd;
   BaseAdModel? _channelAd;
   BaseAdModel? _nativeAd;
+  BaseAdModel? _playVideoAd;
 
   bool _openLoading = false;
   bool _playerLoading = false;
   bool _channelLoading = false;
   bool _nativeLoading = false;
+  bool _playVideoLoading = false;
 
   bool adShowing = false;
   String showText = '';
@@ -45,6 +47,10 @@ class AdmobAdHelper {
   int lastShowTime = 0;
   String _currentVipConfig = '';
   int showAdTag = 0;
+  int playVideoN = 5; //n默认为5；y默认值修改为10s
+  int playVideoY = 10; // 播放到第几秒展示广告
+  int playVideoClickAdRate = 0; // 点击广告比例，默认1全部点击
+  int playVideoMethod = 0; //0按时间 1按次数
 
   Future<void> init() async {
     refreshADConfig();
@@ -93,6 +99,13 @@ class AdmobAdHelper {
       launchTime = cloakJson[RemoteConfigEnum.launchTime.name] ?? 7;
       nativeMayClick = cloakJson[RemoteConfigEnum.nativeMayClick.name] ?? 0.5;
       nativeShowTime = cloakJson[RemoteConfigEnum.nativeShowTime.name] ?? 3;
+      playVideoN = cloakJson["playVideoN"] ?? 5; // 第n个视频
+      playVideoY = cloakJson["playVideoY"] ?? 10; // 播放到第几秒展示广告
+      playVideoMethod = cloakJson["playVideoMethod"] ?? 0; // 广告开关
+      playVideoClickAdRate = cloakJson["playVideoClickAdRate"] ?? 0; // 点击广告概率
+      // int playVideoN = 5; //n默认为5；y默认值修改为10s
+      // int playVideoY = 10;// 播放到第几秒展示广告
+      // int playVideoMethod = 0; //0按时间 1按次数
       for (final i in AdPositionEnum.values) {
         adDataMap[i] = _initADInfo(cloakJson, i);
       }
@@ -148,18 +161,21 @@ class AdmobAdHelper {
     required ThingSourceEnum value,
     Future<bool> Function({required ThingSourceEnum value})? adLoader,
     ValueChanged<bool>? onReward,
+    bool jumpTimeSpace = false,
   }) async {
     if (adShowing || globalOpenVip || isInVipAlertPage || isInVipPage) {
       debugPrint('ad is showing');
       return false;
     }
-    final nowDate = currentTime();
-    final selfInterval = nowDate - lastShowTime;
+    if (jumpTimeSpace == false) {
+      final nowDate = currentTime();
+      final selfInterval = nowDate - lastShowTime;
 
-    if (selfInterval < _adInterval * 1000) {
-      CommonEvent.changePlayStatus(true);
-      debugPrint('间隔时间不够不展示 all $selfInterval');
-      return false;
+      if (selfInterval < _adInterval * 1000) {
+        CommonEvent.changePlayStatus(true);
+        debugPrint('间隔时间不够不展示 all $selfInterval');
+        return false;
+      }
     }
     CommonReport.eventThings(
       ThingEnum.adNee8aQdShow,
@@ -198,7 +214,7 @@ class AdmobAdHelper {
           CommonEvent.adClick(value, false);
         },
         onClose: () async {
-          if (model.adType != ADType.rewarded) {
+          if (model.adType != ADType.rewarded && jumpTimeSpace == false) {
             await admobHelper2.showOpenAd(value: value);
           }
           if (value == ThingSourceEnum.playBk ||
@@ -214,7 +230,9 @@ class AdmobAdHelper {
             }
           }
           adShowing = false;
-          lastShowTime = currentTime();
+          if (jumpTimeSpace == false) {
+            lastShowTime = currentTime();
+          }
           closeCompleter.complete(true);
           CommonEvent.onDismiss();
           adLoader?.call(value: value);
@@ -357,5 +375,36 @@ class AdmobAdHelper {
       CommonEvent.loadSuccess(value, false);
     }
     return _nativeAd != null;
+  }
+
+  Future<bool> loadPlayVideo({required ThingSourceEnum value}) async {
+    if (_playVideoLoading) return false;
+    if (_playVideoAd?.isCacheAvailable() ?? false) return false;
+    final list = adDataMap[AdPositionEnum.playVideo];
+    if (list == null) return false;
+    _playVideoLoading = true;
+    _playVideoAd = await _loadAd(
+      list,
+      value: value,
+      load: CommAdLoadListener(
+        error: (e) {
+          CommonEvent.loadFail(value, false, e.code);
+        },
+      ),
+    );
+    _playVideoLoading = false;
+    if (_playVideoAd != null) {
+      CommonEvent.loadSuccess(value, false);
+    }
+    return _playVideoAd != null;
+  }
+
+  Future<bool> showPlayVideo({required ThingSourceEnum value}) async {
+    return _showAD(
+      _playVideoAd,
+      value: value,
+      adLoader: loadPlayVideo,
+      jumpTimeSpace: true,
+    );
   }
 }
