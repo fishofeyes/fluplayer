@@ -81,7 +81,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       }
     });
     if (admobHelper.playVideoMethod == 1) {
-      admobHelper.loadPlayVideo(value: ThingSourceEnum.play);
+      admobHelper.loadPlayVideo(value: ThingSourceEnum.pause);
     }
   }
 
