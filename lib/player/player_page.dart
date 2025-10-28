@@ -238,12 +238,12 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
               _loadAd(ThingSourceEnum.play10);
               _showAd(ThingSourceEnum.play10);
             }
-          }
-        } else {
-          final sec = _controller?.value.position.inSeconds ?? 0;
-          if (sec >= admobHelper.playVideoY &&
-              playCount == admobHelper.playVideoN) {
-            _showAd2(ThingSourceEnum.pause);
+          } else {
+            final sec = _controller?.value.position.inSeconds ?? 0;
+            if (sec >= admobHelper.playVideoY &&
+                playCount == admobHelper.playVideoN) {
+              _showAd2(ThingSourceEnum.pause);
+            }
           }
         }
       });
