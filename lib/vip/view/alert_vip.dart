@@ -5,18 +5,25 @@ import 'package:fluplayer/vip/view/vip_privacy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../common/common_enum.dart';
+import '../../common/common_report/common_report.dart';
+
 class AlertVip extends ConsumerStatefulWidget {
-  const AlertVip({super.key});
+  final String source;
+  const AlertVip({super.key, required this.source});
 
   @override
   ConsumerState<AlertVip> createState() => _AlertVipState();
 }
 
 class _AlertVipState extends ConsumerState<AlertVip> {
+  Map<String, dynamic>? data;
   @override
   void initState() {
     super.initState();
     isInVipAlertPage = true;
+    data = {"gNAuA": "xBHdW", "fyzk": "vvbWKArjy", "tExnF2": widget.source};
+    CommonReport.eventThings(ThingEnum.premiug8amExpose, data: data);
   }
 
   @override
@@ -65,7 +72,7 @@ class _AlertVipState extends ConsumerState<AlertVip> {
                         ),
                     SizedBox(height: 12),
                     GestureDetector(
-                      onTap: () => ref.read(vipProvider.notifier).buyVip(),
+                      onTap: () => ref.read(vipProvider.notifier).buyVip(data),
                       child: Stack(
                         alignment: Alignment.center,
                         children: [

@@ -11,7 +11,7 @@ double playerBrightness = 0;
 double playerVolume = 0;
 Function()? nativeAdCloseAction;
 Function()? nativeAdPlayVideoCloseAction;
-Function(bool isPage)? autoJumpVip;
+Function(bool isPage, bool isAd)? autoJumpVip;
 RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
 enum SharedStoreKey {

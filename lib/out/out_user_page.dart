@@ -125,7 +125,7 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                   ),
                   const Spacer(),
                   // const VipEnterItem(from: VipEnterValue.clpage),
-                  SubscribeIcon(),
+                  SubscribeIcon(source: "wrckMHFz"),
                   const SizedBox(width: 12),
                 ],
               ),

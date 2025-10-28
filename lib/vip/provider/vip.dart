@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:fluplayer/common/common_enum.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/request/http_helper.dart';
 import 'package:fluplayer/vip/model/vip_model.dart';
@@ -16,6 +17,7 @@ part 'vip.g.dart';
 class Vip extends _$Vip {
   final instance = InAppPurchase.instance;
   List<ProductDetails> details = [];
+  Map<String, dynamic>? data;
   @override
   VipState build() {
     _listener();
@@ -50,6 +52,10 @@ class Vip extends _$Vip {
           await _buyRequest(tranc, false);
           EasyLoading.dismiss();
         case PurchaseStatus.canceled:
+          CommonReport.eventThings(
+            ThingEnum.premiwqfumFail,
+            data: {"PuUTVimak": tranc.productID},
+          );
           EasyLoading.dismiss();
       }
       for (final i in data) {
@@ -58,11 +64,14 @@ class Vip extends _$Vip {
     });
   }
 
-  void buyVip() {
+  void buyVip(Map<String, dynamic>? sender) {
     EasyLoading.show();
     final curr = ref.read(vipChooseProvider);
     final model = state.models.firstWhereOrNull((e) => e.id == curr);
     final del = details.firstWhereOrNull((e) => e.id == curr);
+    data = sender;
+    data?["PuUTVimak"] = curr;
+    CommonReport.eventThings(ThingEnum.premiuTHTLmClick, data: data);
     if (del != null) {
       final p = PurchaseParam(productDetails: del);
       if (model?.type == 3) {
@@ -106,6 +115,9 @@ class Vip extends _$Vip {
         desc: p.type == 3 ? desc : desc.replaceAll("##", p.desc),
       );
       globalOpenVip = true;
+      if (firstBuy) {
+        CommonReport.eventThings(ThingEnum.premiBdUumSuc, data: data);
+      }
     } else {
       clear();
     }

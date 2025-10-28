@@ -1,5 +1,7 @@
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
+import 'package:fluplayer/common/common_enum.dart';
+import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/view/background_title.dart';
 import 'package:collection/collection.dart';
 import 'package:fluplayer/vip/provider/provider.dart';
@@ -17,16 +19,24 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../common/common_report/common_event.dart';
 
 class VipPage extends ConsumerStatefulWidget {
-  const VipPage({super.key});
+  final bool isAuto;
+  final String source;
+  const VipPage({super.key, required this.isAuto, required this.source});
 
   @override
   ConsumerState<VipPage> createState() => _VipPageState();
 }
 
 class _VipPageState extends ConsumerState<VipPage> {
+  Map<String, dynamic>? data;
   @override
   void initState() {
     super.initState();
+    data = {
+      "gNAuA": "bBtr",
+      "fyzk": widget.isAuto ? "vvbWKArjy" : "YvrXCXszRH",
+      "tExnF2": widget.source,
+    };
     CommonEvent.changePlayStatus(false);
     SchedulerBinding.instance.addPostFrameCallback((e) {
       admobHelper.updateVipModels();
@@ -34,6 +44,7 @@ class _VipPageState extends ConsumerState<VipPage> {
     });
     EasyLoading.instance.userInteractions = false;
     isInVipPage = true;
+    CommonReport.eventThings(ThingEnum.premiug8amExpose, data: data);
   }
 
   @override
@@ -122,14 +133,7 @@ class _VipPageState extends ConsumerState<VipPage> {
                   SizedBox(height: 38),
                   Align(
                     alignment: AlignmentGeometry.centerLeft,
-                    child: GestureDetector(
-                      onTap: () {
-                        if (kDebugMode) {
-                          commonShowDialog(context, AlertVip());
-                        }
-                      },
-                      child: BackgroundTitleView(title: 'Premium benefit'),
-                    ),
+                    child: BackgroundTitleView(title: 'Premium benefit'),
                   ),
                   SizedBox(height: 20),
                   Row(
@@ -240,7 +244,7 @@ As a new member, you can now enjoy all premium features.''',
                   Visibility(
                     visible: isVip == false,
                     child: GestureDetector(
-                      onTap: () => ref.read(vipProvider.notifier).buyVip(),
+                      onTap: () => ref.read(vipProvider.notifier).buyVip(data),
                       child: Stack(
                         alignment: Alignment.center,
                         children: [

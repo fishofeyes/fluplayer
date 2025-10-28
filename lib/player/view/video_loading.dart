@@ -44,7 +44,7 @@ class VideoLoading extends ConsumerWidget {
             InkWell(
               onTap: () {
                 if (vip) return;
-                commonPush(context, VipPage());
+                commonPush(context, VipPage(isAuto: false, source: "ZpkXtfH"));
               },
               child: Stack(
                 alignment: AlignmentGeometry.center,

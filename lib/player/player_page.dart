@@ -389,7 +389,10 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       if (newValue.id != model.id || isFirstOpen) {
         isFirstOpen = false;
         model = ref.read(playProvider.notifier).getModel();
-        playCount = ref.read(playProvider.notifier).getIdx();
+        playCount += 1;
+        if (playCount > admobHelper.playVideoN) {
+          playCount = 0;
+        }
         _initVideo();
       }
     });

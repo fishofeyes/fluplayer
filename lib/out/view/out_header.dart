@@ -96,7 +96,7 @@ class OutHeader extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(child: SubscribeIcon(), right: 12),
+        Positioned(right: 12, child: SubscribeIcon(source: "glT")),
       ],
     );
   }

@@ -41,7 +41,7 @@ class VideoTitle extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 12.0),
-              child: SubscribeIcon(),
+              child: SubscribeIcon(source: "cfyVVGNRM"),
             ),
           ],
         ),

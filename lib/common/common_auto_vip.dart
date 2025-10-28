@@ -43,7 +43,7 @@ class CommonAutoVip {
     return go;
   }
 
-  static void jumpVip(BuildContext context, bool autoPage) async {
+  static void jumpVip(BuildContext context, bool autoPage, bool isAd) async {
     await _init();
     bool go = false;
     String timeKey = "autoVip_${autoPage ? 'page' : 'pop'}";
@@ -72,9 +72,12 @@ class CommonAutoVip {
     if (go) {
       CommonEvent.changePlayStatus(false);
       if (autoPage) {
-        commonPush(context, VipPage());
+        commonPush(
+          context,
+          VipPage(isAuto: true, source: isAd ? "ZZpu" : "WFZcIkYdR"),
+        );
       } else {
-        commonShowDialog(context, AlertVip());
+        commonShowDialog(context, AlertVip(source: "ZZpu"));
       }
     }
   }

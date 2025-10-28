@@ -78,8 +78,8 @@ class _RootPageState extends ConsumerState<RootPage>
 
     ref.read(vipProvider.notifier).redeem(false);
 
-    autoJumpVip = (isPage) {
-      CommonAutoVip.jumpVip(context, isPage);
+    autoJumpVip = (isPage, isAd) {
+      CommonAutoVip.jumpVip(context, isPage, isAd);
     };
   }
 
