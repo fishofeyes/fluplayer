@@ -191,6 +191,8 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     isWillShowPlayAd = false;
     if (res == false) {
       playCount = admobHelper.playVideoN - 1;
+    } else {
+      playCount = 1;
     }
     return res;
   }
@@ -393,9 +395,6 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         isFirstOpen = false;
         model = ref.read(playProvider.notifier).getModel();
         playCount += 1;
-        if (playCount >= admobHelper.playVideoN) {
-          playCount = 1;
-        }
         _initVideo();
       }
     });
