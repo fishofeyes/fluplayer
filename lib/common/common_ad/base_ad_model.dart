@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fluplayer/common/common_ad/admob/admob_native.dart';
+import 'package:fluplayer/common/common_ad/admob/admob_native2.dart';
 import 'package:fluplayer/common/common_ad/max/max_open.dart';
 import 'package:flutter/material.dart';
 import 'admob/admob_insert.dart';
@@ -113,6 +114,9 @@ class BaseAdModel {
         if (!isAdmob) return MaxInterstitialLoader();
         return AdmobInterLoader();
       case ADType.native:
+        if (position == AdPositionEnum.playVideo) {
+          return AdmobNativeLoader2();
+        }
         return AdmobNativeLoader();
       case ADType.rewarded:
         if (!isAdmob) return MaxRewardLoader();
