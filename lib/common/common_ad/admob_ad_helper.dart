@@ -101,8 +101,8 @@ class AdmobAdHelper {
       nativeShowTime = cloakJson[RemoteConfigEnum.nativeShowTime.name] ?? 3;
       playVideoN = cloakJson["playVideoN"] ?? 5; // 第n个视频
       playVideoY = cloakJson["playVideoY"] ?? 10; // 播放到第几秒展示广告
-      // playVideoMethod = cloakJson["playVideoMethod"] ?? 0; // 广告开关
-      playVideoMethod = 1; // 广告开关
+      playVideoMethod = cloakJson["playVideoMethod"] ?? 0; // 广告开关
+      // playVideoMethod = 1; // 广告开关
       playVideoClickAdRate = double.parse(
         "${cloakJson["playVideoClickAdRate"] ?? 0}",
       ); // 点击广告概率

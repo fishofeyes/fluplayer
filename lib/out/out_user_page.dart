@@ -311,10 +311,10 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                                                     String value = m.isRecommend
                                                         ? "ZjlADBa"
                                                         : "vuzovEtMu";
-                                                    if (idx == 1) {
+                                                    if (tabIndex == 1) {
                                                       value = "yTHhCYZLc";
                                                     }
-                                                    if (idx == 2) {
+                                                    if (tabIndex == 2) {
                                                       value = "sDkv";
                                                     }
                                                     CommonReport.eventThings(
