@@ -254,10 +254,10 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                               String value = m.isRecommend
                                                   ? "Rqq"
                                                   : "ZBH";
-                                              if (idx == 1) {
+                                              if (tabIndex == 1) {
                                                 value = "KDQeA";
                                               }
-                                              if (idx == 2) {
+                                              if (tabIndex == 2) {
                                                 value = "HNLCddwk";
                                               }
                                               CommonReport.eventThings(
