@@ -141,16 +141,19 @@ class CommonEvent {
   ) async {
     final sp = await SharedPreferences.getInstance();
     final uid = sp.getString(SharedStoreKey.userId.name);
-    CommonReport.backEvent(
-      uid == null ? CommonReportEnum.commLocalAd : CommonReportEnum.commAd,
-      isMiddle: _isMiddle,
-      source: _source,
-      outUrl: _outUrl,
-      fid: _fId,
-      val: val,
-      uid: uid,
-      curr: curr,
-    );
+    final rr = sp.getBool(SharedStoreKey.isMiddle.name);
+    if (rr == _isMiddle) {
+      CommonReport.backEvent(
+        uid == null ? CommonReportEnum.commLocalAd : CommonReportEnum.commAd,
+        isMiddle: _isMiddle,
+        source: _source,
+        outUrl: _outUrl,
+        fid: _fId,
+        val: val,
+        uid: uid,
+        curr: curr,
+      );
+    }
     CommonReport.adEvent(
       val,
       curr,
