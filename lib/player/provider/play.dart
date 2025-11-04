@@ -80,7 +80,7 @@ class Play extends _$Play {
     if (isReport) {
       CommonReport.eventThings(
         ThingEnum.playST5Xource,
-        data: {"PuUTVimak": "kDiwrEWeWG"},
+        data: {"PuUTVimak": "Jso"},
       );
     }
     state = state.copyWith(
@@ -92,15 +92,21 @@ class Play extends _$Play {
 
   void nextModel(bool isNext, bool isReport) {
     int idx = state.list.indexWhere((e) => e.id == state.id);
+    if (isReport) {
+      CommonReport.eventThings(
+        ThingEnum.playST5Xource,
+        data: {"PuUTVimak": "kDiwrEWeWG"},
+      );
+    }
     if (isNext) {
       idx += 1;
       if (idx < state.list.length) {
-        tapModel(state.list[idx], isReport);
+        tapModel(state.list[idx], false);
       }
     } else {
       idx -= 1;
       if (idx >= 0) {
-        tapModel(state.list[idx], isReport);
+        tapModel(state.list[idx], false);
       }
     }
   }
