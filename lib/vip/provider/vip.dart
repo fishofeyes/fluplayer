@@ -13,6 +13,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:collection/collection.dart';
 part 'vip.g.dart';
 
+final _llList = ["gBCEi", "sEIzcDL", "RKUpnI"];
+
 @Riverpod(keepAlive: true)
 class Vip extends _$Vip {
   final instance = InAppPurchase.instance;
@@ -52,10 +54,15 @@ class Vip extends _$Vip {
           await _buyRequest(tranc, false);
           EasyLoading.dismiss();
         case PurchaseStatus.canceled:
-          CommonReport.eventThings(
-            ThingEnum.premiwqfumFail,
-            data: {"PuUTVimak": tranc.productID},
+          final model = state.models.firstWhereOrNull(
+            (e) => e.id == tranc.productID,
           );
+          if (model != null) {
+            CommonReport.eventThings(
+              ThingEnum.premiwqfumFail,
+              data: {"PuUTVimak": _llList[model.type - 1]},
+            );
+          }
           EasyLoading.dismiss();
       }
       for (final i in data) {
@@ -70,9 +77,10 @@ class Vip extends _$Vip {
     final model = state.models.firstWhereOrNull((e) => e.id == curr);
     final del = details.firstWhereOrNull((e) => e.id == curr);
     data = sender;
-    data?["PuUTVimak"] = curr;
-    CommonReport.eventThings(ThingEnum.premiuTHTLmClick, data: data);
+
     if (del != null) {
+      data?["PuUTVimak"] = _llList[(model?.type ?? 1) - 1];
+      CommonReport.eventThings(ThingEnum.premiuTHTLmClick, data: data);
       final p = PurchaseParam(productDetails: del);
       if (model?.type == 3) {
         InAppPurchase.instance.buyConsumable(purchaseParam: p);

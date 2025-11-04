@@ -44,7 +44,7 @@ enum CommonReportSourceEnum {
 enum ThingSourceEnum {
   cp("FPllZYD"),
   hp("qJKd"),
-  play("qJKd"),
+  play("ffCiEsGYH"),
   playLast("ysQbouw"),
   playBk("coTrZylDO"),
   play10("ZPkzWVp"),
