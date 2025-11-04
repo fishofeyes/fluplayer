@@ -80,7 +80,7 @@ class Play extends _$Play {
     if (isReport) {
       CommonReport.eventThings(
         ThingEnum.playST5Xource,
-        data: {"PuUTVimak": "Jso"},
+        data: {"PuUTVimak": sender.recommend == true ? "kDiwrEWeWG" : "Jso"},
       );
     }
     state = state.copyWith(
@@ -92,22 +92,26 @@ class Play extends _$Play {
 
   void nextModel(bool isNext, bool isReport) {
     int idx = state.list.indexWhere((e) => e.id == state.id);
-    if (isReport) {
-      CommonReport.eventThings(
-        ThingEnum.playST5Xource,
-        data: {"PuUTVimak": "kDiwrEWeWG"},
-      );
-    }
+    HomeVideoModel? sender;
     if (isNext) {
       idx += 1;
       if (idx < state.list.length) {
+        sender = state.list[idx];
         tapModel(state.list[idx], false);
       }
     } else {
       idx -= 1;
       if (idx >= 0) {
+        sender = state.list[idx];
         tapModel(state.list[idx], false);
       }
+    }
+
+    if (isReport && sender != null) {
+      CommonReport.eventThings(
+        ThingEnum.playST5Xource,
+        data: {"PuUTVimak": sender.recommend == true ? "kDiwrEWeWG" : "Jso"},
+      );
     }
   }
 
