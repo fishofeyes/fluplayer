@@ -435,6 +435,8 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
               isLast: state.isLast,
               onList: _showList,
               onLast: () {
+                _loadAd(ThingSourceEnum.playLast);
+                _showAd(ThingSourceEnum.playLast);
                 ref.read(playProvider.notifier).nextModel(true, true);
               },
             ),
