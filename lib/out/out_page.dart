@@ -40,6 +40,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
     SchedulerBinding.instance.addPostFrameCallback((e) async {
       final sp = await SharedPreferences.getInstance();
       final rr = sp.getString(SharedStoreKey.userId.name);
+      await ref.read(outProvider(widget.model).notifier).initData();
       CommonReport.eventThings(
         ThingEnum.landpagMJFlMeExpose,
         data: {
@@ -48,7 +49,6 @@ class _PresentPageState extends ConsumerState<OutPage> {
           "JfnOLzMRW": rr == null,
         },
       );
-      ref.read(outProvider(widget.model).notifier).initData();
     });
     CommonEvent.changePlayStatus(false);
     CommonReport.outUrl = widget.model.outUrl;
