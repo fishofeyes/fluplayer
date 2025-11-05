@@ -35,7 +35,7 @@ class _VipPageState extends ConsumerState<VipPage> {
     data = {
       "gNAuA": "bBtr",
       "fyzk": widget.isAuto ? "vvbWKArjy" : "YvrXCXszRH",
-      "tExnF2": widget.source,
+      "bqaKMIx": widget.source,
     };
     CommonEvent.changePlayStatus(false);
     SchedulerBinding.instance.addPostFrameCallback((e) {

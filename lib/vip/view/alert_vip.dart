@@ -22,7 +22,7 @@ class _AlertVipState extends ConsumerState<AlertVip> {
   void initState() {
     super.initState();
     isInVipAlertPage = true;
-    data = {"gNAuA": "xBHdW", "fyzk": "vvbWKArjy", "tExnF2": widget.source};
+    data = {"gNAuA": "xBHdW", "fyzk": "vvbWKArjy", "bqaKMIx": widget.source};
     CommonReport.eventThings(ThingEnum.premiug8amExpose, data: data);
   }
 
