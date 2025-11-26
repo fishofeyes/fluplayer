@@ -45,6 +45,7 @@ class Vip extends _$Vip {
       final status = tranc.status;
       switch (status) {
         case PurchaseStatus.pending:
+          break;
         case PurchaseStatus.purchased:
           await _buyRequest(tranc, true);
           EasyLoading.dismiss();
