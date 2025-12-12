@@ -1,0 +1,6 @@
+framework module InstantSupervisor {
+  umbrella header "InstantSupervisor.h"
+  export *
+
+  module * { export * }
+}
