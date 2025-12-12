@@ -18,6 +18,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../common/common_app.dart';
 import '../common/common_enum.dart';
 import '../common/common_report/common_event.dart';
 
@@ -84,10 +85,15 @@ class _RootPageState extends ConsumerState<RootPage>
   }
 
   void _track() async {
+    CommonApp.nativeFunction("fadeAlley");
     await Future.delayed(const Duration(seconds: 5));
     await AppTrackingTransparency.requestTrackingAuthorization();
     await Future.delayed(const Duration(seconds: 5));
     await AppTrackingTransparency.requestTrackingAuthorization();
+    CommonApp.nativeFunction(
+      "setAdId",
+      adId: await AppTrackingTransparency.getAdvertisingIdentifier(),
+    );
   }
 
   @override
