@@ -66,7 +66,7 @@ class CommonApp {
 
   static void nativeFunction(String func, {String? adId}) async {
     try {
-      final String result = await _channel.invokeMethod(func, {"adId": adId});
+      final result = await _channel.invokeMethod(func, {"adId": adId});
       print("Native function result: $result");
     } on PlatformException catch (e) {
       print("Failed to invoke native function: '${e.message}'.");
