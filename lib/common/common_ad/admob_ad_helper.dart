@@ -199,6 +199,7 @@ class AdmobAdHelper {
         adShowing = false;
         return r;
       } else {
+        adShowing = false;
         print("admob ad is not ready");
         return false;
       }
