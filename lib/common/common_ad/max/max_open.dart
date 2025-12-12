@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:applovin_max/applovin_max.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/common/common_ad/max_ad_helper.dart';
@@ -12,20 +14,30 @@ class MaxOpenLoader extends BaseAd {
     CommAdLoadListener? listener,
   }) async {
     adId = adPlacement;
+    final completer = Completer<void>();
     maxHelper.addLoadListener(
       adUnitId: adPlacement,
       onLoad: CommAdLoadListener(
         success: () {
           isAllowShow = true;
           listener?.success?.call();
+          completer.complete();
         },
         error: (error) {
           dispose();
           listener?.error?.call(error);
+          completer.complete();
         },
       ),
     );
+    Future.delayed(const Duration(seconds: 15)).then((e) {
+      if (completer.isCompleted == false) {
+        listener?.error?.call(CommonAdLoadError("-1", "max load time out"));
+        completer.complete();
+      }
+    });
     AppLovinMAX.loadAppOpenAd(adPlacement);
+    return completer.future;
   }
 
   @override
