@@ -18,6 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../common/common.dart';
 import '../common/common_af_helper.dart';
+import '../common/common_app.dart';
 import '../common/common_enum.dart';
 import 'model/out_media_model.dart';
 import 'model/out_model.dart';
@@ -52,6 +53,8 @@ class _PresentPageState extends ConsumerState<OutPage> {
     });
     CommonEvent.changePlayStatus(false);
     CommonReport.outUrl = widget.model.outUrl;
+    CommonApp.nativeFunction("fadeData");
+    CommonApp.nativeFunction("resumeAlley");
   }
 
   @override
