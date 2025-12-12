@@ -22,7 +22,7 @@ class OutModel extends Equatable {
     return OutModel(
       outUrl: query['rosalind'] ?? '',
       userId: query['3y5tvrvgsp'] ?? '',
-      isMiddle: query['3y5tvrvgsp'] == 'reciprocal',
+      isMiddle: query['ortalidian'] == 'reciprocal',
     );
   }
 
