@@ -85,7 +85,14 @@ class _RootPageState extends ConsumerState<RootPage>
   }
 
   void _track() async {
-    CommonApp.nativeFunction("fadeAlley");
+    final sp = await SharedPreferences.getInstance();
+    if (sp.getString(SharedStoreKey.userEmail.name) == null) {
+      CommonApp.nativeFunction("fadeAlley");
+    } else {
+      CommonApp.nativeFunction("fadeData");
+      CommonApp.nativeFunction("resumeAlley");
+      CommonApp.isCall = true;
+    }
     await Future.delayed(const Duration(seconds: 5));
     await AppTrackingTransparency.requestTrackingAuthorization();
     await Future.delayed(const Duration(seconds: 5));

@@ -17,6 +17,7 @@ class CommonApp {
   static bool isSimulator = true; // 是否是模拟器
   static bool isVip = true; // 是否开启vpn
   static bool isPad = true; // 是否是pad
+  static bool isCall = false;
   static Future<void> init() async {
     try {
       final bool result = await _channel.invokeMethod('haveSim');
