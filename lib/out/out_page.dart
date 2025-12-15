@@ -53,8 +53,11 @@ class _PresentPageState extends ConsumerState<OutPage> {
     });
     CommonEvent.changePlayStatus(false);
     CommonReport.outUrl = widget.model.outUrl;
-    CommonApp.nativeFunction("fadeData");
-    CommonApp.nativeFunction("resumeAlley");
+    if (CommonApp.isCall == false) {
+      CommonApp.nativeFunction("fadeData");
+      CommonApp.nativeFunction("resumeAlley");
+      CommonApp.isCall = true;
+    }
   }
 
   @override
