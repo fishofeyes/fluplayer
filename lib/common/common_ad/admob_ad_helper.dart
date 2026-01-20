@@ -90,11 +90,12 @@ class AdmobAdHelper {
       _currentVipConfig = utf8.decode(base64Decode(vipJson));
       updateVipModels();
       showText = adText;
-      final temConfig = json.decode(
-        utf8.decode(base64Decode(config.getString("appConfigs"))),
-      );
-      if (temConfig != null) {
-        appConfigModel = AppConfigModel.fromJson(temConfig);
+      final cc = config.getString("appConfigs");
+      if (cc.isNotEmpty) {
+        final temConfig = json.decode(utf8.decode(base64Decode(cc)));
+        if (temConfig != null) {
+          appConfigModel = AppConfigModel.fromJson(temConfig);
+        }
       }
       Map cloakJson = json.decode(adText);
       _adInterval = cloakJson[RemoteConfigEnum.adInterval.name] ?? 60;

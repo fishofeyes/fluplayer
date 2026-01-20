@@ -26,7 +26,11 @@ class AdmobAdHelper2 {
   void refreshADConfig() {
     try {
       final config = FirebaseRemoteConfig.instance;
-      final adRemoteJson = config.getString(idKey);
+      String adRemoteJson = config.getString(idKey);
+      // if (kDebugMode) {
+      //   adRemoteJson =
+      //       'ewogICAgIm9wZW4iOiBbCiAgICAgICAgewogICAgICAgICAgICAiaWQiOiAiY2EtYXBwLXB1Yi0zOTQwMjU2MDk5OTQyNTQ0LzM5ODY2MjQ1MTEiLAogICAgICAgICAgICAiaWQyIjogImNhLWFwcC1wdWItMzk0MDI1NjA5OTk0MjU0NC8yNTIxNjkzMzE2IiwKICAgICAgICAgICAgInNvcnQiOiAxLAogICAgICAgICAgICAic291cmNlIjogImFkbW9iIiwKICAgICAgICAgICAgIm5hbWUiOiAibmF0aXZlIgogICAgICAgIH0KICAgIF0KfQ==';
+      // }
       if (adRemoteJson.isEmpty) {
         adList.clear();
         return;
