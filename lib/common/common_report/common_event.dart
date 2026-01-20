@@ -85,6 +85,7 @@ class CommonEvent {
   ) async {
     Future.delayed(const Duration(seconds: 2)).then((e) {
       admobHelper2.loadOpenAd(value: value);
+      admobHelper3.loadOpenAd(value: value);
     });
     switch (position) {
       case AdPositionEnum.open:

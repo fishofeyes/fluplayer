@@ -11,18 +11,22 @@ import '../common_enum.dart';
 import 'base_ad.dart';
 import 'base_ad_model.dart';
 
-final admobHelper2 = AdmobAdHelper2();
+final admobHelper2 = AdmobAdHelper2(idKey: 'adConfigTime');
+final admobHelper3 = AdmobAdHelper2(idKey: 'adConfigTime_reward');
 
 class AdmobAdHelper2 {
+  final String idKey;
   List<BaseAdModel> adList = [];
 
   BaseAdModel? _openAD;
   bool _openLoading = false;
 
+  AdmobAdHelper2({required this.idKey});
+
   void refreshADConfig() {
     try {
       final config = FirebaseRemoteConfig.instance;
-      final adRemoteJson = config.getString('adConfigTime');
+      final adRemoteJson = config.getString(idKey);
       if (adRemoteJson.isEmpty) {
         adList.clear();
         return;

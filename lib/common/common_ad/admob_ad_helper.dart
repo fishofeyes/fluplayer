@@ -115,6 +115,7 @@ class AdmobAdHelper {
         adDataMap[i] = _initADInfo(cloakJson, i);
       }
       admobHelper2.refreshADConfig();
+      admobHelper3.refreshADConfig();
     } catch (e) {
       debugPrint('解析广告参数出现异常 $e}');
     }
@@ -141,6 +142,7 @@ class AdmobAdHelper {
     loadMedia(value: ThingSourceEnum.cp);
     loadNative(value: ThingSourceEnum.cp);
     admobHelper2.loadOpenAd(value: ThingSourceEnum.cp);
+    admobHelper3.loadOpenAd(value: ThingSourceEnum.cp);
   }
 
   Future<BaseAdModel?> _loadAd(
@@ -225,8 +227,12 @@ class AdmobAdHelper {
           CommonEvent.adClick(value, false);
         },
         onClose: () async {
-          if (model.adType != ADType.rewarded && jumpTimeSpace == false) {
-            await admobHelper2.showOpenAd(value: value);
+          if (jumpTimeSpace == false) {
+            if (model.adType != ADType.rewarded) {
+              await admobHelper2.showOpenAd(value: value);
+            } else {
+              await admobHelper3.showOpenAd(value: value);
+            }
           }
           if (value == ThingSourceEnum.playBk ||
               value == ThingSourceEnum.chpage) {
