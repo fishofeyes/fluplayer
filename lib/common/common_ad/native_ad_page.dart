@@ -19,12 +19,20 @@ class _NativeAdPageState extends State<NativeAdPage>
   Timer? _timer;
   int total = 10;
   bool mayClickAd = false;
+  StreamSubscription<bool>? cancel;
   @override
   void initState() {
     super.initState();
     total = admobHelper.nativeShowTime;
     mayClickAd = Random().nextDouble() < admobHelper.nativeMayClick;
     _beginTimer();
+    cancel = admobHelper.closeNativeAdController.stream.listen((e) {
+      if (mounted) {
+        setState(() {
+          mayClickAd = false;
+        });
+      }
+    });
   }
 
   void _beginTimer() {
@@ -42,24 +50,9 @@ class _NativeAdPageState extends State<NativeAdPage>
     }
   }
 
-  void _initClose() {
-    nativeAdCloseAction = () {
-      if (mounted) {
-        setState(() {
-          mayClickAd = false;
-        });
-      }
-    };
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _initClose();
-  }
-
   @override
   void dispose() {
+    cancel?.cancel();
     _timer?.cancel();
     _timer = null;
     super.dispose();

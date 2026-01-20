@@ -17,31 +17,23 @@ class NativeAdPage2 extends StatefulWidget {
 class _NativeAdPageState extends State<NativeAdPage2>
     with AutomaticKeepAliveClientMixin {
   bool mayClickAd = false;
+  StreamSubscription<bool>? cancel;
   @override
   void initState() {
     super.initState();
     mayClickAd = Random().nextDouble() < admobHelper.playVideoClickAdRate;
-    _initClose();
-  }
-
-  void _initClose() {
-    nativeAdPlayVideoCloseAction = () {
+    cancel = admobHelper.closeNativeAdController.stream.listen((e) {
       if (mounted) {
         setState(() {
           mayClickAd = false;
         });
       }
-    };
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _initClose();
+    });
   }
 
   @override
   void dispose() {
+    cancel?.cancel();
     super.dispose();
   }
 

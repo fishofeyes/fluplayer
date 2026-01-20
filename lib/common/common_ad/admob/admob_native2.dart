@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:fluplayer/common/common.dart';
+import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -66,7 +67,7 @@ class AdmobNativeLoader2 extends BaseAd {
         showListener?.success?.call();
       },
       onAdClicked: (ad) {
-        nativeAdPlayVideoCloseAction?.call();
+        admobHelper.closeNativeAdController.add(true);
         showListener?.onClick?.call();
       },
       onAdClosed: (e) {
