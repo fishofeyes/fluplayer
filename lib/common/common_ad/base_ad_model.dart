@@ -16,6 +16,7 @@ class BaseAdModel {
   AdPositionEnum position = AdPositionEnum.open;
   ADType adType = ADType.open;
   String id = '';
+  String? id2;
   int sort = 1;
   int loadADTime = 0;
   bool isAdmob = true;
@@ -25,11 +26,13 @@ class BaseAdModel {
     required this.adLoader,
     required this.position,
     required this.adType,
+    this.id2,
   });
 
   BaseAdModel.fromMap(Map map, AdPositionEnum type) {
     sort = map['sort'] ?? 1;
     id = map['id'] ?? '';
+    id2 = map['id2'];
     isAdmob = map['source'] == 'admob';
     adType = ADType.values.firstWhere(
       (e) => e.toString() == 'ADType.${map['name']}',
@@ -61,6 +64,7 @@ class BaseAdModel {
           //     .logEvent(name: 'ad_fail_ios', parameters: {'value': getADPositionName(), 'code': error.code});
         },
       ),
+      nativeId: id2,
     );
     return loadCompleter.future;
   }

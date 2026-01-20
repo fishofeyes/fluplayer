@@ -12,6 +12,7 @@ class MaxOpenLoader extends BaseAd {
   Future<void> loadAD(
     String adPlacement, {
     CommAdLoadListener? listener,
+    String? nativeId,
   }) async {
     adId = adPlacement;
     final completer = Completer<void>();
@@ -49,10 +50,10 @@ class MaxOpenLoader extends BaseAd {
     maxHelper.addShowListener(
       adUnitId: adId!,
       onShow: CommAdShowListener(
-        success: () {
+        success: (e) {
           isADShowProcess = true;
           isAllowShow = false;
-          listener?.success?.call();
+          listener?.success?.call(e);
         },
         error: (error) {
           dispose();

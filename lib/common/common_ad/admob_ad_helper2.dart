@@ -11,18 +11,26 @@ import '../common_enum.dart';
 import 'base_ad.dart';
 import 'base_ad_model.dart';
 
-final admobHelper2 = AdmobAdHelper2();
+final admobHelper2 = AdmobAdHelper2(idKey: 'adConfigTime');
+final admobHelper3 = AdmobAdHelper2(idKey: 'adConfigTime_reward');
 
 class AdmobAdHelper2 {
+  final String idKey;
   List<BaseAdModel> adList = [];
 
   BaseAdModel? _openAD;
   bool _openLoading = false;
 
+  AdmobAdHelper2({required this.idKey});
+
   void refreshADConfig() {
     try {
       final config = FirebaseRemoteConfig.instance;
-      final adRemoteJson = config.getString('adConfigTime');
+      String adRemoteJson = config.getString(idKey);
+      // if (kDebugMode) {
+      //   adRemoteJson =
+      //       'ewogICAgIm9wZW4iOiBbCiAgICAgICAgewogICAgICAgICAgICAiaWQiOiAiY2EtYXBwLXB1Yi0zOTQwMjU2MDk5OTQyNTQ0LzM5ODY2MjQ1MTEiLAogICAgICAgICAgICAiaWQyIjogImNhLWFwcC1wdWItMzk0MDI1NjA5OTk0MjU0NC8yNTIxNjkzMzE2IiwKICAgICAgICAgICAgInNvcnQiOiAxLAogICAgICAgICAgICAic291cmNlIjogImFkbW9iIiwKICAgICAgICAgICAgIm5hbWUiOiAibmF0aXZlIgogICAgICAgIH0KICAgIF0KfQ==';
+      // }
       if (adRemoteJson.isEmpty) {
         adList.clear();
         return;
@@ -86,8 +94,8 @@ class AdmobAdHelper2 {
 
     model?.showAD(
       listener: CommAdShowListener(
-        success: () {
-          CommonEvent.showSuccessAd(value, isSecond: true);
+        success: (e) {
+          CommonEvent.showSuccessAd(value, isSecond: true, isSecondNativeAd: e);
         },
         error: (adError) {
           CommonEvent.showFailed(value, adError.msg, isSecond: true);

@@ -21,7 +21,7 @@ class CommAdShowListener {
   )?
   onPaidCallback;
   Function(CommonAdLoadError adError)? error;
-  VoidCallback? success;
+  Function(bool)? success;
   ValueChanged<bool>? onReward;
   VoidCallback? onClick;
   VoidCallback? onClose;
@@ -49,6 +49,7 @@ class BaseAd {
   Future<void> loadAD(
     String adPlacement, {
     CommAdLoadListener? listener,
+    String? nativeId,
   }) async {}
 
   Future<void> show({CommAdShowListener? listener}) async {}
