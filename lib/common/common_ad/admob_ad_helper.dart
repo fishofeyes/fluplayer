@@ -42,6 +42,7 @@ class AdmobAdHelper {
   String adConfigText = '';
   int launchTime = 7; //首次打开广告延迟展示时间 秒
   double nativeMayClick = 0.5; //原生广告关闭率
+  double closeAdRate = 0.5; //原生广告关闭率
   int nativeShowTime = 3; //原生广告展示时间 秒
   AppConfigModel appConfigModel = AppConfigModel();
   int lastShowTime = 0;
@@ -108,6 +109,7 @@ class AdmobAdHelper {
       playVideoClickAdRate = double.parse(
         "${cloakJson["playVideoClickAdRate"] ?? 0}",
       ); // 点击广告概率
+      closeAdRate = double.parse("${cloakJson["closeAdRate"] ?? 0}");
       // int playVideoN = 5; //n默认为5；y默认值修改为10s
       // int playVideoY = 10;// 播放到第几秒展示广告
       // int playVideoMethod = 0; //0按时间 1按次数
@@ -211,9 +213,13 @@ class AdmobAdHelper {
 
     model?.showAD(
       listener: CommAdShowListener(
-        success: () {
+        success: (e) {
           adShowing = true;
-          CommonEvent.showSuccessAd(value, isSecond: false);
+          CommonEvent.showSuccessAd(
+            value,
+            isSecond: false,
+            isSecondNativeAd: e,
+          );
           debugPrint('广告展示成功 ${model.id} ${model.position} ${model.adType}');
         },
         error: (adError) async {

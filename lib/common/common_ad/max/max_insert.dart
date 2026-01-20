@@ -12,6 +12,7 @@ class MaxInterstitialLoader extends BaseAd {
   Future<void> loadAD(
     String adPlacement, {
     CommAdLoadListener? listener,
+    String? nativeId,
   }) async {
     final completer = Completer<void>();
     adId = adPlacement;
@@ -50,10 +51,10 @@ class MaxInterstitialLoader extends BaseAd {
     maxHelper.addShowListener(
       adUnitId: adId!,
       onShow: CommAdShowListener(
-        success: () {
+        success: (e) {
           isADShowProcess = true;
           isAllowShow = false;
-          listener?.success?.call();
+          listener?.success?.call(e);
         },
         error: (error) {
           dispose();

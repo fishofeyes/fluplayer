@@ -32,7 +32,7 @@ class MaxAdHelper {
           );
         },
         onAdDisplayedCallback: (ad) {
-          show[ad.adUnitId]?.success?.call();
+          show[ad.adUnitId]?.success?.call(false);
           show[ad.adUnitId]?.onPaidCallback?.call(
             ad.revenue * 1000000,
             null,
@@ -64,7 +64,7 @@ class MaxAdHelper {
           );
         },
         onAdDisplayedCallback: (ad) {
-          show[ad.adUnitId]?.success?.call();
+          show[ad.adUnitId]?.success?.call(false);
           show[ad.adUnitId]?.onPaidCallback?.call(
             ad.revenue * 1000000,
             null,
@@ -99,7 +99,7 @@ class MaxAdHelper {
           );
         },
         onAdDisplayedCallback: (ad) {
-          show[ad.adUnitId]?.success?.call();
+          show[ad.adUnitId]?.success?.call(false);
           show[ad.adUnitId]?.onPaidCallback?.call(
             ad.revenue * 1000000,
             null,

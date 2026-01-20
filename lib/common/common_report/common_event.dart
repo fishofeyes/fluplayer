@@ -35,11 +35,19 @@ class CommonEvent {
     videoPlayController.add(isPlay);
   }
 
-  static void showSuccessAd(ThingSourceEnum value, {bool isSecond = false}) {
+  static void showSuccessAd(
+    ThingSourceEnum value, {
+    bool isSecond = false,
+    required bool isSecondNativeAd,
+  }) {
     changePlayStatus(false);
     CommonReport.eventThings(
       ThingEnum.adShowPqEpOslacement,
-      data: {"PuUTVimak": value.value, "gNAuA": isSecond ? 2 : 1},
+      data: {
+        "PuUTVimak": value.value,
+        "gNAuA": isSecond ? 2 : 1,
+        if (isSecondNativeAd) "QcaFyP3": 2,
+      },
     ); // 统一上报到一个事件
   }
 

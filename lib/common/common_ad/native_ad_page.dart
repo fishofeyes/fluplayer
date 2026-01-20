@@ -8,7 +8,8 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class NativeAdPage extends StatefulWidget {
   final NativeAd ad;
-  const NativeAdPage({super.key, required this.ad});
+  final NativeAd? ad2;
+  const NativeAdPage({super.key, required this.ad, this.ad2});
 
   @override
   State<NativeAdPage> createState() => _NativeAdPageState();
@@ -20,11 +21,18 @@ class _NativeAdPageState extends State<NativeAdPage>
   int total = 10;
   bool mayClickAd = false;
   StreamSubscription<bool>? cancel;
+  final rad = Random();
+  bool isShowTop = true;
   @override
   void initState() {
     super.initState();
     total = admobHelper.nativeShowTime;
-    mayClickAd = Random().nextDouble() < admobHelper.nativeMayClick;
+    if (widget.ad2 != null) {
+      mayClickAd = rad.nextDouble() < admobHelper.closeAdRate;
+      isShowTop = rad.nextBool();
+    } else {
+      mayClickAd = rad.nextDouble() < admobHelper.nativeMayClick;
+    }
     _beginTimer();
     cancel = admobHelper.closeNativeAdController.stream.listen((e) {
       if (mounted) {
@@ -66,10 +74,10 @@ class _NativeAdPageState extends State<NativeAdPage>
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          spacing: 25,
+          runSpacing: 25,
           children: [
             Stack(
               children: [
@@ -84,7 +92,7 @@ class _NativeAdPageState extends State<NativeAdPage>
                 ),
                 Positioned(
                   child: Visibility(
-                    visible: total == 0,
+                    visible: total == 0 && isShowTop,
                     child: mayClickAd
                         ? IgnorePointer(
                             ignoring: true,
@@ -134,7 +142,46 @@ class _NativeAdPageState extends State<NativeAdPage>
                 ),
               ],
             ),
-            SizedBox(height: 24),
+            if (widget.ad2 != null)
+              Stack(
+                children: [
+                  Container(
+                    width: adWidth,
+                    height: adWidth,
+                    alignment: Alignment.bottomCenter,
+                    child: AdWidget(
+                      ad: widget.ad2!,
+                      key: ValueKey(widget.ad2!.adUnitId),
+                    ),
+                  ),
+                  Positioned(
+                    child: Visibility(
+                      visible: total == 0 && isShowTop == false,
+                      child: mayClickAd
+                          ? IgnorePointer(
+                              ignoring: true,
+                              child: Container(
+                                color: Colors.black45,
+                                child: const Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          : InkWell(
+                              onTap: () => Navigator.pop(context),
+                              child: Container(
+                                color: Colors.black45,
+                                child: const Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                    ),
+                  ),
+                ],
+              ),
           ],
         ),
       ),

@@ -90,8 +90,8 @@ class AdmobAdHelper2 {
 
     model?.showAD(
       listener: CommAdShowListener(
-        success: () {
-          CommonEvent.showSuccessAd(value, isSecond: true);
+        success: (e) {
+          CommonEvent.showSuccessAd(value, isSecond: true, isSecondNativeAd: e);
         },
         error: (adError) {
           CommonEvent.showFailed(value, adError.msg, isSecond: true);
