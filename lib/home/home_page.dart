@@ -1,5 +1,6 @@
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
+import 'package:fluplayer/common/common_ad/admob_ad_helper2.dart';
 import 'package:fluplayer/common/common_report/common_event.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/view/background_title.dart';
@@ -67,20 +68,22 @@ class _HomePageState extends ConsumerState<HomePage>
                 ),
                 const RecommendHistoryGroup(),
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
                     if (kDebugMode) {
-                      showDialog(
-                        context: commonContext!,
-                        barrierDismissible: false,
-                        useSafeArea: false,
-                        builder: (ctx) => OutPage(
-                          model: OutModel(
-                            outUrl: "1983081451133997057",
-                            userId: "1746775020438425601",
-                            isMiddle: false,
-                          ),
-                        ),
-                      );
+                      await admobHelper3.loadOpenAd(value: ThingSourceEnum.pause);
+                      admobHelper3.showOpenAd(value: ThingSourceEnum.pause);
+                      // showDialog(
+                      //   context: commonContext!,
+                      //   barrierDismissible: false,
+                      //   useSafeArea: false,
+                      //   builder: (ctx) => OutPage(
+                      //     model: OutModel(
+                      //       outUrl: "1983081451133997057",
+                      //       userId: "1746775020438425601",
+                      //       isMiddle: false,
+                      //     ),
+                      //   ),
+                      // );
                     }
                   },
                   child: const BackgroundTitleView(title: 'All videos'),

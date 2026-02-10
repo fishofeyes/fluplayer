@@ -17,7 +17,7 @@ void main() async {
   await CommonApp.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await CommonHive.init();
-  admobHelper.init();
+  await admobHelper.init();
 
   runApp(ProviderScope(child: RootApp()));
 }

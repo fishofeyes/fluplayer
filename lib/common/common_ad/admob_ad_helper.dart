@@ -145,7 +145,7 @@ class AdmobAdHelper {
     loadMedia(value: ThingSourceEnum.cp);
     loadNative(value: ThingSourceEnum.cp);
     admobHelper2.loadOpenAd(value: ThingSourceEnum.cp);
-    admobHelper3.loadOpenAd(value: ThingSourceEnum.cp);
+    Future.delayed(const Duration(seconds: 1)).then((e) => admobHelper3.loadOpenAd(value: ThingSourceEnum.cp));
   }
 
   Future<BaseAdModel?> _loadAd(
