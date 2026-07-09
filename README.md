@@ -18,3 +18,11 @@ samples, guidance on mobile development, and a full API reference.
 flutter build ipa 
 xcrun altool --upload-app --type ios -f build/ios/ipa/*.ipa --apiKey 8N8WJHZ553 --apiIssuer 41f76a5b-7758-477d-98fc-b93b8a4b6bd0
 ```
+
+```shell
+flutter build appbundle --obfuscate --split-debug-info=symbolapk
+```
+
+```shell
+flutter build apk
+```
