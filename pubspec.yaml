@@ -55,6 +55,7 @@ dependencies:
   uuid: ^4.5.1
   wakelock_plus: ^1.2.11
   flutter_native_splash: ^2.4.6
+  gradient_borders: ^1.0.4
 
 dev_dependencies:
   flutter_test:

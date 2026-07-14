@@ -33,12 +33,12 @@ class ChooseMediaPage extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 14),
-                const Text(
+                 Text(
                   "Import from system file",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    color: Colors.white.withValues(alpha: .75),
                   ),
                 ),
                 const SizedBox(height: 40),

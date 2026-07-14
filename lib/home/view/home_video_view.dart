@@ -5,6 +5,7 @@ import 'package:fluplayer/common/common_format.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:fluplayer/home/view/media_info.dart';
 import 'package:flutter/material.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
 class HomeVideoView extends StatelessWidget {
   final HomeVideoModel model;
@@ -18,15 +19,25 @@ class HomeVideoView extends StatelessWidget {
       child: Container(
         height: 208,
         decoration: BoxDecoration(
+          // gradient: LinearGradient(
+          //   colors: [
+          //     Color(0xffffbb7b).withValues(alpha: 0),
+          //     Color(0xffff9f45).withValues(alpha: 0.2),
+          //   ],
+          //   begin: Alignment.topCenter,
+          //   end: Alignment.bottomCenter,
+          // ),
           borderRadius: BorderRadius.circular(6),
-          gradient: LinearGradient(
-            colors: [
-              Color(0xffffbb7b).withValues(alpha: 0),
-              Color(0xffff9f45).withValues(alpha: 0.2),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          // border: Border.all(width: 1, color: Color(0xffff9f45).withValues(alpha: 0.2)),
+          border: GradientBoxBorder(gradient: LinearGradient(
+              colors: [
+                Color(0xffffbb7b).withValues(alpha: 0),
+                Color(0xffff9f45).withValues(alpha: 0.2),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),),
+          color: Color(0xff211102),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

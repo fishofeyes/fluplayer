@@ -13,54 +13,58 @@ class HomeHistoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => onTap?.call(model),
-      child: Container(
-        margin: const EdgeInsets.only(right: 10),
-        width: 280,
-        decoration: BoxDecoration(
+      child: Padding(
+        padding: const EdgeInsets.only(right: 10),
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
-          image: DecorationImage(
-            image: FileImage(File(model.face ?? '')),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: ClipRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: Container(
-                    height: 44,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xffFFDBB9).withValues(alpha: 0),
-                          Color(0xffA04D00).withValues(alpha: 0.45),
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
+          child: Container(
+            width: 280,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: FileImage(File(model.face ?? '')),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: ClipRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Container(
+                        height: 44,
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xffFFDBB9).withValues(alpha: 0),
+                              Color(0xffA04D00).withValues(alpha: 0.45),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                        ),
+                        child: Text(
+                          model.name,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                            height: 14 / 12,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      model.name,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                        height: 14 / 12,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
