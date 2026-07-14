@@ -26,3 +26,7 @@ flutter build appbundle --obfuscate --split-debug-info=symbolapk
 ```shell
 flutter build apk
 ```
+
+```shell
+keytool -genkey -alias fluplayer -keyalg RSA -keysize 2048 -validity 36500 -keystore fluplayer.keystore
+```
