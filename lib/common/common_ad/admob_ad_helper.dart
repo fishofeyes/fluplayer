@@ -76,7 +76,7 @@ class AdmobAdHelper {
 
   void updateVipModels() {
     if (_currentVipConfig.isEmpty) return;
-    commonRef?.read(vipProvider.notifier).init(_currentVipConfig);
+    // commonRef?.read(vipProvider.notifier).init(_currentVipConfig);
   }
 
   void refreshADConfig() {

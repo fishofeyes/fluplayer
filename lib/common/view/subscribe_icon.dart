@@ -13,15 +13,17 @@ class SubscribeIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => commonPush(context, VipPage(isAuto: false, source: source)),
-      child: Padding(
-        padding: padding,
-        child: Align(
-          alignment: Alignment.centerRight,
-          child: Image.asset("assets/pro_icon.png", height: 22),
-        ),
-      ),
-    );
+    return SizedBox();
+    //
+    // return InkWell(
+    //   onTap: () => commonPush(context, VipPage(isAuto: false, source: source)),
+    //   child: Padding(
+    //     padding: padding,
+    //     child: Align(
+    //       alignment: Alignment.centerRight,
+    //       child: Image.asset("assets/pro_icon.png", height: 22),
+    //     ),
+    //   ),
+    // );
   }
 }
