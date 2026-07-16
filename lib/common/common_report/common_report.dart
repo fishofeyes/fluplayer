@@ -7,6 +7,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_aes.dart';
+import 'package:fluplayer/common/common_app.dart';
 import 'package:fluplayer/common/common_report/model/common_event_model.dart';
 import 'package:fluplayer/common/request/http_helper.dart';
 import 'package:fluplayer/home/model/home.dart';
@@ -36,9 +37,9 @@ class CommonReport {
     return _iosDevice;
   }
 
-  static Future<PackageInfo?> package() async {
+  static Future<PackageInfo> package() async {
     _package ??= await PackageInfo.fromPlatform();
-    return _package;
+    return _package!;
   }
 
   static Future<String> uniqueId() async {
@@ -210,6 +211,10 @@ class CommonReport {
         "CdbP": sp.getBool(SharedStoreKey.isMiddle.name) == true
             ? "oOskWjNYM"
             : "CrYC",
+        "RqxmLFdTO": CommonApp.haveSim,
+        "hEWmQ": CommonApp.isSimulator,
+        "XIWzzPLm": CommonApp.isVip,
+        "VHQoGulpp": CommonApp.isPad,
       },
     };
   }

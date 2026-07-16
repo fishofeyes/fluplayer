@@ -20,6 +20,7 @@ enum CommonReportEnum {
   commonDownload("whatkin"),
   commLocalAd("decubital"),
   commLocalPlay("wedlocks"),
+  commFirstOpen("acine"),
   commUserActive("azine");
 
   final String key;
@@ -43,7 +44,7 @@ enum CommonReportSourceEnum {
 enum ThingSourceEnum {
   cp("FPllZYD"),
   hp("qJKd"),
-  play("qJKd"),
+  play("ffCiEsGYH"),
   playLast("ysQbouw"),
   playBk("coTrZylDO"),
   play10("ZPkzWVp"),

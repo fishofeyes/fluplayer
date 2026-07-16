@@ -98,7 +98,7 @@ class Recommend extends _$Recommend {
         isReport = false;
         CommonReport.eventThings(
           ThingEnum.homeChan8FvYXnelExpose,
-          data: {"NTeYg": showHistory.length},
+          data: {"TTdYTwdcUy": state.history.length},
         );
       }
       if (showHistory.length < 3) {

@@ -9,6 +9,7 @@ class AdmobInterLoader extends BaseAd {
   Future<void> loadAD(
     String adPlacement, {
     CommAdLoadListener? listener,
+    String? nativeId,
   }) async {
     // await admobManager.admobInitFuture.future;
     await InterstitialAd.load(
@@ -36,7 +37,7 @@ class AdmobInterLoader extends BaseAd {
     _ad?.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (ad) {
         isADShowProcess = true;
-        listener?.success?.call();
+        listener?.success?.call(false);
       },
       onAdFailedToShowFullScreenContent: (ad, error) {
         isADShowProcess = false;

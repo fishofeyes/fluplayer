@@ -46,6 +46,7 @@ class RecommendHistory extends StatelessWidget {
               userId: model.uid,
               isMiddle: model.isMiddle,
             ),
+            sourch: isHome ? "UWMe" : "oQWnnODAYl",
           ),
         );
       },

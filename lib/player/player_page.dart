@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
+import 'package:fluplayer/common/common_ad/native_ad_page2.dart';
 import 'package:fluplayer/common/common_enum.dart';
 import 'package:fluplayer/common/common_report/common_event.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
@@ -14,6 +15,7 @@ import 'package:fluplayer/player/view/play_list.dart';
 import 'package:fluplayer/player/view/player_controller.dart';
 import 'package:fluplayer/player/view/player_forward.dart';
 import 'package:fluplayer/player/view/player_media.dart';
+import 'package:fluplayer/player/view/video_loading.dart';
 import 'package:fluplayer/player/view/video_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +56,9 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   bool isLoading = true;
   bool isFirstOpen = true;
   StreamSubscription? playStatus;
+  int playCount = 0;
+  int playCurrIdx = 0;
+  bool isWillShowPlayAd = false;
   @override
   void initState() {
     super.initState();
@@ -76,6 +81,9 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         _controller?.pause();
       }
     });
+    if (admobHelper.playVideoMethod == 1) {
+      admobHelper.loadPlayVideo(value: ThingSourceEnum.pause);
+    }
   }
 
   @override
@@ -164,6 +172,29 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     return res;
   }
 
+  Future<bool> _showAd2(ThingSourceEnum value) async {
+    if (isWillShowPlayAd) return false;
+    isWillShowPlayAd = true;
+    late bool res;
+    if (model.isMiddle == null) {
+      res = await CommonEvent.showAd(AdPositionEnum.playVideo, value);
+    } else {
+      res = await CommonEvent.showAd(
+        AdPositionEnum.playVideo,
+        value,
+        fId: model.id,
+        outUrl: model.uidUrl,
+        isMiddle: model.isMiddle,
+        source: widget.place,
+      );
+    }
+    isWillShowPlayAd = false;
+    if (res) {
+      playCount = 1;
+    }
+    return res;
+  }
+
   void _initVideo() async {
     _controller?.dispose();
     _controller = null;
@@ -202,20 +233,28 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           setState(() {
             _isVisible = true;
           });
-          ref.read(playProvider.notifier).nextModel(true);
+          ref.read(playProvider.notifier).nextModel(true, false);
         }
         if (_controller != null) {
-          progress =
-              _controller!.value.position.inMilliseconds /
-              _controller!.value.duration.inMilliseconds;
-          if (_controller!.value.position.inSeconds ==
-              admobHelper.mediaPlayPoint) {
-            _loadAd(ThingSourceEnum.play10);
-            _loadAd(ThingSourceEnum.play10);
+          if (admobHelper.playVideoMethod == 0) {
+            progress =
+                _controller!.value.position.inMilliseconds /
+                _controller!.value.duration.inMilliseconds;
+            if (_controller!.value.position.inSeconds ==
+                admobHelper.mediaPlayPoint) {
+              _loadAd(ThingSourceEnum.play10);
+              _showAd(ThingSourceEnum.play10);
+            }
+          } else {
+            final sec = _controller?.value.position.inSeconds ?? 0;
+            if (sec >= admobHelper.playVideoY &&
+                playCount >= admobHelper.playVideoN) {
+              _showAd2(ThingSourceEnum.pause);
+            }
           }
         }
       });
-      if (model.position > 0 && model.position < 0.9) {
+      if (model.position > 0 && model.position < 0.8) {
         await _controller!.seekTo(
           Duration(
             milliseconds:
@@ -239,11 +278,11 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           _isVisible = true;
           error = "Failed to load video";
         });
+        CommonReport.eventThings(
+          ThingEnum.playrrXujFail,
+          data: {"PuUTVimak": "$e"},
+        );
       }
-      CommonReport.eventThings(
-        ThingEnum.playrrXujFail,
-        data: {"PuUTVimak": "$e"},
-      );
       print("video play err: $e");
     }
   }
@@ -353,6 +392,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       if (newValue.id != model.id || isFirstOpen) {
         isFirstOpen = false;
         model = ref.read(playProvider.notifier).getModel();
+        playCount += 1;
         _initVideo();
       }
     });
@@ -385,7 +425,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           ),
           Visibility(
             visible: _isVisible,
-            child: VideoTitle(name: model.name, onList: _showList),
+            child: VideoTitle(name: model.name),
           ),
           Visibility(
             visible: _isVisible,
@@ -393,8 +433,11 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
               controller: _controller,
               onRotate: _onRotate,
               isLast: state.isLast,
+              onList: _showList,
               onLast: () {
-                ref.read(playProvider.notifier).nextModel(true);
+                _loadAd(ThingSourceEnum.playLast);
+                _showAd(ThingSourceEnum.playLast);
+                ref.read(playProvider.notifier).nextModel(true, true);
               },
             ),
           ),
@@ -436,13 +479,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           ),
           Positioned.fill(
             top: 100,
-            child: Visibility(
-              visible: isLoading,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 100.0),
-                child: CupertinoActivityIndicator(color: Colors.white),
-              ),
-            ),
+            child: Visibility(visible: isLoading, child: VideoLoading()),
           ),
           Positioned.fill(
             child: Visibility(

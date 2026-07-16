@@ -9,7 +9,7 @@ bool screenPortraitUp = true;
 int playerForward = 0;
 double playerBrightness = 0;
 double playerVolume = 0;
-Function()? nativeAdCloseAction;
+Function(bool isPage, bool isAd)? autoJumpVip;
 RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
 enum SharedStoreKey {
@@ -22,6 +22,7 @@ enum SharedStoreKey {
   newUser,
   userDistinctId,
   isInstall,
+  firstTimeOpen,
 }
 
 Future<dynamic> commonPush(BuildContext context, Widget page) {

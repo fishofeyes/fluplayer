@@ -17,6 +17,8 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		C3ACE8A92E70009D00635591 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3ACE8A82E70009D00635591 /* GoogleService-Info.plist */; };
+		C3ACE8AB2EAB585300635591 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3ACE8AA2EAB585300635591 /* StoreKit.framework */; };
+		C3ACE8AD2EEBE47900635591 /* InstantSupervisor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3ACE8AC2EEBE47900635591 /* InstantSupervisor.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +70,8 @@
 		A2D4031F3E56542F21FC9233 /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
 		C3ACE8A52E6FF5E900635591 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		C3ACE8A82E70009D00635591 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C3ACE8AA2EAB585300635591 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		C3ACE8AC2EEBE47900635591 /* InstantSupervisor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = InstantSupervisor.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +79,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3ACE8AD2EEBE47900635591 /* InstantSupervisor.framework in Frameworks */,
 				3EF11FCA852486F78A8EF2EC /* Pods_Runner.framework in Frameworks */,
+				C3ACE8AB2EAB585300635591 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,8 +112,10 @@
 		1EFC94D9BE366770D2E4B2A4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C3ACE8AA2EAB585300635591 /* StoreKit.framework */,
 				7788162C1FDFAC4654C4AE90 /* Pods_Runner.framework */,
 				729E0725C2F6157DDBE8927C /* Pods_RunnerTests.framework */,
+				C3ACE8AC2EEBE47900635591 /* InstantSupervisor.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -497,6 +505,10 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = Q3KX2RASC4;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -686,6 +698,10 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = Q3KX2RASC4;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -715,6 +731,10 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = Q3KX2RASC4;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

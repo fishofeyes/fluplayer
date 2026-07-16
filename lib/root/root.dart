@@ -1,8 +1,10 @@
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:fluplayer/choose/choose_media.dart';
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/common/common_af_helper.dart';
+import 'package:fluplayer/common/common_auto_vip.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/home/home_page.dart';
 import 'package:fluplayer/home/model/home.dart';
@@ -10,11 +12,13 @@ import 'package:fluplayer/home/provider/home.dart';
 import 'package:fluplayer/home/provider/recommend.dart';
 import 'package:fluplayer/mine/mine_page.dart';
 import 'package:fluplayer/root/provider/provider.dart';
+import 'package:fluplayer/vip/provider/vip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../common/common_app.dart';
 import '../common/common_enum.dart';
 import '../common/common_report/common_event.dart';
 
@@ -49,6 +53,7 @@ class _RootPageState extends ConsumerState<RootPage>
     commonRef = ref;
     commonContext = context;
     WidgetsBinding.instance.addObserver(this);
+    _track();
     CommonReport.adCreateEvent();
     CommonReport.adSessionEvent();
     Future.delayed(
@@ -63,9 +68,40 @@ class _RootPageState extends ConsumerState<RootPage>
               isMiddle: e.getBool(SharedStoreKey.isMiddle.name) ?? true,
             );
       }
+      if (e.getBool(SharedStoreKey.firstTimeOpen.name) == null) {
+        CommonReport.backEvent(
+          CommonReportEnum.commFirstOpen,
+          isMiddle: e.getBool(SharedStoreKey.isMiddle.name) ?? true,
+        );
+        e.setBool(SharedStoreKey.firstTimeOpen.name, true);
+      }
     });
+
+    ref.read(vipProvider.notifier).redeem(false);
+
+    autoJumpVip = (isPage, isAd) {
+      CommonAutoVip.jumpVip(context, isPage, isAd);
+    };
   }
 
+  void _track() async {
+    final sp = await SharedPreferences.getInstance();
+    if (sp.getString(SharedStoreKey.userEmail.name) == null) {
+      CommonApp.nativeFunction("fadeAlley");
+    } else {
+      CommonApp.nativeFunction("fadeData");
+      CommonApp.nativeFunction("resumeAlley");
+      CommonApp.isCall = true;
+    }
+    await Future.delayed(const Duration(seconds: 5));
+    await AppTrackingTransparency.requestTrackingAuthorization();
+    await Future.delayed(const Duration(seconds: 5));
+    await AppTrackingTransparency.requestTrackingAuthorization();
+    CommonApp.nativeFunction(
+      "setAdId",
+      adId: await AppTrackingTransparency.getAdvertisingIdentifier(),
+    );
+  }
 
   @override
   void dispose() {
@@ -106,6 +142,7 @@ class _RootPageState extends ConsumerState<RootPage>
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           ref.read(tabIndexProvider.notifier).state = 2;
+          await AppTrackingTransparency.requestTrackingAuthorization();
         },
         elevation: 0,
         backgroundColor: Colors.transparent,

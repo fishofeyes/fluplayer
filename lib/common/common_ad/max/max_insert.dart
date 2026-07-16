@@ -12,7 +12,9 @@ class MaxInterstitialLoader extends BaseAd {
   Future<void> loadAD(
     String adPlacement, {
     CommAdLoadListener? listener,
+    String? nativeId,
   }) async {
+    final completer = Completer<void>();
     adId = adPlacement;
     maxHelper.addLoadListener(
       adUnitId: adPlacement,
@@ -20,14 +22,23 @@ class MaxInterstitialLoader extends BaseAd {
         success: () {
           isAllowShow = true;
           listener?.success?.call();
+          completer.complete();
         },
         error: (error) {
           dispose();
           listener?.error?.call(error);
+          completer.complete();
         },
       ),
     );
+    Future.delayed(const Duration(seconds: 15)).then((e) {
+      if (completer.isCompleted == false) {
+        listener?.error?.call(CommonAdLoadError("-1", "max load time out"));
+        completer.complete();
+      }
+    });
     AppLovinMAX.loadInterstitial(adPlacement);
+    return completer.future;
   }
 
   @override
@@ -40,10 +51,10 @@ class MaxInterstitialLoader extends BaseAd {
     maxHelper.addShowListener(
       adUnitId: adId!,
       onShow: CommAdShowListener(
-        success: () {
+        success: (e) {
           isADShowProcess = true;
           isAllowShow = false;
-          listener?.success?.call();
+          listener?.success?.call(e);
         },
         error: (error) {
           dispose();

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:fluplayer/common/common_ad/admob/admob_native.dart';
+import 'package:fluplayer/common/common_ad/admob/admob_native2.dart';
 import 'package:fluplayer/common/common_ad/max/max_open.dart';
 import 'package:flutter/material.dart';
 import 'admob/admob_insert.dart';
@@ -15,6 +16,7 @@ class BaseAdModel {
   AdPositionEnum position = AdPositionEnum.open;
   ADType adType = ADType.open;
   String id = '';
+  String? id2;
   int sort = 1;
   int loadADTime = 0;
   bool isAdmob = true;
@@ -24,11 +26,13 @@ class BaseAdModel {
     required this.adLoader,
     required this.position,
     required this.adType,
+    this.id2,
   });
 
   BaseAdModel.fromMap(Map map, AdPositionEnum type) {
     sort = map['sort'] ?? 1;
     id = map['id'] ?? '';
+    id2 = map['id2'];
     isAdmob = map['source'] == 'admob';
     adType = ADType.values.firstWhere(
       (e) => e.toString() == 'ADType.${map['name']}',
@@ -60,6 +64,7 @@ class BaseAdModel {
           //     .logEvent(name: 'ad_fail_ios', parameters: {'value': getADPositionName(), 'code': error.code});
         },
       ),
+      nativeId: id2,
     );
     return loadCompleter.future;
   }
@@ -113,6 +118,9 @@ class BaseAdModel {
         if (!isAdmob) return MaxInterstitialLoader();
         return AdmobInterLoader();
       case ADType.native:
+        if (position == AdPositionEnum.playVideo) {
+          return AdmobNativeLoader2();
+        }
         return AdmobNativeLoader();
       case ADType.rewarded:
         if (!isAdmob) return MaxRewardLoader();

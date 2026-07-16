@@ -1,4 +1,5 @@
 import 'package:fluplayer/common/common.dart';
+import 'package:fluplayer/common/common_app.dart';
 import 'package:fluplayer/common/common_val.dart';
 import 'package:fluplayer/common/view/background_title.dart';
 import 'package:fluplayer/mine/privacy_page.dart';
@@ -121,6 +122,10 @@ class _MinePageState extends State<MinePage> {
                             ],
                           ),
                         ),
+                      ),
+                      SettingsTile(
+                        title: 'Game',
+                        onTap: () => CommonApp.nativeFunction("pasteParticle"),
                       ),
                     ],
                   ),

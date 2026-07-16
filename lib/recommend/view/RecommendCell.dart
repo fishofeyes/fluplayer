@@ -10,12 +10,19 @@ import '../../out/model/out_model.dart';
 class ReCommendCell extends StatelessWidget {
   final RecommendModel model;
   final int idx;
-  const ReCommendCell({super.key, required this.model, required this.idx});
+  final Function()? onReport;
+  const ReCommendCell({
+    super.key,
+    required this.model,
+    required this.idx,
+    this.onReport,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        onReport?.call();
         commonPush(
           context,
           OutUserPage(
@@ -25,6 +32,7 @@ class ReCommendCell extends StatelessWidget {
               corver: model.cover,
             ),
             model: OutModel(userId: model.uid, isMiddle: model.isMiddle),
+            sourch: "oQWnnODAYl",
           ),
         );
       },

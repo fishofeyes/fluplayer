@@ -2,9 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper2.dart';
+import 'package:fluplayer/common/common_ad/app_config.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/common/common_ad/max_ad_helper.dart';
 import 'package:fluplayer/common/common_val.dart';
+import 'package:fluplayer/vip/provider/provider.dart';
+import 'package:fluplayer/vip/provider/vip.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -25,11 +28,13 @@ class AdmobAdHelper {
   BaseAdModel? _playerAd;
   BaseAdModel? _channelAd;
   BaseAdModel? _nativeAd;
+  BaseAdModel? _playVideoAd;
 
   bool _openLoading = false;
   bool _playerLoading = false;
   bool _channelLoading = false;
   bool _nativeLoading = false;
+  bool _playVideoLoading = false;
 
   bool adShowing = false;
   String showText = '';
@@ -37,9 +42,18 @@ class AdmobAdHelper {
   String adConfigText = '';
   int launchTime = 7; //首次打开广告延迟展示时间 秒
   double nativeMayClick = 0.5; //原生广告关闭率
+  double closeAdRate = 0.5; //原生广告关闭率
   int nativeShowTime = 3; //原生广告展示时间 秒
-
+  AppConfigModel appConfigModel = AppConfigModel();
   int lastShowTime = 0;
+  String _currentVipConfig = '';
+  int showAdTag = 0;
+  int playVideoN = 5; //n默认为5；y默认值修改为10s
+  int playVideoY = 10; // 播放到第几秒展示广告
+  double playVideoClickAdRate = 0.0; // 点击广告比例，默认1全部点击
+  int playVideoMethod = 0; //0按时间 1按次数
+  StreamController<bool> closeNativeAdController =
+      StreamController<bool>.broadcast();
 
   Future<void> init() async {
     refreshADConfig();
@@ -60,24 +74,51 @@ class AdmobAdHelper {
 
   int currentTime() => DateTime.now().millisecondsSinceEpoch;
 
+  void updateVipModels() {
+    if (_currentVipConfig.isEmpty) return;
+    commonRef?.read(vipProvider.notifier).init(_currentVipConfig);
+  }
+
   void refreshADConfig() {
     try {
       final config = FirebaseRemoteConfig.instance;
       final configJson = config.getString('adConfigJson');
+      String vipJson = config.getString('vipJson');
       String adBase64String = configJson.isEmpty ? testAdConfig : configJson;
+      vipJson = vipJson.isEmpty ? testVipJson : vipJson;
       final adText = utf8.decode(base64Decode(adBase64String));
+      _currentVipConfig = utf8.decode(base64Decode(vipJson));
+      updateVipModels();
       showText = adText;
-
+      final cc = config.getString("appConfigs");
+      if (cc.isNotEmpty) {
+        final temConfig = json.decode(utf8.decode(base64Decode(cc)));
+        if (temConfig != null) {
+          appConfigModel = AppConfigModel.fromJson(temConfig);
+        }
+      }
       Map cloakJson = json.decode(adText);
       _adInterval = cloakJson[RemoteConfigEnum.adInterval.name] ?? 60;
       mediaPlayPoint = cloakJson[RemoteConfigEnum.mediaPlayPoint.name] ?? 600;
       launchTime = cloakJson[RemoteConfigEnum.launchTime.name] ?? 7;
       nativeMayClick = cloakJson[RemoteConfigEnum.nativeMayClick.name] ?? 0.5;
       nativeShowTime = cloakJson[RemoteConfigEnum.nativeShowTime.name] ?? 3;
+      playVideoN = cloakJson["playVideoN"] ?? 5; // 第n个视频
+      playVideoY = cloakJson["playVideoY"] ?? 10; // 播放到第几秒展示广告
+      playVideoMethod = cloakJson["playVideoMethod"] ?? 0; // 广告开关
+      // playVideoMethod = 1; // 广告开关
+      playVideoClickAdRate = double.parse(
+        "${cloakJson["playVideoClickAdRate"] ?? 0}",
+      ); // 点击广告概率
+      closeAdRate = double.parse("${cloakJson["closeAdRate"] ?? 0}");
+      // int playVideoN = 5; //n默认为5；y默认值修改为10s
+      // int playVideoY = 10;// 播放到第几秒展示广告
+      // int playVideoMethod = 0; //0按时间 1按次数
       for (final i in AdPositionEnum.values) {
         adDataMap[i] = _initADInfo(cloakJson, i);
       }
       admobHelper2.refreshADConfig();
+      admobHelper3.refreshADConfig();
     } catch (e) {
       debugPrint('解析广告参数出现异常 $e}');
     }
@@ -104,6 +145,7 @@ class AdmobAdHelper {
     loadMedia(value: ThingSourceEnum.cp);
     loadNative(value: ThingSourceEnum.cp);
     admobHelper2.loadOpenAd(value: ThingSourceEnum.cp);
+    Future.delayed(const Duration(seconds: 1)).then((e) => admobHelper3.loadOpenAd(value: ThingSourceEnum.cp));
   }
 
   Future<BaseAdModel?> _loadAd(
@@ -129,18 +171,21 @@ class AdmobAdHelper {
     required ThingSourceEnum value,
     Future<bool> Function({required ThingSourceEnum value})? adLoader,
     ValueChanged<bool>? onReward,
+    bool jumpTimeSpace = false,
   }) async {
-    if (adShowing) {
+    if (adShowing || globalOpenVip || isInVipAlertPage || isInVipPage) {
       debugPrint('ad is showing');
       return false;
     }
-    final nowDate = currentTime();
-    final selfInterval = nowDate - lastShowTime;
+    if (jumpTimeSpace == false) {
+      final nowDate = currentTime();
+      final selfInterval = nowDate - lastShowTime;
 
-    if (selfInterval < _adInterval * 1000) {
-      CommonEvent.changePlayStatus(true);
-      debugPrint('间隔时间不够不展示 all $selfInterval');
-      return false;
+      if (selfInterval < _adInterval * 1000) {
+        CommonEvent.changePlayStatus(true);
+        debugPrint('间隔时间不够不展示 all $selfInterval');
+        return false;
+      }
     }
     CommonReport.eventThings(
       ThingEnum.adNee8aQdShow,
@@ -153,19 +198,29 @@ class AdmobAdHelper {
     if (!isEnable) {
       CommonEvent.showFailed(value, "no padding", isSecond: false);
       adShowing = true;
-      final r = await admobHelper2.showOpenAd(value: value);
-      if (r) {
-        lastShowTime = currentTime();
+      if (jumpTimeSpace == false) {
+        final r = await admobHelper2.showOpenAd(value: value);
+        if (r) {
+          lastShowTime = currentTime();
+        }
+        adShowing = false;
+        return r;
+      } else {
+        adShowing = false;
+        print("admob ad is not ready");
+        return false;
       }
-      adShowing = false;
-      return r;
     }
 
     model?.showAD(
       listener: CommAdShowListener(
-        success: () {
+        success: (e) {
           adShowing = true;
-          CommonEvent.showSuccessAd(value, isSecond: false);
+          CommonEvent.showSuccessAd(
+            value,
+            isSecond: false,
+            isSecondNativeAd: e,
+          );
           debugPrint('广告展示成功 ${model.id} ${model.position} ${model.adType}');
         },
         error: (adError) async {
@@ -179,11 +234,29 @@ class AdmobAdHelper {
           CommonEvent.adClick(value, false);
         },
         onClose: () async {
-          if (model.adType != ADType.rewarded) {
-            await admobHelper2.showOpenAd(value: value);
+          if (jumpTimeSpace == false) {
+            if (model.adType != ADType.rewarded) {
+              await admobHelper2.showOpenAd(value: value);
+            } else {
+              await admobHelper3.showOpenAd(value: value);
+            }
+          }
+          if (value == ThingSourceEnum.playBk ||
+              value == ThingSourceEnum.chpage) {
+            autoJumpVip?.call(true, true);
+          }
+          if (value == ThingSourceEnum.play ||
+              ThingSourceEnum.play10 == value ||
+              ThingSourceEnum.playLast == value) {
+            showAdTag += 1;
+            if (showAdTag % 2 == 0) {
+              autoJumpVip?.call(false, true);
+            }
           }
           adShowing = false;
-          lastShowTime = currentTime();
+          if (jumpTimeSpace == false) {
+            lastShowTime = currentTime();
+          }
           closeCompleter.complete(true);
           CommonEvent.onDismiss();
           adLoader?.call(value: value);
@@ -227,7 +300,7 @@ class AdmobAdHelper {
       value: value,
       load: CommAdLoadListener(
         error: (error) {
-          CommonEvent.loadFail(value, false);
+          CommonEvent.loadFail(value, false, error.code);
         },
       ),
     );
@@ -262,7 +335,7 @@ class AdmobAdHelper {
       value: value,
       load: CommAdLoadListener(
         error: (error) {
-          CommonEvent.loadFail(value, false);
+          CommonEvent.loadFail(value, false, error.code);
         },
       ),
     );
@@ -291,7 +364,7 @@ class AdmobAdHelper {
       value: value,
       load: CommAdLoadListener(
         error: (error) {
-          CommonEvent.loadFail(value, false);
+          CommonEvent.loadFail(value, false, error.code);
         },
       ),
     );
@@ -317,7 +390,7 @@ class AdmobAdHelper {
       value: value,
       load: CommAdLoadListener(
         error: (e) {
-          CommonEvent.loadFail(value, false);
+          CommonEvent.loadFail(value, false, e.code);
         },
       ),
     );
@@ -326,5 +399,36 @@ class AdmobAdHelper {
       CommonEvent.loadSuccess(value, false);
     }
     return _nativeAd != null;
+  }
+
+  Future<bool> loadPlayVideo({required ThingSourceEnum value}) async {
+    if (_playVideoLoading) return false;
+    if (_playVideoAd?.isCacheAvailable() ?? false) return false;
+    final list = adDataMap[AdPositionEnum.playVideo];
+    if (list == null) return false;
+    _playVideoLoading = true;
+    _playVideoAd = await _loadAd(
+      list,
+      value: value,
+      load: CommAdLoadListener(
+        error: (e) {
+          CommonEvent.loadFail(value, false, e.code);
+        },
+      ),
+    );
+    _playVideoLoading = false;
+    if (_playVideoAd != null) {
+      CommonEvent.loadSuccess(value, false);
+    }
+    return _playVideoAd != null;
+  }
+
+  Future<bool> showPlayVideo({required ThingSourceEnum value}) async {
+    return _showAD(
+      _playVideoAd,
+      value: value,
+      adLoader: loadPlayVideo,
+      jumpTimeSpace: true,
+    );
   }
 }

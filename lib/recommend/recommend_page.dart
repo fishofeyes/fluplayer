@@ -1,9 +1,11 @@
+import 'package:fluplayer/common/common_enum.dart';
 import 'package:fluplayer/common/view/background_title.dart';
 import 'package:fluplayer/recommend/view/RecommendCell.dart';
 import 'package:fluplayer/recommend/view/recommend_history.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../common/common_report/common_report.dart';
 import '../home/provider/recommend.dart';
 
 class RecommendPage extends StatefulWidget {
@@ -23,6 +25,7 @@ class _RecommendPageState extends State<RecommendPage> {
     //   AdController.showAd(AdModelType.detail,
     //       from: from, value: MySessionValue.chlistpage);
     // });
+    CommonReport.eventThings(ThingEnum.channellbXVRwistExpose);
   }
 
   @override
@@ -123,6 +126,16 @@ class _RecommendPageState extends State<RecommendPage> {
                                 return ReCommendCell(
                                   model: list[idx],
                                   idx: idx,
+                                  onReport: () {
+                                    CommonReport.eventThings(
+                                      ThingEnum.channellqZkdlistClick,
+                                      data: {
+                                        "PuUTVimak": "TLCVXmtm",
+                                        "gNAuA": "TXM",
+                                        "NTeYg": "GQvtQi",
+                                      },
+                                    );
+                                  },
                                 );
                               },
                             ),

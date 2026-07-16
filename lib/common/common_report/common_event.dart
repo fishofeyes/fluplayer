@@ -35,11 +35,19 @@ class CommonEvent {
     videoPlayController.add(isPlay);
   }
 
-  static void showSuccessAd(ThingSourceEnum value, {bool isSecond = false}) {
+  static void showSuccessAd(
+    ThingSourceEnum value, {
+    bool isSecond = false,
+    required bool isSecondNativeAd,
+  }) {
     changePlayStatus(false);
     CommonReport.eventThings(
       ThingEnum.adShowPqEpOslacement,
-      data: {"PuUTVimak": value.value, "gNAuA": isSecond ? 2 : 1},
+      data: {
+        "PuUTVimak": value.value,
+        "gNAuA": isSecond ? 2 : 1,
+        if (isSecondNativeAd) "QcaFyP3": 2,
+      },
     ); // 统一上报到一个事件
   }
 
@@ -61,10 +69,14 @@ class CommonEvent {
     );
   }
 
-  static void loadFail(ThingSourceEnum value, bool isSecond) {
+  static void loadFail(ThingSourceEnum value, bool isSecond, String code) {
     CommonReport.eventThings(
       ThingEnum.adRe7aTtqFail,
-      data: {"PuUTVimak": value.value, "gNAuA": isSecond ? 2 : 1},
+      data: {
+        "PuUTVimak": value.value,
+        "gNAuA": isSecond ? 2 : 1,
+        "pAoJksW": code,
+      },
     );
   }
 
@@ -79,8 +91,10 @@ class CommonEvent {
     AdPositionEnum position,
     ThingSourceEnum value,
   ) async {
-    Future.delayed(const Duration(seconds: 2)).then((e) {
+    Future.delayed(const Duration(seconds: 1)).then((e) async {
       admobHelper2.loadOpenAd(value: value);
+      await Future.delayed(const Duration(seconds: 1));
+      admobHelper3.loadOpenAd(value: value);
     });
     switch (position) {
       case AdPositionEnum.open:
@@ -91,6 +105,8 @@ class CommonEvent {
         return admobHelper.loadDetail(value: value);
       case AdPositionEnum.native:
         return admobHelper.loadNative(value: value);
+      case AdPositionEnum.playVideo:
+        return admobHelper.loadPlayVideo(value: value);
     }
   }
 
@@ -120,6 +136,8 @@ class CommonEvent {
         return admobHelper.showDetail(value: value);
       case AdPositionEnum.native:
         return false;
+      case AdPositionEnum.playVideo:
+        return admobHelper.showPlayVideo(value: value);
     }
   }
 
@@ -133,16 +151,19 @@ class CommonEvent {
   ) async {
     final sp = await SharedPreferences.getInstance();
     final uid = sp.getString(SharedStoreKey.userId.name);
-    CommonReport.backEvent(
-      uid == null ? CommonReportEnum.commLocalAd : CommonReportEnum.commAd,
-      isMiddle: _isMiddle,
-      source: _source,
-      outUrl: _outUrl,
-      fid: _fId,
-      val: val,
-      uid: uid,
-      curr: curr,
-    );
+    final rr = sp.getBool(SharedStoreKey.isMiddle.name);
+    if (rr == _isMiddle) {
+      CommonReport.backEvent(
+        uid == null ? CommonReportEnum.commLocalAd : CommonReportEnum.commAd,
+        isMiddle: _isMiddle,
+        source: _source,
+        outUrl: _outUrl,
+        fid: _fId,
+        val: val,
+        uid: uid,
+        curr: curr,
+      );
+    }
     CommonReport.adEvent(
       val,
       curr,
