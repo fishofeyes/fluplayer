@@ -25,6 +25,12 @@ class Home extends _$Home {
     return HomeState();
   }
 
+  void load() async {
+    final e = CommonHive.homeVideoBox.values.toList();
+    final his = CommonHive.historyBox.values.toList();
+    state = state.copyWith(history: his, home: e);
+  }
+
   void insertHistory(HomeVideoModel m) {
     state = state.copyWith(history: [m, ...state.history]);
     CommonHive.homeVideoBox.put(m.id, m);
@@ -60,13 +66,14 @@ class Home extends _$Home {
   void updatePosition(HomeVideoModel m, double position) {
     m = m.copyWith(position: position);
     final tempList = state.history;
-    final idx1 = tempList.indexWhere((e) => e.path == m.path);
+    final idx1 = tempList.indexWhere((e) => e.id == m.id);
     if (idx1 != -1) {
       tempList[idx1] = m;
       state = state.copyWith(history: tempList);
       CommonHive.historyBox.put(m.id, m);
     } else {
-      insertHistory(m);
+      state = state.copyWith(history: [m, ...state.history]);
+      CommonHive.historyBox.put(m.id, m);
     }
   }
 

@@ -2,15 +2,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../home/model/home.dart';
-
+const isProd = true;
 WidgetRef? commonRef;
 BuildContext? commonContext;
 bool screenPortraitUp = true;
 int playerForward = 0;
 double playerBrightness = 0;
 double playerVolume = 0;
+Function()? nativeAdCloseAction;
 RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
+
+enum SharedStoreKey {
+  recommendUserId,
+  isMiddle,
+  userId,
+  userEmail,
+  userTags,
+  firstInstall,
+  newUser,
+  userDistinctId,
+  isInstall,
+}
 
 Future<dynamic> commonPush(BuildContext context, Widget page) {
   return Navigator.push(context, CupertinoPageRoute(builder: (c) => page));

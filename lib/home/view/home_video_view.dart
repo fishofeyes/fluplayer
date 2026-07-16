@@ -17,7 +17,7 @@ class HomeVideoView extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap?.call(model),
       child: Container(
-        height: 208,
+        padding: EdgeInsets.all(1),
         decoration: BoxDecoration(
           // gradient: LinearGradient(
           //   colors: [
@@ -39,83 +39,90 @@ class HomeVideoView extends StatelessWidget {
             ),),
           color: Color(0xff211102),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                ClipRRect(
-                  clipBehavior: Clip.antiAlias,
-                  borderRadius: BorderRadius.circular(6),
-                  child: Image.file(
-                    File(model.face ?? ""),
-                    errorBuilder: (_, __, ___) => Container(
-                      color: Colors.black,
+        child: Container(
+          height: 210,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: Color(0xff211102),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  ClipRRect(
+                    clipBehavior: Clip.antiAlias,
+                    borderRadius: BorderRadius.circular(6),
+                    child: Image.file(
+                      File(model.face ?? ""),
+                      errorBuilder: (_, __, ___) => Container(
+                        color: Colors.black,
+                        height: 126,
+                        width: double.infinity,
+                      ),
                       height: 126,
                       width: double.infinity,
-                    ),
-                    height: 126,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Image.asset("assets/home/play.png", width: 28, height: 28),
-              ],
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: Column(
-                children: [
-                  SizedBox(height: 7),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Text(
-                      model.name,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                        height: 20 / 14,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  const SizedBox(height: 6),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          '${model.size.format(1)} • ${model.createDate.time('yyyy/MM/dd')}',
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          commonShowBottomSheet(
-                            context,
-                            MediaInfo(model: model),
-                          );
-                        },
-                        child: Image.asset(
-                          "assets/home/more.png",
-                          width: 24,
-                          height: 24,
-                        ),
-                      ),
-                    ],
-                  ),
+                  Image.asset("assets/home/play.png", width: 28, height: 28),
                 ],
               ),
-            ),
-            const SizedBox(height: 5),
-          ],
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 6),
+                child: Column(
+                  children: [
+                    SizedBox(height: 7),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        model.name,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          height: 20 / 14,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '${model.size.format(1)} • ${model.createDate.time('yyyy/MM/dd')}',
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            commonShowBottomSheet(
+                              context,
+                              MediaInfo(model: model),
+                            );
+                          },
+                          child: Image.asset(
+                            "assets/home/more.png",
+                            width: 24,
+                            height: 24,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 5),
+            ],
+          ),
         ),
       ),
     );

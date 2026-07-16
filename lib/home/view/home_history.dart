@@ -7,6 +7,7 @@ import 'package:fluplayer/home/view/home_video_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../common/common_enum.dart';
 import '../../player/player_page.dart';
 import 'home_history_item.dart';
 
@@ -16,7 +17,7 @@ class HomeHistoryView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final state = ref.watch(homeProvider);
-    final list = state.history.take(4).toList();
+    final list = state.history.toList();
     return Column(
       children: [
         Row(
@@ -55,7 +56,14 @@ class HomeHistoryView extends ConsumerWidget {
               return HomeHistoryItem(
                 model: list[index],
                 onTap: (e) {
-                  commonPush(context, PlayerPage(model: e, models: list));
+                  commonPush(
+                    context,
+                    PlayerPage(
+                      model: e,
+                      models: list,
+                      place: CommonReportSourceEnum.history,
+                    ),
+                  );
                 },
               );
             },

@@ -1,3 +1,5 @@
+import 'package:fluplayer/common/common_aes.dart';
+import 'package:fluplayer/common/request/http_helper.dart';
 import 'package:hive/hive.dart';
 part 'home.g.dart';
 
@@ -19,6 +21,13 @@ class HomeVideoModel {
   final String id;
   @HiveField(7)
   final double position;
+  @HiveField(8)
+  final String? uid;
+  @HiveField(9)
+  final String? uidUrl;
+  @HiveField(10)
+  final bool? isMiddle;
+  final bool? recommend;
 
   HomeVideoModel({
     required this.name,
@@ -29,6 +38,10 @@ class HomeVideoModel {
     required this.face,
     required this.position,
     required this.id,
+    this.uid,
+    this.uidUrl,
+    this.isMiddle,
+    this.recommend,
   });
 
   HomeVideoModel copyWith({
@@ -49,6 +62,19 @@ class HomeVideoModel {
       path: path ?? this.path,
       face: face ?? this.face,
       id: id ?? this.id,
+      isMiddle: isMiddle,
+      uid: uid,
+      uidUrl: uidUrl,
     );
+  }
+
+  Future<String> getRealLink() async {
+    final sender = await HttpHelper.request(
+      HttpHelperApi.getUrl,
+      query: "/$uid/$id?quality=ORIGINAL",
+      post: false,
+      isMiddle: isMiddle!,
+    );
+    return CommonAes.getUrl(sender);
   }
 }

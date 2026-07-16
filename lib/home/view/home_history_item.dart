@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:fluplayer/common/view/common_cover.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,9 @@ class HomeHistoryItem extends StatelessWidget {
             width: 280,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: FileImage(File(model.face ?? '')),
+                image: model.isMiddle == null
+                    ? FileImage(File(model.face ?? ''))
+                    : NetworkImage(model.face ?? ""),
                 fit: BoxFit.cover,
               ),
             ),
@@ -33,7 +36,7 @@ class HomeHistoryItem extends StatelessWidget {
                   right: 0,
                   child: ClipRect(
                     child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                       child: Container(
                         height: 44,
                         padding: const EdgeInsets.all(8),

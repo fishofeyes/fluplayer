@@ -30,3 +30,9 @@ flutter build apk
 ```shell
 keytool -genkey -alias fluplayer -keyalg RSA -keysize 2048 -validity 36500 -keystore fluplayer.keystore
 ```
+
+
+```bash
+flutter build ipa --obfuscate --split-debug-info=build/app/outputs/symbols
+xcrun altool --upload-app --type ios -f build/ios/ipa/*.ipa --apiKey keyId --apiIssuer your_issuer_id
+```

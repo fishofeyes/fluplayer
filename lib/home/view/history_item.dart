@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:fluplayer/common/common_format.dart';
+import 'package:fluplayer/common/view/common_cover.dart';
 import 'package:fluplayer/common/view/common_gradient_bar.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:flutter/material.dart';
@@ -54,17 +56,7 @@ class HistoryItem extends StatelessWidget {
                     ClipRRect(
                       clipBehavior: Clip.antiAlias,
                       borderRadius: BorderRadius.circular(4),
-                      child: Image.file(
-                        File(model.face ?? ''),
-                        width: 128,
-                        height: 72,
-                        errorBuilder: (_, __, ___) => Container(
-                          color: Colors.black,
-                          width: 128,
-                          height: 72,
-                        ),
-                        fit: BoxFit.cover,
-                      ),
+                      child: CommonCover(data: model),
                     ),
                     Positioned(
                       left: 4,
