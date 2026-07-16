@@ -93,42 +93,42 @@ class Vip extends _$Vip {
   }
 
   Future<void> _buyRequest(PurchaseDetails sender, bool firstBuy) async {
-    final res = await HttpHelper.dio2.postUri(
-      Uri.parse("https://fpyr.fluplayer.com/anomalurus/pyruvates/covid"),
-      options: Options(headers: {"taxw8ego86": "insolvable"}),
-      data: {
-        "nassau": await CommonReport.uniqueId(),
-        "overloan": (await CommonReport.package()).packageName,
-        "pn2id44xb_": sender.productID,
-        "moraller": {
-          "finickily": (await CommonReport.device())?.identifierForVendor,
-        },
-        "portrays": sender.verificationData.serverVerificationData,
-      },
-    );
-    final r = res.data['governor'];
-    if (r["overkick"] == true) {
-      final rf = r['delthyrium'][0];
-      final time = rf['gabbais'] ?? 0;
-      final id = rf['pn2id44xb_'];
-      final p = state.models.firstWhere((e) => e.id == id);
-      final desc = vipPriceMap[p.type]!;
-      state = state.copyWith(
-        isVip: true,
-        expired: p.type == 3
-            ? "Lifetime"
-            : DateFormat(
-                "yyyy/MM/dd",
-              ).format(DateTime.fromMillisecondsSinceEpoch(time)),
-        desc: p.type == 3 ? desc : desc.replaceAll("##", p.desc),
-      );
-      globalOpenVip = true;
-      if (firstBuy) {
-        CommonReport.eventThings(ThingEnum.premiBdUumSuc, data: data);
-      }
-    } else {
-      clear();
-    }
+    // final res = await HttpHelper.dio2.postUri(
+    //   Uri.parse("https://fpyr.fluplayer.com/anomalurus/pyruvates/covid"),
+    //   options: Options(headers: {"taxw8ego86": "insolvable"}),
+    //   data: {
+    //     "nassau": await CommonReport.uniqueId(),
+    //     "overloan": (await CommonReport.package()).packageName,
+    //     "pn2id44xb_": sender.productID,
+    //     "moraller": {
+    //       "finickily": (await CommonReport.device())?.identifierForVendor,
+    //     },
+    //     "portrays": sender.verificationData.serverVerificationData,
+    //   },
+    // );
+    // final r = res.data['governor'];
+    // if (r["overkick"] == true) {
+    //   final rf = r['delthyrium'][0];
+    //   final time = rf['gabbais'] ?? 0;
+    //   final id = rf['pn2id44xb_'];
+    //   final p = state.models.firstWhere((e) => e.id == id);
+    //   final desc = vipPriceMap[p.type]!;
+    //   state = state.copyWith(
+    //     isVip: true,
+    //     expired: p.type == 3
+    //         ? "Lifetime"
+    //         : DateFormat(
+    //             "yyyy/MM/dd",
+    //           ).format(DateTime.fromMillisecondsSinceEpoch(time)),
+    //     desc: p.type == 3 ? desc : desc.replaceAll("##", p.desc),
+    //   );
+    //   globalOpenVip = true;
+    //   if (firstBuy) {
+    //     CommonReport.eventThings(ThingEnum.premiBdUumSuc, data: data);
+    //   }
+    // } else {
+    //   clear();
+    // }
   }
 
   void clear() {

@@ -116,7 +116,7 @@ class AdmobAdHelper2 {
             ecpm,
             currencyCode,
             networkName,
-            model.position.name,
+            value.value,
             model.id,
             model.adType.name,
           );

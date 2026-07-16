@@ -22,17 +22,17 @@ import '../common_hive.dart';
 
 class CommonReport {
   static PackageInfo? _package;
-  static IosDeviceInfo? _iosDevice;
+  static AndroidDeviceInfo? _iosDevice;
   static const _uuid = Uuid();
   static String? outUrl;
   static String? fileId;
   static const host = isProd
-      ? "https://fiddle.fluplayer.com/air/equine"
-      : "https://test-fiddle.fluplayer.com/buggy/hoc";
+      ? "https://test-phase.fluplayerapp.com/nazism/bedevil/liturgic"
+      : "https://phase.fluplayerapp.com/dew/nodule";
 
-  static Future<IosDeviceInfo?> device() async {
-    _iosDevice ??= await DeviceInfoPlugin().iosInfo;
-    return _iosDevice;
+  static Future<AndroidDeviceInfo> device() async {
+    _iosDevice ??= await DeviceInfoPlugin().androidInfo;
+    return _iosDevice!;
   }
 
   static Future<PackageInfo> package() async {
@@ -140,20 +140,21 @@ class CommonReport {
       "vacate": await isNewUser(),
       "pigments": {"phyllodia": p.packageName},
       "snuffly": await AdvertisingId.id(),
-      "visioned": d?.identifierForVendor,
+      "visioned": await AdvertisingId.id(),
       "bumpsy": "cmcc",
-      "phenakism": d?.model,
+      "k8xi0hqumd": await uniqueId(),
+      "phenakism": d.model,
       "incurable": p.version,
-      "artworks": d?.systemVersion,
+      "artworks": d.version.release,
       "anaseismic": PlatformDispatcher.instance.locales.first.countryCode,
       "u3nb2roago": dId, // distinct_id
       "pvxbxrmpzo": {
-        "respired": {"cepes": d?.model},
+        "respired": {"cepes": d.model},
       },
-      "proparia": "ios",
+      "proparia": "android",
       "3lkaprpcxz": DateTime.now().timeZoneOffset.inHours,
       "thetics": DateTime.now().millisecondsSinceEpoch,
-      "civilizade": d?.name,
+      "civilizade": d.name,
       "rombowline": Platform.localeName,
       "wasting": await AdvertisingId.id(),
     };
@@ -174,40 +175,31 @@ class CommonReport {
       sp.setString(SharedStoreKey.userDistinctId.name, dId);
     }
     return {
-      "diane": {"cellar": _uuid.v4(), "dopant": p?.packageName, "savage": dId},
-      "solid": {
-        "pl": "mcc",
-        "louse": DateTime.now().millisecondsSinceEpoch,
-        "rush": p?.version,
-        "next": await AdvertisingId.id(),
-        "spar": "",
-        "stud": d?.name,
-      },
-      "agrimony": {
-        "kafka": "motto",
-        "hermann": Platform.localeName,
-        "okay": "",
-        "severe": null,
-        "torrid": null,
-      },
-      "sec": {
-        "advisory": d?.systemVersion,
-        "cetacean": d?.model,
-        "spite": await AdvertisingId.id(),
-      },
-      "scarlet": {
-        "pSEsS": outUrl,
-        "eELXrc": fileId,
-        "jxMjP": sp.getString(SharedStoreKey.userEmail.name),
-        "kroulaXb": sp.getString(SharedStoreKey.userId.name),
-        "CdbP": sp.getBool(SharedStoreKey.isMiddle.name) == true
-            ? "oOskWjNYM"
-            : "CrYC",
-        "RqxmLFdTO": CommonApp.haveSim,
-        "hEWmQ": CommonApp.isSimulator,
-        "XIWzzPLm": CommonApp.isVip,
-        "VHQoGulpp": CommonApp.isPad,
-      },
+      "qs": p.packageName,
+      "bizet": "exclude",
+      "flip": p.version,
+      "fill": dId,
+      "pour": _uuid.v4(),
+      "homeward": DateTime.now().millisecondsSinceEpoch,
+      "marmoset": d.brand,
+      "squishy": d.model,
+      "somali": d.version.release,
+      "parabola": "mnc",
+      "omnibus": Platform.localeName,
+      "monomial": "gp",
+      "morsel": await uniqueId(),
+      "acid": await AdvertisingId.id(),
+      "lola%pSEsS": outUrl,
+      "lola%eELXrc": fileId,
+      "lola%jxMjP": sp.getString(SharedStoreKey.userEmail.name),
+      "lola%kroulaXb": sp.getString(SharedStoreKey.userId.name),
+      "lola%CdbP": sp.getBool(SharedStoreKey.isMiddle.name) == true
+          ? "oOskWjNYM"
+          : "CrYC",
+      "lola%RqxmLFdTO": CommonApp.haveSim,
+      "lola%hEWmQ": CommonApp.isSimulator,
+      "lola%XIWzzPLm": CommonApp.isVip,
+      "lola%VHQoGulpp": CommonApp.isPad,
     };
   }
 
@@ -243,16 +235,16 @@ class CommonReport {
     try {
       final data = {
         ...p,
-        "eucre": "build/${pp.version}",
-        "browne": "utm_source=google-play&utm_medium=organic",
-        "diode": "Mozilla/5.0",
-        "eluate": 0,
-        "erasure": 0,
-        "nagoya": 0,
-        "confect": 0,
-        "topmost": 0,
-        "bernie": 0,
-        "hello": "low",
+        "aesthete": "build/${pp.version}",
+        "whop": "adrift",
+        "lux": "Mozilla",
+        "freetown": "juniper",
+        "frazier": 0,
+        "knit": 0,
+        "gordon": 0,
+        "marriott": 0,
+        "monty": 0,
+        "amoebae": 0,
       };
       final res = await _commonPost(data);
       if (res && user != null) {
@@ -267,7 +259,7 @@ class CommonReport {
 
   static void adSessionEvent() async {
     final p = await otherParams();
-    _commonPost({...p, "hello": "lye"});
+    _commonPost({...p, "whop": "oppose"});
   }
 
   static void adEvent(
@@ -282,14 +274,14 @@ class CommonReport {
     final p = await otherParams();
     _commonPost({
       ...p,
-      "arianism": {
-        "stanford": m,
-        "alb": coin,
-        "forsworn": network,
-        "wharf": adS,
-        "sulfite": adId,
-        "annex": adP,
-        "azalea": adT,
+      "sweater": {
+        "crook": m,
+        "playtime": coin,
+        "brood": network,
+        "diogenes": adS,
+        "float": adId,
+        "currant": adP,
+        "reason": adT,
       },
     });
   }

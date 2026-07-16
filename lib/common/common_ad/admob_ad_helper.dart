@@ -145,7 +145,9 @@ class AdmobAdHelper {
     loadMedia(value: ThingSourceEnum.cp);
     loadNative(value: ThingSourceEnum.cp);
     admobHelper2.loadOpenAd(value: ThingSourceEnum.cp);
-    Future.delayed(const Duration(seconds: 1)).then((e) => admobHelper3.loadOpenAd(value: ThingSourceEnum.cp));
+    Future.delayed(
+      const Duration(seconds: 1),
+    ).then((e) => admobHelper3.loadOpenAd(value: ThingSourceEnum.cp));
   }
 
   Future<BaseAdModel?> _loadAd(
@@ -269,7 +271,7 @@ class AdmobAdHelper {
             ecpm,
             currencyCode,
             networkName,
-            model.position.name,
+            value.value,
             model.id,
             model.adType.name,
           );

@@ -25,11 +25,9 @@ class CommonApp {
     } catch (e) {
       print("get sim info error $e");
     }
-    if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      isSimulator = !iosInfo.isPhysicalDevice;
-      isPad = iosInfo.model.toLowerCase().contains('ipad');
-    }
+    AndroidDeviceInfo iosInfo = await deviceInfo.androidInfo;
+    isSimulator = !iosInfo.isPhysicalDevice;
+    isPad = iosInfo.model.toLowerCase().contains('ipad');
 
     bool isConnected = await VpnConnectionDetector.isVpnActive();
     isVip = isConnected;
