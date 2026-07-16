@@ -398,6 +398,8 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     });
     return Scaffold(
       backgroundColor: Colors.black,
+      resizeToAvoidBottomInset: false,
+      extendBody: true,
       body: Stack(
         fit: StackFit.expand,
         children: [
