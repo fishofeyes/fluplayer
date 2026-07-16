@@ -69,8 +69,8 @@ class CommonReport {
     final p = await otherParams();
     _commonPost({
       ...p,
-      "hello": e.value,
-      if (data != null) "samson": {...data},
+      "whop=": e.value,
+      if (data != null) e.value: {...data},
     });
   }
 
