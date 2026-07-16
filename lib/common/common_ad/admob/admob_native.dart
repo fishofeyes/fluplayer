@@ -77,7 +77,6 @@ class AdmobNativeLoader extends BaseAd {
         showListener?.success?.call(false);
       },
       onAdClicked: (ad) {
-        admobHelper.closeNativeAdController.add(true);
         showListener?.onClick?.call();
       },
       onAdClosed: (e) {
@@ -144,7 +143,6 @@ class AdmobNativeLoader extends BaseAd {
         showListener?.success?.call(true);
       },
       onAdClicked: (ad) {
-        admobHelper.closeNativeAdController.add(true);
         showListener?.onClick?.call();
       },
       onAdClosed: (e) {

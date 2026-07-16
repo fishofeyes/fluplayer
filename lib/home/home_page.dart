@@ -44,6 +44,7 @@ class _HomePageState extends ConsumerState<HomePage>
     super.build(context);
     final state = ref.watch(homeProvider);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Positioned(

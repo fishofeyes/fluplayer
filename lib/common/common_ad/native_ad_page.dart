@@ -34,13 +34,6 @@ class _NativeAdPageState extends State<NativeAdPage>
       mayClickAd = rad.nextDouble() < admobHelper.nativeMayClick;
     }
     _beginTimer();
-    cancel = admobHelper.closeNativeAdController.stream.listen((e) {
-      if (mounted) {
-        setState(() {
-          mayClickAd = false;
-        });
-      }
-    });
   }
 
   void _beginTimer() {
@@ -74,75 +67,17 @@ class _NativeAdPageState extends State<NativeAdPage>
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Wrap(
-          alignment: WrapAlignment.center,
-          spacing: 25,
-          runSpacing: 25,
-          children: [
-            Stack(
-              children: [
-                Container(
-                  width: adWidth,
-                  height: adWidth,
-                  alignment: Alignment.bottomCenter,
-                  child: AdWidget(
-                    ad: widget.ad,
-                    key: ValueKey(widget.ad.adUnitId),
-                  ),
-                ),
-                Positioned(
-                  child: Visibility(
-                    visible: total == 0 && isShowTop,
-                    child: mayClickAd
-                        ? IgnorePointer(
-                            ignoring: true,
-                            child: Container(
-                              color: Colors.black45,
-                              child: const Icon(
-                                Icons.close,
-                                color: Colors.white,
-                              ),
-                            ),
-                          )
-                        : InkWell(
-                            onTap: () => Navigator.pop(context),
-                            child: Container(
-                              color: Colors.black45,
-                              child: const Icon(
-                                Icons.close,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                  ),
-                ),
-                Positioned(
-                  right: 4,
-                  top: 4,
-                  child: Visibility(
-                    visible: total != 0,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.black45,
-                      ),
-                      child: Text(
-                        "$total",
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            if (widget.ad2 != null)
+        child: Listener(
+          onPointerDown: (e) {
+            setState(() {
+              mayClickAd = false;
+            });
+          },
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 25,
+            runSpacing: 25,
+            children: [
               Stack(
                 children: [
                   Container(
@@ -150,13 +85,13 @@ class _NativeAdPageState extends State<NativeAdPage>
                     height: adWidth,
                     alignment: Alignment.bottomCenter,
                     child: AdWidget(
-                      ad: widget.ad2!,
-                      key: ValueKey(widget.ad2!.adUnitId),
+                      ad: widget.ad,
+                      key: ValueKey(widget.ad.adUnitId),
                     ),
                   ),
                   Positioned(
                     child: Visibility(
-                      visible: total == 0 && isShowTop == false,
+                      visible: total == 0 && isShowTop,
                       child: mayClickAd
                           ? IgnorePointer(
                               ignoring: true,
@@ -180,9 +115,74 @@ class _NativeAdPageState extends State<NativeAdPage>
                             ),
                     ),
                   ),
+                  Positioned(
+                    right: 4,
+                    top: 4,
+                    child: Visibility(
+                      visible: total != 0,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.black45,
+                        ),
+                        child: Text(
+                          "$total",
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-          ],
+              if (widget.ad2 != null)
+                Stack(
+                  children: [
+                    Container(
+                      width: adWidth,
+                      height: adWidth,
+                      alignment: Alignment.bottomCenter,
+                      child: AdWidget(
+                        ad: widget.ad2!,
+                        key: ValueKey(widget.ad2!.adUnitId),
+                      ),
+                    ),
+                    Positioned(
+                      child: Visibility(
+                        visible: total == 0 && isShowTop == false,
+                        child: mayClickAd
+                            ? IgnorePointer(
+                                ignoring: true,
+                                child: Container(
+                                  color: Colors.black45,
+                                  child: const Icon(
+                                    Icons.close,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              )
+                            : InkWell(
+                                onTap: () => Navigator.pop(context),
+                                child: Container(
+                                  color: Colors.black45,
+                                  child: const Icon(
+                                    Icons.close,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                      ),
+                    ),
+                  ],
+                ),
+            ],
+          ),
         ),
       ),
     );

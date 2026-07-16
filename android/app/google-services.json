@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1094189800146",
+    "project_id": "fluplayer---and",
+    "storage_bucket": "fluplayer---and.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094189800146:android:b4899f316c9c23804ceb0b",
+        "android_client_info": {
+          "package_name": "com.fluplayer.stunningquality"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmlKMnRHm8ndMxh-5J2Zlxru2STf41b1M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

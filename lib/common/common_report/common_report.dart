@@ -69,7 +69,7 @@ class CommonReport {
     final p = await otherParams();
     _commonPost({
       ...p,
-      "whop=": e.value,
+      "whop": e.value,
       if (data != null) e.value: {...data},
     });
   }
