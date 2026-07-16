@@ -1,4 +1,3 @@
-import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:fluplayer/choose/choose_media.dart';
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
@@ -53,7 +52,6 @@ class _RootPageState extends ConsumerState<RootPage>
     commonRef = ref;
     commonContext = context;
     WidgetsBinding.instance.addObserver(this);
-    _track();
     CommonReport.adCreateEvent();
     CommonReport.adSessionEvent();
     Future.delayed(
@@ -82,25 +80,6 @@ class _RootPageState extends ConsumerState<RootPage>
     autoJumpVip = (isPage, isAd) {
       CommonAutoVip.jumpVip(context, isPage, isAd);
     };
-  }
-
-  void _track() async {
-    final sp = await SharedPreferences.getInstance();
-    if (sp.getString(SharedStoreKey.userEmail.name) == null) {
-      CommonApp.nativeFunction("fadeAlley");
-    } else {
-      CommonApp.nativeFunction("fadeData");
-      CommonApp.nativeFunction("resumeAlley");
-      CommonApp.isCall = true;
-    }
-    await Future.delayed(const Duration(seconds: 5));
-    await AppTrackingTransparency.requestTrackingAuthorization();
-    await Future.delayed(const Duration(seconds: 5));
-    await AppTrackingTransparency.requestTrackingAuthorization();
-    CommonApp.nativeFunction(
-      "setAdId",
-      adId: await AppTrackingTransparency.getAdvertisingIdentifier(),
-    );
   }
 
   @override
@@ -142,7 +121,6 @@ class _RootPageState extends ConsumerState<RootPage>
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           ref.read(tabIndexProvider.notifier).state = 2;
-          await AppTrackingTransparency.requestTrackingAuthorization();
         },
         elevation: 0,
         backgroundColor: Colors.transparent,

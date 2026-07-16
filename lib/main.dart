@@ -8,14 +8,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'common/common_app.dart';
 import 'common/common_report/common_report.dart';
-import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   CommonReport.uniqueId();
   HttpHelper.log();
   await CommonApp.init();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(options: FirebaseOptions(apiKey: "apiKey", appId: "appId", messagingSenderId: "messagingSenderId", projectId: "projectId"));
   await CommonHive.init();
   await admobHelper.init();
 

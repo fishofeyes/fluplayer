@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:advertising_id/advertising_id.dart';
-import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:fluplayer/common/common.dart';
@@ -192,7 +191,6 @@ class CommonReport {
       },
       "agrimony": {
         "kafka": "motto",
-        "dont": await AppTrackingTransparency.getAdvertisingIdentifier(),
         "hermann": Platform.localeName,
         "okay": "",
         "severe": null,
@@ -251,14 +249,9 @@ class CommonReport {
     try {
       final data = {
         ...p,
-        "eucre": "build/${pp?.version}",
+        "eucre": "build/${pp.version}",
         "browne": "utm_source=google-play&utm_medium=organic",
         "diode": "Mozilla/5.0",
-        "zigzag":
-            (await AppTrackingTransparency.trackingAuthorizationStatus) ==
-                TrackingStatus.authorized
-            ? "gypsum"
-            : "faber",
         "eluate": 0,
         "erasure": 0,
         "nagoya": 0,
