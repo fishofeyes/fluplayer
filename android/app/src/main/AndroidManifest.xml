@@ -35,13 +35,13 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:scheme="https"
-                    android:host="fluplayerapp.go.link" />
+                    android:host="fluplayerapp.onelink.me" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="fluplayer" />
+                <data android:scheme="fluplayerapp" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

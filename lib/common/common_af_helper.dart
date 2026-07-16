@@ -28,9 +28,8 @@ class CommonAfHelper {
   Future<void> init() async {
     if (!isProd) return;
     final AppsFlyerOptions options = AppsFlyerOptions(
-      afDevKey: "TYf2mHakoyPhfxp5XnrYGU",
-      appId: "6751945078",
-      timeToWaitForATTUserAuthorization: 30,
+      afDevKey: "ZtETeJ8XgKRg2qRPDdFE46",
+      manualStart: true,
     );
     _appsflyerSdk = AppsflyerSdk(options);
     _appsflyerSdk.onDeepLinking((DeepLinkResult dp) {
