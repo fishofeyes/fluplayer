@@ -36,3 +36,5 @@ keytool -genkey -alias fluplayer -keyalg RSA -keysize 2048 -validity 36500 -keys
 flutter build ipa --obfuscate --split-debug-info=build/app/outputs/symbols
 xcrun altool --upload-app --type ios -f build/ios/ipa/*.ipa --apiKey 8N8WJHZ553 --apiIssuer 41f76a5b-7758-477d-98fc-b93b8a4b6bd0
 ```
+
+android tba: https://market.gte666.com/#/appmeta/doc/2077636239448858626

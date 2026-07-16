@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:advertising_id/advertising_id.dart';
+import 'package:android_id/android_id.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:fluplayer/common/common.dart';
@@ -12,7 +13,6 @@ import 'package:fluplayer/common/request/http_helper.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:fluplayer/out/model/out_user_model.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
@@ -23,7 +23,6 @@ import '../common_hive.dart';
 class CommonReport {
   static PackageInfo? _package;
   static IosDeviceInfo? _iosDevice;
-  static const FlutterSecureStorage _storage = FlutterSecureStorage();
   static const _uuid = Uuid();
   static String? outUrl;
   static String? fileId;
@@ -41,13 +40,8 @@ class CommonReport {
     return _package!;
   }
 
-  static Future<String> uniqueId() async {
-    String? uniqueId = await _storage.read(key: "device_uniqueId_name");
-    if (uniqueId == null) {
-      uniqueId = _uuid.v4();
-      await _storage.write(key: "device_uniqueId_name", value: uniqueId);
-    }
-    debugPrint("uniqu id = $uniqueId"); //9e93b073-8b12-41b6-92e7-9a6f5b9211d0
+  static Future<String?> uniqueId() async {
+    String? uniqueId = await AndroidId().getId();
     return uniqueId;
   }
 
@@ -144,12 +138,12 @@ class CommonReport {
       "utilizers": await uniqueId(),
       "4fiabarlcw": {"illuminate": source?.name},
       "vacate": await isNewUser(),
-      "pigments": {"phyllodia": p?.packageName},
+      "pigments": {"phyllodia": p.packageName},
       "snuffly": await AdvertisingId.id(),
       "visioned": d?.identifierForVendor,
       "bumpsy": "cmcc",
       "phenakism": d?.model,
-      "incurable": p?.version,
+      "incurable": p.version,
       "artworks": d?.systemVersion,
       "anaseismic": PlatformDispatcher.instance.locales.first.countryCode,
       "u3nb2roago": dId, // distinct_id
