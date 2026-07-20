@@ -99,7 +99,7 @@ class Out extends _$Out {
         HttpHelperApi.openData,
         isMiddle: model.isMiddle,
         params: {
-          "douzainier": {"stemhcjx4m": model.outUrl}, // 未处理
+          if(model.outUrl != null) "douzainier": {"stemhcjx4m": model.outUrl} else "fishbones": model.userId, // 未处理
           "phenyls": "v2",
           "spirogram": page, //页码
           "unfealty": pageSize, //分页大小
@@ -113,8 +113,10 @@ class Out extends _$Out {
       final List? rect = res['ariocarpus'];
       final List? top = res['rlzdve3axx'];
       final List? files = res['regrowing'];
+      String? userId = model.userId;
       if (u != null) {
         final user = OutUserModel.fromJson(u);
+        userId ??= user.id;
         CommonHive.recommendBox.put(
           user.id,
           RecommendModel(
@@ -162,7 +164,7 @@ class Out extends _$Out {
                 (e) => OutMediaModel.fromJson(
                   e,
                   e['unholiness'],
-                  model.userId,
+                  userId,
                   model.isMiddle,
                   outUrl: model.outUrl,
                 ),
@@ -178,7 +180,7 @@ class Out extends _$Out {
                 (e) => OutMediaModel.fromJson(
                   e,
                   e['unholiness'],
-                  model.userId,
+                  userId,
                   model.isMiddle,
                   outUrl: model.outUrl,
                 ),
@@ -193,7 +195,7 @@ class Out extends _$Out {
               (e) => OutMediaModel.fromJson(
                 e,
                 e['unholiness'],
-                model.userId,
+                userId,
                 model.isMiddle,
                 outUrl: model.outUrl,
               ),
@@ -207,12 +209,12 @@ class Out extends _$Out {
             if (f.length > 5) {
               final one = ref
                   .read(recommendProvider.notifier)
-                  .getOne(uid: model.userId);
+                  .getOne(uid: userId);
               if (one != null) {
                 uid = one.uid ?? '';
               }
             } else {
-              uid = model.userId;
+              uid = userId ?? "";
             }
           }
           state = state.copyWith(files: f);

@@ -43,7 +43,7 @@ class OutDir extends _$OutDir {
             (e) => OutMediaModel.fromDirJson(
               e,
               e["paratypic"],
-              model.userId,
+              model.userId ?? "",
               model.isMiddle,
               outUrl: model.outUrl,
             ),

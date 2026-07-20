@@ -30,7 +30,7 @@ class OutUser extends _$OutUser {
       isMiddle = one.isMiddle;
     } else {
       isMiddle = model.isMiddle;
-      uid = model.userId;
+      uid = model.userId ?? "";
     }
     return OutState();
   }

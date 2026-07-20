@@ -34,10 +34,11 @@ class OutPage extends ConsumerStatefulWidget {
 class _PresentPageState extends ConsumerState<OutPage> {
   String customKey = 'home';
   final _refreshController = EasyRefreshController(controlFinishLoad: true);
-  int tabIndex = 0;
+  int tabIndex = 0;late OutModel model;
   @override
   void initState() {
     super.initState();
+    model = widget.model;
     SchedulerBinding.instance.addPostFrameCallback((e) async {
       final sp = await SharedPreferences.getInstance();
       final rr = sp.getString(SharedStoreKey.userId.name);
@@ -45,14 +46,14 @@ class _PresentPageState extends ConsumerState<OutPage> {
       CommonReport.eventThings(
         ThingEnum.landpagMJFlMeExpose,
         data: {
-          "PuUTVimak": widget.model.isMiddle ? "oOskWjNYM" : "CrYC",
+          "PuUTVimak": model.isMiddle ? "oOskWjNYM" : "CrYC",
           "vgJDrflFt": CommonAfHelper().isDeep ? "HBYSNoNAil" : "yJWTu",
           "JfnOLzMRW": rr == null,
         },
       );
     });
     CommonEvent.changePlayStatus(false);
-    CommonReport.outUrl = widget.model.outUrl;
+    CommonReport.outUrl = model.outUrl;
     if (CommonApp.isCall == false) {
       CommonApp.nativeFunction("fadeData");
       CommonApp.nativeFunction("resumeAlley");
@@ -73,6 +74,9 @@ class _PresentPageState extends ConsumerState<OutPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(outProvider(widget.model));
     ref.listen(outProvider(widget.model), (oldValue, newValue) {
+      if(newValue.user?.id != null) {
+        model = model.copyWith(userId: newValue.user!.id);
+      }
       SchedulerBinding.instance.addPostFrameCallback((e) {
         _refreshController.finishLoad(
           newValue.isMore ? IndicatorResult.noMore : IndicatorResult.success,
@@ -116,7 +120,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
                         context,
                         OutUserPage(
                           user: state.user,
-                          model: widget.model,
+                          model: model,
                           sourch: "UpbHSr",
                         ),
                       );
@@ -237,7 +241,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                               commonPush(
                                                 context,
                                                 OutDirPage(
-                                                  model: widget.model,
+                                                  model: model,
                                                   mediaModel: m,
                                                   place: m.isRecommend
                                                       ? CommonReportSourceEnum

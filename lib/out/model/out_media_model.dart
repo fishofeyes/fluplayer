@@ -51,7 +51,7 @@ class OutMediaModel {
   factory OutMediaModel.fromJson(
     Map<String, dynamic> json,
     Map<String, dynamic> meta,
-    String userId,
+    String? userId,
     bool isMiddle, {
     bool isRecommend = false,
     String? outUrl,
