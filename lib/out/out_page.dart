@@ -34,7 +34,8 @@ class OutPage extends ConsumerStatefulWidget {
 class _PresentPageState extends ConsumerState<OutPage> {
   String customKey = 'home';
   final _refreshController = EasyRefreshController(controlFinishLoad: true);
-  int tabIndex = 0;late OutModel model;
+  int tabIndex = 0;
+  late OutModel model;
   @override
   void initState() {
     super.initState();
@@ -74,7 +75,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(outProvider(widget.model));
     ref.listen(outProvider(widget.model), (oldValue, newValue) {
-      if(newValue.user?.id != null) {
+      if (newValue.user?.id != null) {
         model = model.copyWith(userId: newValue.user!.id);
       }
       SchedulerBinding.instance.addPostFrameCallback((e) {
@@ -241,7 +242,11 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                               commonPush(
                                                 context,
                                                 OutDirPage(
-                                                  model: model,
+                                                  model: m.isRecommend
+                                                      ? widget.model.copyWith(
+                                                          userId: m.userId,
+                                                        )
+                                                      : widget.model,
                                                   mediaModel: m,
                                                   place: m.isRecommend
                                                       ? CommonReportSourceEnum
