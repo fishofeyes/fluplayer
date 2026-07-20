@@ -250,6 +250,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                                   model: m.isRecommend
                                                       ? widget.model.copyWith(
                                                           userId: m.userId,
+                                                    outUrl: "",
                                                         )
                                                       : widget.model,
                                                   mediaModel: m,

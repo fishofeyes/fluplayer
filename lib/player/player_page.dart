@@ -266,6 +266,9 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
                     .toInt(),
           ),
         );
+        if(admobHelper.adShowing) {
+          _controller?.pause();
+        }
       }
       if (admobHelper.adShowing == false) {
         _controller!.play();

@@ -26,7 +26,6 @@ class OutCover extends StatelessWidget {
               model.cover ?? "",
               fit: BoxFit.cover,
               cacheWidth: 110 * 2,
-              cacheHeight: 110 * 2,
               loadStateChanged: (state) {
                 final str = isDir
                     ? 'home/file.png'
