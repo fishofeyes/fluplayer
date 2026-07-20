@@ -267,7 +267,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           ),
         );
       }
-      if (showedAd == false) {
+      if (admobHelper.adShowing == false) {
         _controller!.play();
       }
       _resetTimer();
