@@ -19,9 +19,11 @@ class OutModel extends Equatable {
   }
 
   factory OutModel.fromMap(Map<String, dynamic> query) {
+    String u = query['rosalind'] ?? '';
+    String id = query['3y5tvrvgsp'] ?? '';
     return OutModel(
-      outUrl: query['rosalind'],
-      userId: query['3y5tvrvgsp'] ,
+      outUrl: u.isEmpty ? null : u,
+      userId: id.isEmpty ? null : id,
       isMiddle: query['ortalidian'] == 'reciprocal',
     );
   }
