@@ -26,9 +26,7 @@ class CommonReport {
   static const _uuid = Uuid();
   static String? outUrl;
   static String? fileId;
-  static const host = isProd
-      ? "https://test-phase.fluplayerapp.com/nazism/bedevil/liturgic"
-      : "https://phase.fluplayerapp.com/dew/nodule";
+  static const host = "https://phase.fluplayerapp.com/dew/nodule";
 
   static Future<AndroidDeviceInfo> device() async {
     _iosDevice ??= await DeviceInfoPlugin().androidInfo;

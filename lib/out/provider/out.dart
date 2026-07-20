@@ -135,15 +135,6 @@ class Out extends _$Out {
               isMiddle: model.isMiddle,
             );
         state = state.copyWith(user: user, isLoading: false);
-        if (isReport == false) {
-          // 拿到数据之后上报view_app
-          isReport = true;
-          CommonReport.backEvent(
-            CommonReportEnum.commonView,
-            isMiddle: model.isMiddle,
-            outUrl: model.outUrl,
-          );
-        }
         final sp = await SharedPreferences.getInstance();
         await sp.setString(SharedStoreKey.userId.name, user.id);
         await sp.setBool(SharedStoreKey.isMiddle.name, model.isMiddle);
@@ -156,6 +147,15 @@ class Out extends _$Out {
           );
         }
         await sp.setString(SharedStoreKey.userEmail.name, user.email ?? "");
+        if (isReport == false) {
+          // 拿到数据之后上报view_app
+          isReport = true;
+          CommonReport.backEvent(
+            CommonReportEnum.commonView,
+            isMiddle: model.isMiddle,
+            outUrl: model.outUrl,
+          );
+        }
       }
       if (rect != null) {
         state = state.copyWith(

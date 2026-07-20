@@ -230,6 +230,9 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         if (!mounted) return;
         setState(() {});
         final total = _controller?.value.duration.inSeconds ?? 0;
+        final total2 = _controller?.value.duration.inMilliseconds ?? 0;
+        final curr2 = _controller?.value.position.inMilliseconds ?? 0;
+        progress = curr2 / (total2 == 0 ? 1 : total2).toDouble();
         if (_controller?.value.isCompleted == true && total > 1) {
           setState(() {
             _isVisible = true;

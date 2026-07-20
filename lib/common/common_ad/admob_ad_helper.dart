@@ -8,6 +8,7 @@ import 'package:fluplayer/common/common_ad/max_ad_helper.dart';
 import 'package:fluplayer/common/common_val.dart';
 import 'package:fluplayer/vip/provider/provider.dart';
 import 'package:fluplayer/vip/provider/vip.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -173,7 +174,7 @@ class AdmobAdHelper {
     ValueChanged<bool>? onReward,
     bool jumpTimeSpace = false,
   }) async {
-    if (adShowing || globalOpenVip || isInVipAlertPage || isInVipPage) {
+    if (adShowing || globalOpenVip || isInVipAlertPage || isInVipPage || kDebugMode) {
       debugPrint('ad is showing');
       return false;
     }

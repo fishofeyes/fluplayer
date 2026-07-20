@@ -115,9 +115,10 @@ class _PresentPageState extends ConsumerState<OutPage> {
                 const SizedBox(height: 56),
                 OutHeader(
                   model: state.user,
-                  onTap: () {
+                  onTap: () async {
                     if (state.user != null) {
-                      commonPush(
+                      CommonReport.outUrl = null;
+                      await commonPush(
                         context,
                         OutUserPage(
                           user: state.user,
@@ -125,6 +126,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
                           sourch: "UpbHSr",
                         ),
                       );
+                      CommonReport.outUrl = widget.model.outUrl;
                     }
                   },
                 ),
@@ -230,7 +232,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                             bottom: 12,
                                             top: 12,
                                           ),
-                                          onTap: () {
+                                          onTap: () async {
                                             final r = ref
                                                 .read(
                                                   outProvider(
@@ -239,7 +241,10 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                                 )
                                                 .model;
                                             if (m.directory) {
-                                              commonPush(
+                                              if(m.isRecommend) {
+                                                CommonReport.outUrl = null;
+                                              }
+                                              await commonPush(
                                                 context,
                                                 OutDirPage(
                                                   model: m.isRecommend
@@ -255,6 +260,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                                             .outpage,
                                                 ),
                                               );
+                                              CommonReport.outUrl = widget.model.outUrl;
                                             } else if (m.video) {
                                               bool isRecommend = m.isRecommend;
                                               final res = list
