@@ -303,6 +303,7 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                                                                   .copyWith(
                                                                     userId: m
                                                                         .userId,
+                                                          outUrl: "",
                                                                   )
                                                             : widget.model,
                                                         mediaModel: m,

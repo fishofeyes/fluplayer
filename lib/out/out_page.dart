@@ -122,7 +122,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
                         context,
                         OutUserPage(
                           user: state.user,
-                          model: model,
+                          model: model.copyWith(outUrl: ""),
                           sourch: "UpbHSr",
                         ),
                       );
@@ -252,7 +252,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                                           userId: m.userId,
                                                     outUrl: "",
                                                         )
-                                                      : widget.model,
+                                                      : model,
                                                   mediaModel: m,
                                                   place: m.isRecommend
                                                       ? CommonReportSourceEnum

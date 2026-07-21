@@ -73,7 +73,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     });
 
     playStatus = CommonEvent.videoPlayController.stream.listen((e) {
-      if (e == true) {
+      if (e == true && admobHelper.adShowing == false) {
         showedAd = false;
         _controller?.play();
       } else {
