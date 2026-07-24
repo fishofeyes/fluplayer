@@ -1,3 +1,4 @@
+import 'package:android_id/android_id.dart';
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper2.dart';
@@ -71,20 +72,22 @@ class _HomePageState extends ConsumerState<HomePage>
                 InkWell(
                   onTap: () async {
                     if (kDebugMode) {
+                      final androidId = await AndroidId().getId();
+                      print("--androidId--$androidId");
                       // await admobHelper3.loadOpenAd(value: ThingSourceEnum.pause);
                       // admobHelper3.showOpenAd(value: ThingSourceEnum.pause);
-                      showDialog(
-                        context: commonContext!,
-                        barrierDismissible: false,
-                        useSafeArea: false,
-                        builder: (ctx) => OutPage(
-                          model: OutModel(
-                            outUrl: "1983081451133997057",
-                            // userId: "1746775020438425601",
-                            isMiddle: false,
-                          ),
-                        ),
-                      );
+                      // showDialog(
+                      //   context: commonContext!,
+                      //   barrierDismissible: false,
+                      //   useSafeArea: false,
+                      //   builder: (ctx) => OutPage(
+                      //     model: OutModel(
+                      //       outUrl: "1983081451133997057",
+                      //       // userId: "1746775020438425601",
+                      //       isMiddle: false,
+                      //     ),
+                      //   ),
+                      // );
                     }
                   },
                   child: const BackgroundTitleView(title: 'All videos'),

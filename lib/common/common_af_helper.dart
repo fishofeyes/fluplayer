@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'common_enum.dart';
 import 'common_report/common_report.dart';
 
-bool _isShowAccept = false;
-
 class CommonAfHelper {
   static final CommonAfHelper _instance = CommonAfHelper._internal();
   factory CommonAfHelper() {
@@ -23,7 +21,6 @@ class CommonAfHelper {
   // 是否是延迟深链
   bool isDeep = false;
   Map<String, String>? deepLinkValue;
-  Function()? onDismiss;
 
   Future<void> init() async {
     if (!isProd) return;
@@ -63,11 +60,8 @@ class CommonAfHelper {
       model.outUrl,
     );
     if (!canJump) return;
-    if (_isShowAccept) {
-      onDismiss?.call();
-      await Future.delayed(const Duration(milliseconds: 300));
-    }
-    _isShowAccept = true;
+    Navigator.popUntil(commonContext!, (e) => e.isFirst);
+    await Future.delayed(const Duration(milliseconds: 100));
     showDialog(
       context: commonContext!,
       barrierDismissible: false,
@@ -77,7 +71,6 @@ class CommonAfHelper {
   }
 
   void dismiss() async {
-    _isShowAccept = false;
     deepLinkValue = null;
   }
 }
