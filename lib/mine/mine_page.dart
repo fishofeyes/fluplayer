@@ -123,10 +123,6 @@ class _MinePageState extends State<MinePage> {
                           ),
                         ),
                       ),
-                      SettingsTile(
-                        title: 'Game',
-                        onTap: () => CommonApp.nativeFunction("pasteParticle"),
-                      ),
                     ],
                   ),
                 ),
