@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../common/common_af_helper.dart';
 import '../common/common_enum.dart';
 
 class LoadPage extends ConsumerStatefulWidget {
@@ -61,6 +62,7 @@ class _SplashPageState extends ConsumerState<LoadPage> {
       },
     );
     await complete.future;
+
     _initLoad();
   }
 
@@ -70,6 +72,7 @@ class _SplashPageState extends ConsumerState<LoadPage> {
     _launchTime = admobHelper.launchTime;
     _width = 200;
     setState(() {});
+    CommonAfHelper().init();
     final time = admobHelper.launchTime - 1;
     await Future.delayed(Duration(seconds: time.clamp(0, time)));
     final canShow = sp.getBool(SharedStoreKey.firstInstall.name);

@@ -59,6 +59,7 @@ flutter {
 dependencies {
     implementation("androidx.core:core-splashscreen:1.0.0")
     implementation("com.google.firebase:firebase-bom:33.14.0")
+    implementation("com.android.installreferrer:installreferrer:2.2")
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.adjust.sdk:adjust-android:5.1.0")
     implementation("com.google.gms:google-services:4.4.4")

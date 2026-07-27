@@ -69,10 +69,10 @@ packages:
     dependency: "direct main"
     description:
       name: appsflyer_sdk
-      sha256: "56ecd542e01b0335bd3388de7c13724d6d5848ba5a57ba9dfd87bf119282ae12"
+      sha256: b64e207f8d95990e80d8a8a37115745876d7be5968f7a0808de16b05cf865e3e
       url: "https://pub.dev"
     source: hosted
-    version: "6.18.0"
+    version: "6.18.1"
   archive:
     dependency: transitive
     description:

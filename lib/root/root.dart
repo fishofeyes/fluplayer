@@ -57,7 +57,8 @@ class _RootPageState extends ConsumerState<RootPage>
     Future.delayed(
       const Duration(seconds: 5),
     ).then((e) => CommonReport.reportFail());
-    CommonAfHelper().init();
+    CommonAfHelper().isInHome = true;
+    CommonAfHelper().tryJump();
     SharedPreferences.getInstance().then((e) {
       if (e.getString(SharedStoreKey.userEmail.name) != null) {
         ref

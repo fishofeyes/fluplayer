@@ -20,22 +20,25 @@ class CommonAfHelper {
 
   // 是否是延迟深链
   bool isDeep = false;
+  bool isInHome = false;
   Map<String, String>? deepLinkValue;
 
   Future<void> init() async {
-    if (!isProd) return;
     final AppsFlyerOptions options = AppsFlyerOptions(
       afDevKey: "ZtETeJ8XgKRg2qRPDdFE46",
       manualStart: true,
     );
     _appsflyerSdk = AppsflyerSdk(options);
     _appsflyerSdk.onDeepLinking((DeepLinkResult dp) {
+      print("-=-=-=-=-=status: ${dp.status}, value: ${dp.deepLink?.deepLinkValue}");
       switch (dp.status) {
         case Status.FOUND:
           isDeep = dp.deepLink?.isDeferred ?? false;
           final deep = dp.deepLink?.deepLinkValue ?? '';
           deepLinkValue = Uri.parse(deep).queryParameters;
-          jumpAccept(sender: deepLinkValue);
+          if(isInHome) {
+            jumpAccept(sender: deepLinkValue);
+          }
           break;
         default:
           print("error deep link ${dp.status}");
@@ -48,7 +51,7 @@ class CommonAfHelper {
     );
   }
 
-  void jumpAccept({Map<String, String>? sender}) async {
+  Future<void> jumpAccept({Map<String, String>? sender}) async {
     if (sender == null) return;
     final model = OutModel.fromMap(sender);
     CommonReport.eventThings(
@@ -62,15 +65,21 @@ class CommonAfHelper {
     if (!canJump) return;
     Navigator.popUntil(commonContext!, (e) => e.isFirst);
     await Future.delayed(const Duration(milliseconds: 100));
-    showDialog(
+    await showDialog(
       context: commonContext!,
       barrierDismissible: false,
       useSafeArea: false,
       builder: (ctx) => OutPage(model: model),
     );
+    dismiss();
   }
 
   void dismiss() async {
     deepLinkValue = null;
+  }
+
+  void tryJump() async {
+    await jumpAccept(sender: deepLinkValue);
+    dismiss();
   }
 }
