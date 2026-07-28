@@ -154,6 +154,7 @@ class AdmobAdHelper {
     CommAdLoadListener? load,
     required ThingSourceEnum value,
   }) async {
+    if(globalOpenVip) return null;
     CommonReport.eventThings(
       ThingEnum.adReqPlR1Kacement,
       data: {"PuUTVimak": value.value, "gNAuA": 1},
@@ -174,7 +175,7 @@ class AdmobAdHelper {
     ValueChanged<bool>? onReward,
     bool jumpTimeSpace = false,
   }) async {
-    if (adShowing || globalOpenVip || isInVipAlertPage || isInVipPage) {
+    if (adShowing || globalOpenVip || isInVipAlertPage || isInVipPage || kDebugMode) {
       debugPrint('ad is showing');
       return false;
     }

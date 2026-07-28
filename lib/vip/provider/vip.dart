@@ -92,42 +92,46 @@ class Vip extends _$Vip {
   }
 
   Future<void> _buyRequest(PurchaseDetails sender) async {
-    final res = await HttpHelper.dio2.postUri(
-      Uri.parse("https://uyp.fluplayerapp.com/melanoids/zybah8e4da/overscream"),
-      options: Options(headers: {"skulled": "spicehouse"}),
-      data: {
-        "bossdom": await CommonReport.uniqueId(),
-        "sukey": firstBuy,
-        "bistort": (await CommonReport.package()).packageName,
-        "catchflies": sender.productID,
-        "severals": 1,
-        "agtpuuq_lv": int.parse(sender.transactionDate ?? "0"),
-        "fidos": sender.status.index,
-        "wytzl_ufka": sender.verificationData.serverVerificationData,
-      },
-    );
-    firstBuy = false;
-    final r = res.data['knelling'];
-    if (r["aphanesite"] == true) {
-      final time = r['overserene'] ?? 0;
-      final id = r['catchflies'];
-      final p = state.models.firstWhere((e) => e.id == id);
-      final desc = vipPriceMap[p.type]!;
-      state = state.copyWith(
-        isVip: true,
-        expired: p.type == 3
-            ? "Lifetime"
-            : DateFormat(
-                "yyyy/MM/dd",
-              ).format(DateTime.fromMillisecondsSinceEpoch(time)),
-        desc: p.type == 3 ? desc : desc.replaceAll("##", p.desc),
+    try {
+      final res = await HttpHelper.dio2.postUri(
+        Uri.parse(
+            "https://uyp.fluplayerapp.com/melanoids/zybah8e4da/overscream"),
+        options: Options(headers: {"skulled": "spicehouse"}),
+        data: {
+          "bossdom": await CommonReport.uniqueId(),
+          "sukey": firstBuy,
+          "bistort": (await CommonReport.package()).packageName,
+          "catchflies": sender.productID,
+          "severals": 1,
+          "agtpuuq_lv": int.parse(sender.transactionDate ?? "0"),
+          "fidos": sender.status.index,
+          "wytzl_ufka": sender.verificationData.serverVerificationData,
+        },
       );
-      globalOpenVip = true;
-      if (firstBuy) {
-        CommonReport.eventThings(ThingEnum.premiBdUumSuc, data: data);
+      final r = res.data['knelling'];
+      if (r["aphanesite"] == true) {
+        final time = r['overserene'] ?? 0;
+        final p = state.models.firstWhere((e) => e.id == sender.productID);
+        final desc = vipPriceMap[p.type]!;
+        state = state.copyWith(
+          isVip: true,
+          expired: p.type == 3
+              ? "Lifetime"
+              : DateFormat(
+            "yyyy/MM/dd",
+          ).format(DateTime.fromMillisecondsSinceEpoch(time)),
+          desc: p.type == 3 ? desc : desc.replaceAll("##", p.desc),
+        );
+        globalOpenVip = true;
+        if (firstBuy) {
+          CommonReport.eventThings(ThingEnum.premiBdUumSuc, data: data);
+        }
+      } else {
+        clear();
       }
-    } else {
-      clear();
+    } finally{
+      firstBuy = false;
+      EasyLoading.dismiss();
     }
   }
 

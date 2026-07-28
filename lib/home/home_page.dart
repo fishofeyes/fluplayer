@@ -72,22 +72,22 @@ class _HomePageState extends ConsumerState<HomePage>
                 InkWell(
                   onTap: () async {
                     if (kDebugMode) {
-                      final androidId = await AndroidId().getId();
-                      print("--androidId--$androidId");
+                      // final androidId = await AndroidId().getId();
+                      // print("--androidId--$androidId");
                       // await admobHelper3.loadOpenAd(value: ThingSourceEnum.pause);
                       // admobHelper3.showOpenAd(value: ThingSourceEnum.pause);
-                      // showDialog(
-                      //   context: commonContext!,
-                      //   barrierDismissible: false,
-                      //   useSafeArea: false,
-                      //   builder: (ctx) => OutPage(
-                      //     model: OutModel(
-                      //       outUrl: "1983081451133997057",
-                      //       // userId: "1746775020438425601",
-                      //       isMiddle: false,
-                      //     ),
-                      //   ),
-                      // );
+                      showDialog(
+                        context: commonContext!,
+                        barrierDismissible: false,
+                        useSafeArea: false,
+                        builder: (ctx) => OutPage(
+                          model: OutModel(
+                            outUrl: "1983081451133997057",
+                            userId: "1746775020438425601",
+                            isMiddle: false,
+                          ),
+                        ),
+                      );
                     }
                   },
                   child: const BackgroundTitleView(title: 'All videos'),

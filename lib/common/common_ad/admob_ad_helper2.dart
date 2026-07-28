@@ -7,6 +7,7 @@ import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../vip/provider/provider.dart';
 import '../common_enum.dart';
 import 'base_ad.dart';
 import 'base_ad_model.dart';
@@ -62,6 +63,7 @@ class AdmobAdHelper2 {
     CommAdLoadListener? load,
     required ThingSourceEnum value,
   }) async {
+    if(globalOpenVip) return null;
     CommonReport.eventThings(
       ThingEnum.adReqPlR1Kacement,
       data: {"PuUTVimak": value.value, "gNAuA": 2},
