@@ -41,34 +41,34 @@ class VideoLoading extends ConsumerWidget {
                 child: Text("Current line congestion... ${speed}kb/s"),
               ),
             ),
-            // InkWell(
-            //   onTap: () {
-            //     if (vip) return;
-            //     // commonPush(context, VipPage(isAuto: false, source: "ZpkXtfH"));
-            //   },
-            //   child: Stack(
-            //     alignment: AlignmentGeometry.center,
-            //     children: [
-            //       Image.asset("assets/hat_bg.png", height: 31),
-            //       Positioned(
-            //         child: Row(
-            //           mainAxisSize: MainAxisSize.min,
-            //           children: vip
-            //               ? [Text("Exclusive acceleration line")]
-            //               : [
-            //                   Image.asset(
-            //                     "assets/hat.png",
-            //                     width: 22,
-            //                     height: 22,
-            //                   ),
-            //                   SizedBox(width: 4),
-            //                   Text("Exclusive acceleration line"),
-            //                 ],
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            InkWell(
+              onTap: () {
+                if (vip) return;
+                commonPush(context, VipPage(isAuto: false, source: "ZpkXtfH"));
+              },
+              child: Stack(
+                alignment: AlignmentGeometry.center,
+                children: [
+                  Image.asset("assets/hat_bg.png", height: 31),
+                  Positioned(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: vip
+                          ? [Text("Exclusive acceleration line")]
+                          : [
+                              Image.asset(
+                                "assets/hat.png",
+                                width: 22,
+                                height: 22,
+                              ),
+                              SizedBox(width: 4),
+                              Text("Exclusive acceleration line"),
+                            ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
