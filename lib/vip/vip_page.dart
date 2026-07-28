@@ -10,7 +10,6 @@ import 'package:fluplayer/vip/view/alert_vip.dart';
 import 'package:fluplayer/vip/view/vip_buy.dart';
 import 'package:fluplayer/vip/view/vip_pot.dart';
 import 'package:fluplayer/vip/view/vip_privacy.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';

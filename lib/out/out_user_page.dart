@@ -125,7 +125,7 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                   ),
                   const Spacer(),
                   // const VipEnterItem(from: VipEnterValue.clpage),
-                  SubscribeIcon(source: "wrckMHFz"),
+                  SubscribeIcon(source: "GGbBqDUBbq"),
                   const SizedBox(width: 12),
                 ],
               ),
@@ -303,7 +303,7 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                                                                   .copyWith(
                                                                     userId: m
                                                                         .userId,
-                                                          outUrl: "",
+                                                                    outUrl: "",
                                                                   )
                                                             : widget.model,
                                                         mediaModel: m,
