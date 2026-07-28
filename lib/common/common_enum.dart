@@ -89,8 +89,7 @@ enum ThingEnum {
   premiBdUumSuc("cua"), // 订阅成功
   premiwqfumFail("ZcdFigmKPy"), // 订阅失败时机：取消时上报
   rateServgRe0iceVisit("NjB"), // 好评弹窗曝光
-  rateServj2snjiceClick("OVzeSH"), // 好评评分提交
-  deepOpen("kUSRZ") // 好评评分提交
+  rateServj2snjiceClick("OVzeSH") // 好评评分提交
   ;
 
   final String value;
