@@ -102,7 +102,6 @@ class _VipPageState extends ConsumerState<VipPage> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          if (isVip) return;
                           ref.read(vipProvider.notifier).redeem(true);
                         },
                         child: Container(

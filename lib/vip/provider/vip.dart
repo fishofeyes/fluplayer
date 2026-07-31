@@ -13,8 +13,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:collection/collection.dart';
 part 'vip.g.dart';
 
-final _llList = ["gBCEi", "sEIzcDL", "RKUpnI"];
-
 @Riverpod(keepAlive: true)
 class Vip extends _$Vip {
   final instance = InAppPurchase.instance;
@@ -55,19 +53,16 @@ class Vip extends _$Vip {
           await _buyRequest(tranc);
           EasyLoading.dismiss();
         case PurchaseStatus.canceled:
-          final model = state.models.firstWhereOrNull(
-            (e) => e.id == tranc.productID,
-          );
-          if (model != null) {
             CommonReport.eventThings(
               ThingEnum.premiwqfumFail,
-              data: {"PuUTVimak": _llList[model.type - 1]},
+              data: {"PuUTVimak": this.data?["PuUTVimak"]},
             );
-          }
           EasyLoading.dismiss();
       }
       for (final i in data) {
-        instance.completePurchase(i);
+        if(i.status != PurchaseStatus.canceled && i.status != PurchaseStatus.error) {
+          instance.completePurchase(i);
+        }
       }
     });
   }
@@ -76,13 +71,12 @@ class Vip extends _$Vip {
     EasyLoading.show();
 
     final curr = ref.read(vipChooseProvider);
-    final model = state.models.firstWhereOrNull((e) => e.id == curr);
     final del = details.firstWhereOrNull((e) => e.id == curr);
     data = sender;
 
     if (del != null) {
       firstBuy = true;
-      data?["PuUTVimak"] = _llList[(model?.type ?? 1) - 1];
+      data?["PuUTVimak"] = del.id;
       CommonReport.eventThings(ThingEnum.premiuTHTLmClick, data: data);
       final p = PurchaseParam(productDetails: del);
       InAppPurchase.instance.buyNonConsumable(purchaseParam: p);
