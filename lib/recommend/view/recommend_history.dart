@@ -29,7 +29,7 @@ class RecommendHistory extends StatelessWidget {
           ThingEnum.channellqZkdlistClick,
           data: {
             "PuUTVimak": "LhtQBrCkMh",
-            "gNAuA": isHome ? "WFZcIkYdR" : "TXM",
+            "gNAuA_channel": isHome ? "WFZcIkYdR" : "TXM",
             "NTeYg": "faFWosBtC",
           },
         );

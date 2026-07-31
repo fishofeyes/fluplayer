@@ -131,7 +131,7 @@ class _RecommendPageState extends State<RecommendPage> {
                                       ThingEnum.channellqZkdlistClick,
                                       data: {
                                         "PuUTVimak": "TLCVXmtm",
-                                        "gNAuA": "TXM",
+                                        "gNAuA_channel": "TXM",
                                         "NTeYg": "GQvtQi",
                                       },
                                     );
