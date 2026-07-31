@@ -12,6 +12,7 @@ import 'package:fluplayer/vip/view/vip_pot.dart';
 import 'package:fluplayer/vip/view/vip_privacy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -31,8 +32,13 @@ class _VipPageState extends ConsumerState<VipPage> {
   @override
   void initState() {
     super.initState();
+    screenPortraitUp = true;
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ]);
     data = {
-      "gNAuA": "bBtr",
+      "gNAuA_vip": "bBtr",
       "fyzk": widget.isAuto ? "vvbWKArjy" : "YvrXCXszRH",
       "bqaKMIx": widget.source,
     };

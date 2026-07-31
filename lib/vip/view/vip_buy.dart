@@ -31,7 +31,7 @@ class VipBuy extends ConsumerWidget {
                 color: isChoose ? Color(0xffED9647) : Colors.transparent,
               ),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

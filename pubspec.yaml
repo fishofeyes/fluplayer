@@ -70,7 +70,7 @@ dependencies:
   firebase_remote_config: ^6.0.0
   advertising_id: ^2.7.1
   vpn_connection_detector: ^1.0.10
-  in_app_purchase: 3.2.2
+  in_app_purchase: ^3.3.0
   android_id: ^0.5.2+1
 
 dev_dependencies:

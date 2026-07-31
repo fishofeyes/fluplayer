@@ -3,6 +3,7 @@ import 'package:fluplayer/vip/provider/vip.dart';
 import 'package:fluplayer/vip/view/vip_buy.dart';
 import 'package:fluplayer/vip/view/vip_privacy.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../common/common_enum.dart';
@@ -22,7 +23,10 @@ class _AlertVipState extends ConsumerState<AlertVip> {
   void initState() {
     super.initState();
     isInVipAlertPage = true;
-    data = {"gNAuA": "xBHdW", "fyzk": "vvbWKArjy", "bqaKMIx": widget.source};
+    SchedulerBinding.instance.addPostFrameCallback((e) {
+      ref.read(vipChooseProvider.notifier).state = globalDefaultVipId;
+    });
+    data = {"gNAuA_vip": "xBHdW", "fyzk": "vvbWKArjy", "bqaKMIx": widget.source};
     CommonReport.eventThings(ThingEnum.premiug8amExpose, data: data);
   }
 

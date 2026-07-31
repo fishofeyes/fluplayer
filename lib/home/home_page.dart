@@ -21,6 +21,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../common/common_enum.dart';
+import '../vip/view/alert_vip.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});

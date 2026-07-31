@@ -7,12 +7,16 @@ class OutUserCover extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: 52,
       height: 52,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(width: 2, color: Color(0xffed9647))
+      ),
       child: ClipRRect(
         clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(52 / 2.0),
         child: ExtendedImage.network(
           url ?? '',
           width: 50,
