@@ -186,6 +186,7 @@ class AdmobNativeLoader extends BaseAd {
       return;
     }
     showListener = listener;
+    await Future.delayed(const Duration(milliseconds: 100));
     if (commonContext != null) {
       if (ad == null && ad2 != null) {
         await showDialog(

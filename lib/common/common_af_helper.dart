@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
@@ -21,7 +23,7 @@ class CommonAfHelper {
   // 是否是延迟深链
   bool isDeep = false;
   bool isInHome = false;
-  Map<String, String>? deepLinkValue;
+  Map<String, dynamic> deepLinkValue = {};
 
   Future<void> init() async {
     final AppsFlyerOptions options = AppsFlyerOptions(
@@ -34,7 +36,11 @@ class CommonAfHelper {
         case Status.FOUND:
           isDeep = dp.deepLink?.isDeferred ?? false;
           final deep = dp.deepLink?.deepLinkValue ?? '';
-          deepLinkValue = Uri.parse(deep).queryParameters;
+          deepLinkValue.clear();
+          deepLinkValue.addAll(Uri.parse(deep).queryParameters);
+          final m = utf8.decode(base64Decode(deep));
+          final map2 = Uri.parse(Uri.decodeComponent(m)).queryParameters;
+          deepLinkValue.addAll(map2);
           if(isInHome) {
             jumpAccept(sender: deepLinkValue);
           }
@@ -50,7 +56,7 @@ class CommonAfHelper {
     );
   }
 
-  Future<void> jumpAccept({Map<String, String>? sender}) async {
+  Future<void> jumpAccept({Map<String, dynamic>? sender}) async {
     if (sender == null) return;
     final model = OutModel.fromMap(sender);
     CommonReport.eventThings(
@@ -74,7 +80,7 @@ class CommonAfHelper {
   }
 
   void dismiss() async {
-    deepLinkValue = null;
+    deepLinkValue.clear();
   }
 
   void tryJump() async {
