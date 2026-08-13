@@ -187,6 +187,7 @@ class _PresentDirPageState extends ConsumerState<OutDirPage> {
                                         .map((e) => e.convertModel())
                                         .toList(),
                                     place: widget.place,
+                                    source: mp[widget.place] ?? "Dir",
                                   ),
                                 );
                               } else {

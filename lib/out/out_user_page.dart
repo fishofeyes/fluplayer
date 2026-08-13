@@ -351,6 +351,7 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                                                                   .userPageRecommend
                                                             : CommonReportSourceEnum
                                                                   .userpage,
+                                                        source: value,
                                                       ),
                                                     );
                                                   } else {

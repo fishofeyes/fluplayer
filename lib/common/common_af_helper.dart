@@ -57,7 +57,7 @@ class CommonAfHelper {
   }
 
   Future<void> jumpAccept({Map<String, dynamic>? sender}) async {
-    if (sender == null) return;
+    if (sender == null || sender.isEmpty == true) return;
     final model = OutModel.fromMap(sender);
     CommonReport.eventThings(
       ThingEnum.deepliJgyZHnkOpen,

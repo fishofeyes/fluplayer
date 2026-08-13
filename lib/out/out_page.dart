@@ -1,11 +1,9 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:fluplayer/common/common_report/common_event.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
-import 'package:fluplayer/home/model/home.dart';
 import 'package:fluplayer/out/out_dir_page.dart';
 import 'package:fluplayer/out/out_user_page.dart';
 import 'package:fluplayer/out/provider/out.dart';
-import 'package:fluplayer/out/view/out_cover.dart';
 import 'package:fluplayer/out/view/out_header.dart';
 import 'package:fluplayer/out/view/out_item.dart';
 import 'package:fluplayer/out/view/out_section_group.dart';
@@ -295,6 +293,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
                                                       : CommonReportSourceEnum
                                                             .outpage,
                                                   models: res ?? [],
+                                                  source: value,
                                                 ),
                                               );
                                             } else {

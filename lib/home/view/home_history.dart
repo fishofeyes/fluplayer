@@ -67,6 +67,7 @@ class HomeHistoryView extends ConsumerWidget {
                       model: e,
                       models: list,
                       place: CommonReportSourceEnum.history,
+                      source: "LhtQBrCkMh",
                     ),
                   );
                 },

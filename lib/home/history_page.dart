@@ -108,6 +108,7 @@ class _HistoryMorePageState extends ConsumerState<HistoryPage> {
                             model: e,
                             models: state.history,
                             place: CommonReportSourceEnum.history,
+                            source: "LhtQBrCkMh",
                           ),
                         );
                       },

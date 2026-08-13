@@ -100,9 +100,9 @@ class CommonReport {
         isMiddle: isMiddle,
         params: {"strasses": CommonAes.getAes(p)},
       );
-      print("后台事件上报>>>>>>${report.name}:$res");
+      print("后台事件上报>>>>>>${report.name}:$res, source: $source");
     } catch (e) {
-      print("后台事件上报>>>>>>${report.name}:$e");
+      print("后台事件上报>>>>>>${report.name}:$e, source: $source");
     }
   }
 

@@ -115,6 +115,7 @@ class _HomePageState extends ConsumerState<HomePage>
                                   model: e,
                                   models: state.home,
                                   place: CommonReportSourceEnum.home,
+                                  source: "YVEQPmBnm",
                                 ),
                               );
                             },

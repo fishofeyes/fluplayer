@@ -33,11 +33,13 @@ class PlayerPage extends ConsumerStatefulWidget {
   final List<HomeVideoModel> models;
   final HomeVideoModel model;
   final CommonReportSourceEnum place;
+  final String source;
   const PlayerPage({
     super.key,
     required this.models,
     required this.model,
     required this.place,
+    required this.source,
   });
 
   @override
@@ -210,6 +212,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       } else {
         CommonReport.fileId = widget.model.id;
         final r = await model.getRealLink();
+        print("player url: $r");
         _controller = VideoPlayerController.networkUrl(Uri.parse(r));
       }
       _loadAd(ThingSourceEnum.play);
@@ -279,6 +282,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     } catch (e) {
       _controller?.dispose();
       _controller = null;
+      print(">>>> player error: $e");
       if (mounted) {
         setState(() {
           isLoading = false;
