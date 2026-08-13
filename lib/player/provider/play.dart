@@ -13,6 +13,7 @@ part 'play.g.dart';
 @Riverpod(keepAlive: true)
 class Play extends _$Play {
   RecommendModel? userModel;
+  String _source = '';
   @override
   PlayState build() {
     return PlayState();
@@ -22,7 +23,9 @@ class Play extends _$Play {
     List<HomeVideoModel> list,
     HomeVideoModel model,
     bool haveRecommend,
+      String source,
   ) {
+    _source = source;
     if (list.isEmpty) return;
     state = state.copyWith(
       list: list,
@@ -80,7 +83,7 @@ class Play extends _$Play {
     if (isReport) {
       CommonReport.eventThings(
         ThingEnum.playST5Xource,
-        data: {"PuUTVimak": sender.recommend == true ? "kDiwrEWeWG" : "Jso"},
+        data: {"PuUTVimak": sender.recommend == true ? "kDiwrEWeWG" : "Jso", "playlist_source": _source},
       );
     }
     state = state.copyWith(

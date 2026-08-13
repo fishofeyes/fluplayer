@@ -6,6 +6,8 @@ const isProd = true;
 WidgetRef? commonRef;
 BuildContext? commonContext;
 bool screenPortraitUp = true;
+bool globalInPlayPage = false;
+String globalInPlayPageSource = "";
 int playerForward = 0;
 double playerBrightness = 0;
 double playerVolume = 0;

@@ -223,11 +223,11 @@ class Out extends _$Out {
           requestRecommend(false);
         }
       }
-    } catch (e) {
-      print("error = $e");
+    } catch (e, et) {
+      print("error = $e, info: ${et.toString()}");
       CommonReport.eventThings(
         ThingEnum.landpa6EQy5geFail,
-        data: {"PuUTVimak": "$e"},
+        data: {"PuUTVimak": "$e", "errorInfo": "${et.toString()}"},
       );
     }
   }

@@ -4,7 +4,7 @@ class OutMediaModel {
   final String id;
   final int createTime;
   final String? showTime;
-  final int qty;
+  final String qty;
   final bool directory;
   final bool video;
   final String name;
@@ -55,20 +55,30 @@ class OutMediaModel {
     bool isMiddle, {
     bool isRecommend = false,
     String? outUrl,
-  }) => OutMediaModel(
-    id: json["thiazole"],
-    createTime: json["hunyak"],
-    qty: json["hollin"],
-    directory: json["stright"],
-    video: json["edlwpukdhp"],
-    name: json['familia']["unintombed"],
-    cover: meta["haps_gldei"],
-    size: meta["photophily"],
-    userId: userId,
-    isMiddle: isMiddle,
-    outUrl: outUrl,
-    isRecommend: isRecommend,
-  );
+  }) {
+
+    // 安全获取 name
+    String name = '';
+    final familia = json['familia'];
+    if (familia is Map) {
+      name = familia['unintombed']?.toString() ?? '';
+    }
+
+    return OutMediaModel(
+      id: json["thiazole"],
+      createTime: json["hunyak"],
+      qty: "${json["hollin"]}",
+      directory: json["stright"],
+      video: json["edlwpukdhp"],
+      name: name,
+      cover: meta["haps_gldei"],
+      size: meta["photophily"],
+      userId: userId,
+      isMiddle: isMiddle,
+      outUrl: outUrl,
+      isRecommend: isRecommend,
+    );
+  }
 
   // factory OutMediaModel.fromJson(
   //   Map<String, dynamic> json,
@@ -97,20 +107,29 @@ class OutMediaModel {
     bool isMiddle, {
     bool isRecommend = false,
     String? outUrl,
-  }) => OutMediaModel(
-    id: json["kz4g3xf5ci"],
-    createTime: json["twinging"],
-    qty: json["venenose"],
-    directory: json["munches"],
-    video: json["decarhinus"],
-    name: json["gijvuv0x2c"]["jocosity"], // 未处理
-    cover: meta["liparite"],
-    size: meta["atkyl_7v_y"],
-    userId: userId,
-    outUrl: outUrl,
-    isMiddle: isMiddle,
-    isRecommend: isRecommend,
-  );
+  }) {
+    // 安全获取 name
+    String name = '';
+    final familia = json['gijvuv0x2c'];
+    if (familia is Map) {
+      name = familia['jocosity']?.toString() ?? '';
+    }
+
+    return OutMediaModel(
+      id: json["kz4g3xf5ci"],
+      createTime: json["twinging"],
+      qty: "${json["venenose"]}",
+      directory: json["munches"],
+      video: json["decarhinus"],
+      name: name, // 未处理
+      cover: meta["liparite"],
+      size: meta["atkyl_7v_y"],
+      userId: userId,
+      outUrl: outUrl,
+      isMiddle: isMiddle,
+      isRecommend: isRecommend,
+    );
+  }
 
   factory OutMediaModel.fromRecommend(
     Map<String, dynamic> json,
@@ -118,17 +137,25 @@ class OutMediaModel {
     String userId,
     bool isMiddle, {
     bool isRecommend = false,
-  }) => OutMediaModel(
-    id: json["fryperq0qd"],
-    createTime: json["sultanry"],
-    qty: json["sitcoms"],
-    directory: json["corticose"],
-    video: json["miseats"],
-    name: json["mutilators"]["nssi6g_kun"],
-    cover: meta["chpgsdt02a"],
-    size: meta["reunionism"],
-    userId: userId,
-    isMiddle: isMiddle,
-    isRecommend: isRecommend,
-  );
+  }) {
+    // 安全获取 name
+    String name = '';
+    final familia = json['mutilators'];
+    if (familia is Map) {
+      name = familia['nssi6g_kun']?.toString() ?? '';
+    }
+    return OutMediaModel(
+      id: json["fryperq0qd"],
+      createTime: json["sultanry"],
+      qty: "${json["sitcoms"]}",
+      directory: json["corticose"],
+      video: json["miseats"],
+      name: name,
+      cover: meta["chpgsdt02a"],
+      size: meta["reunionism"],
+      userId: userId,
+      isMiddle: isMiddle,
+      isRecommend: isRecommend,
+    );
+  }
 }

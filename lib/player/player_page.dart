@@ -61,9 +61,12 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   int playCount = 0;
   int playCurrIdx = 0;
   bool isWillShowPlayAd = false;
+  bool reportPlayingError = true;
   @override
   void initState() {
     super.initState();
+    globalInPlayPage = true;
+    globalInPlayPageSource = widget.source;
     WakelockPlus.toggle(enable: true);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     model = widget.model;
@@ -71,7 +74,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       final haveRecommend = widget.model.isMiddle != null;
       ref
           .read(playProvider.notifier)
-          .initList(widget.models, model, haveRecommend);
+          .initList(widget.models, model, haveRecommend, widget.source);
     });
 
     playStatus = CommonEvent.videoPlayController.stream.listen((e) {
@@ -98,6 +101,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
 
   @override
   void dispose() {
+    globalInPlayPage = false;
     CommonReport.fileId = null;
     _loadAd(ThingSourceEnum.playBk);
     _showAd(ThingSourceEnum.playBk);
@@ -205,15 +209,20 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     _isVisible = true;
     setState(() {});
     try {
-      CommonReport.eventThings(ThingEnum.playStaZuartAll);
+      CommonReport.eventThings(ThingEnum.playStaZuartAll, data: {"PuUTVimak": widget.source},);
       if (model.isMiddle == null) {
         CommonReport.fileId = null;
         _controller = VideoPlayerController.file(File(model.path));
       } else {
         CommonReport.fileId = widget.model.id;
-        final r = await model.getRealLink();
-        print("player url: $r");
-        _controller = VideoPlayerController.networkUrl(Uri.parse(r));
+        try {
+          final r = await model.getRealLink();
+          CommonReport.eventThings(ThingEnum.playGetLink, data: {"PuUTVimak": widget.source, "is_success": true},);
+          _controller = VideoPlayerController.networkUrl(Uri.parse(r));
+        } catch(e) {
+          CommonReport.eventThings(ThingEnum.playGetLink, data: {"PuUTVimak": widget.source, "errorInfo": "$e", "is_success": false},);
+          rethrow;
+        }
       }
       _loadAd(ThingSourceEnum.play);
       _showAd(ThingSourceEnum.play).then((e) {
@@ -226,11 +235,16 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         }
       });
       await _controller!.initialize();
+      reportPlayingError = true;
       ref.read(homeProvider.notifier).updatePosition(model, progress);
       isLoading = false;
       error = null;
       _controller?.addListener(() {
         if (!mounted) return;
+        if(_controller?.value.hasError == true && reportPlayingError) {
+          reportPlayingError = false;
+          CommonReport.eventThings(ThingEnum.playingError, data: {"PuUTVimak": widget.source, "errorInfo": "${_controller?.value.errorDescription}"},);
+        }
         setState(() {});
         final total = _controller?.value.duration.inSeconds ?? 0;
         final total2 = _controller?.value.duration.inMilliseconds ?? 0;
@@ -278,7 +292,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       }
       _resetTimer();
       _backReport();
-      CommonReport.eventThings(ThingEnum.pla5djkhySuc);
+      CommonReport.eventThings(ThingEnum.pla5djkhySuc,data: {"PuUTVimak": widget.source});
     } catch (e) {
       _controller?.dispose();
       _controller = null;
@@ -289,11 +303,11 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           _isVisible = true;
           error = "Failed to load video";
         });
-        CommonReport.eventThings(
-          ThingEnum.playrrXujFail,
-          data: {"PuUTVimak": "$e"},
-        );
       }
+      CommonReport.eventThings(
+        ThingEnum.playrrXujFail,
+        data: {"PuUTVimak": widget.source, "errorInfo": "$e"},
+      );
       print("video play err: $e");
     }
   }

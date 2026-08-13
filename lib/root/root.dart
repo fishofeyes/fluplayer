@@ -1,6 +1,7 @@
 import 'package:fluplayer/choose/choose_media.dart';
 import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
+import 'package:fluplayer/common/common_ad/admob_ad_helper2.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/common/common_af_helper.dart';
 import 'package:fluplayer/common/common_auto_vip.dart';
@@ -98,6 +99,10 @@ class _RootPageState extends ConsumerState<RootPage>
     print("app life state = $appState");
     if (appState == AppLifecycleState.resumed) {
       CommonEvent.loadAd(AdPositionEnum.open, ThingSourceEnum.hp);
+      if(globalInPlayPage && (admobHelper.adShowing)) {
+        CommonReport.eventThings(
+          ThingEnum.playingAdExitApp, data: {"PuUTVimak": globalInPlayPageSource},);
+      }
       final sp = await SharedPreferences.getInstance();
       final canShow = sp.getBool(SharedStoreKey.firstInstall.name);
       if (canShow != null) {
