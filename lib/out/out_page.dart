@@ -34,14 +34,27 @@ class _PresentPageState extends ConsumerState<OutPage> {
   final _refreshController = EasyRefreshController(controlFinishLoad: true);
   int tabIndex = 0;
   late OutModel model;
+  bool isReport = false;
   @override
   void initState() {
     super.initState();
     model = widget.model;
     SchedulerBinding.instance.addPostFrameCallback((e) async {
+      await ref.read(outProvider(widget.model).notifier).initData();
+    });
+    CommonEvent.changePlayStatus(false);
+    CommonReport.outUrl = model.outUrl;
+    if (CommonApp.isCall == false) {
+      CommonApp.nativeFunction("fadeData");
+      CommonApp.nativeFunction("resumeAlley");
+      CommonApp.isCall = true;
+    }
+  }
+
+  void _reportData() async {
+    if(!isReport) {
       final sp = await SharedPreferences.getInstance();
       final rr = sp.getString(SharedStoreKey.userId.name);
-      await ref.read(outProvider(widget.model).notifier).initData();
       CommonReport.eventThings(
         ThingEnum.landpagMJFlMeExpose,
         data: {
@@ -50,13 +63,7 @@ class _PresentPageState extends ConsumerState<OutPage> {
           "JfnOLzMRW": rr == null,
         },
       );
-    });
-    CommonEvent.changePlayStatus(false);
-    CommonReport.outUrl = model.outUrl;
-    if (CommonApp.isCall == false) {
-      CommonApp.nativeFunction("fadeData");
-      CommonApp.nativeFunction("resumeAlley");
-      CommonApp.isCall = true;
+      isReport = true;
     }
   }
 
@@ -80,6 +87,9 @@ class _PresentPageState extends ConsumerState<OutPage> {
           newValue.isMore ? IndicatorResult.noMore : IndicatorResult.success,
         );
       });
+      if(newValue.files?.isNotEmpty == true) {
+        _reportData();
+      }
     });
 
     List<OutMediaModel> list;
