@@ -121,6 +121,8 @@ class CommonEvent {
     _fId = fId;
     _outUrl = outUrl;
     _source = source;
+    globalInPlayPageSource = value.value;
+
     _isMiddle =
         (isMiddle ??
             (await SharedPreferences.getInstance()).getBool(

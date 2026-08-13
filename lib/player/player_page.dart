@@ -66,7 +66,6 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   void initState() {
     super.initState();
     globalInPlayPage = true;
-    globalInPlayPageSource = widget.source;
     WakelockPlus.toggle(enable: true);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     model = widget.model;
