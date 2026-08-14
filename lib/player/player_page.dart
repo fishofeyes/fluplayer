@@ -3,11 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
-import 'package:fluplayer/common/common_ad/native_ad_page2.dart';
 import 'package:fluplayer/common/common_enum.dart';
 import 'package:fluplayer/common/common_report/common_event.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
-import 'package:fluplayer/common/view/common_button.dart';
 import 'package:fluplayer/home/model/home.dart';
 import 'package:fluplayer/home/provider/home.dart';
 import 'package:fluplayer/player/provider/play.dart';
@@ -15,6 +13,7 @@ import 'package:fluplayer/player/view/play_list.dart';
 import 'package:fluplayer/player/view/player_controller.dart';
 import 'package:fluplayer/player/view/player_forward.dart';
 import 'package:fluplayer/player/view/player_media.dart';
+import 'package:fluplayer/player/view/player_niuma_controller.dart';
 import 'package:fluplayer/player/view/video_loading.dart';
 import 'package:fluplayer/player/view/video_title.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,6 +22,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:niuma_player/niuma_player.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
@@ -48,6 +48,7 @@ class PlayerPage extends ConsumerStatefulWidget {
 
 class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   VideoPlayerController? _controller;
+  NiumaPlayerController? _niumaPlayerController;
   final ScrollController _scrollController = ScrollController();
   late HomeVideoModel model;
   bool _isVisible = true;
@@ -62,6 +63,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   int playCurrIdx = 0;
   bool isWillShowPlayAd = false;
   bool reportPlayingError = true;
+  bool reportNiuMaPlayingError = true;
   @override
   void initState() {
     super.initState();
@@ -80,9 +82,11 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       if (e == true && admobHelper.adShowing == false) {
         showedAd = false;
         _controller?.play();
+        _niumaPlayerController?.play();
       } else {
         showedAd = true;
         _controller?.pause();
+        _niumaPlayerController?.pause();
       }
     });
     if (admobHelper.playVideoMethod == 1) {
@@ -111,6 +115,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     _scrollController.dispose();
     _timer?.cancel();
     _controller?.dispose();
+    _niumaPlayerController?.dispose();
     if (screenPortraitUp == false) {
       screenPortraitUp = true;
       SystemChrome.setPreferredOrientations([
@@ -200,15 +205,16 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     return res;
   }
 
-  void _initVideo() async {
+  Future<void> _initVideoPlayer() async {
     _controller?.dispose();
     _controller = null;
+    _niumaPlayerController?.dispose();
+    _niumaPlayerController = null;
     error = null;
     isLoading = true;
     _isVisible = true;
     setState(() {});
     try {
-      CommonReport.eventThings(ThingEnum.playStaZuartAll, data: {"PuUTVimak": widget.source},);
       if (model.isMiddle == null) {
         CommonReport.fileId = null;
         _controller = VideoPlayerController.file(File(model.path));
@@ -220,7 +226,14 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           _controller = VideoPlayerController.networkUrl(Uri.parse(r));
         } catch(e) {
           CommonReport.eventThings(ThingEnum.playGetLink, data: {"PuUTVimak": widget.source, "errorInfo": "$e", "is_success": false},);
-          rethrow;
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+              _isVisible = true;
+              error = "Failed to load video please retry";
+            });
+          }
+          return;
         }
       }
       _loadAd(ThingSourceEnum.play);
@@ -242,7 +255,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         if (!mounted) return;
         if(_controller?.value.hasError == true && reportPlayingError) {
           reportPlayingError = false;
-          CommonReport.eventThings(ThingEnum.playingError, data: {"PuUTVimak": widget.source, "errorInfo": "${_controller?.value.errorDescription}"},);
+          CommonReport.eventThings(ThingEnum.playingError, data: {"PuUTVimak": widget.source, "errorInfo": "${_controller?.value.errorDescription}","videoType": "video_player"},);
         }
         setState(() {});
         final total = _controller?.value.duration.inSeconds ?? 0;
@@ -259,7 +272,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           if (admobHelper.playVideoMethod == 0) {
             progress =
                 _controller!.value.position.inMilliseconds /
-                _controller!.value.duration.inMilliseconds;
+                    _controller!.value.duration.inMilliseconds;
             if (_controller!.value.position.inSeconds ==
                 admobHelper.mediaPlayPoint) {
               _loadAd(ThingSourceEnum.play10);
@@ -278,8 +291,8 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         await _controller!.seekTo(
           Duration(
             milliseconds:
-                (model.position * _controller!.value.duration.inMilliseconds)
-                    .toInt(),
+            (model.position * _controller!.value.duration.inMilliseconds)
+                .toInt(),
           ),
         );
         if(admobHelper.adShowing) {
@@ -291,7 +304,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       }
       _resetTimer();
       _backReport();
-      CommonReport.eventThings(ThingEnum.pla5djkhySuc,data: {"PuUTVimak": widget.source});
+      CommonReport.eventThings(ThingEnum.pla5djkhySuc,data: {"PuUTVimak": widget.source, "videoType": "video_player"});
     } catch (e) {
       _controller?.dispose();
       _controller = null;
@@ -305,9 +318,122 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       }
       CommonReport.eventThings(
         ThingEnum.playrrXujFail,
-        data: {"PuUTVimak": widget.source, "errorInfo": "$e"},
+        data: {"PuUTVimak": widget.source, "errorInfo": "$e", "videoType": "video_player"},
       );
       print("video play err: $e");
+    }
+  }
+
+  void _initVideo() async {
+    _controller?.dispose();
+    _controller = null;
+    _niumaPlayerController?.dispose();
+    _niumaPlayerController = null;
+    error = null;
+    isLoading = true;
+    _isVisible = true;
+    setState(() {});
+    try {
+      CommonReport.eventThings(ThingEnum.playStaZuartAll, data: {"PuUTVimak": widget.source},);
+      if (model.isMiddle == null) {
+        CommonReport.fileId = null;
+        _niumaPlayerController = NiumaPlayerController.dataSource(NiumaDataSource.file(model.path));
+      } else {
+        CommonReport.fileId = widget.model.id;
+        try {
+          final r = await model.getRealLink();
+          CommonReport.eventThings(ThingEnum.playGetLink, data: {"PuUTVimak": widget.source, "is_success": true},);
+          _niumaPlayerController = NiumaPlayerController.dataSource(NiumaDataSource.network(r));
+        } catch(e) {
+          CommonReport.eventThings(ThingEnum.playGetLink, data: {"PuUTVimak": widget.source, "errorInfo": "$e", "is_success": false},);
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+              _isVisible = true;
+              error = "Failed to load video please retry";
+            });
+          }
+          return;
+        }
+      }
+      _loadAd(ThingSourceEnum.play);
+      _showAd(ThingSourceEnum.play).then((e) {
+        if (e == false) {
+          showedAd = false;
+          _niumaPlayerController?.play();
+        } else {
+          showedAd = true;
+          _niumaPlayerController?.pause();
+        }
+      });
+      await _niumaPlayerController!.initialize();
+      reportNiuMaPlayingError = true;
+      ref.read(homeProvider.notifier).updatePosition(model, progress);
+      isLoading = false;
+      error = null;
+      _niumaPlayerController?.addListener(() {
+        if (!mounted) return;
+        if(_niumaPlayerController?.value.hasError == true && reportNiuMaPlayingError) {
+          reportNiuMaPlayingError = false;
+          CommonReport.eventThings(ThingEnum.playingError, data: {"PuUTVimak": widget.source, "errorInfo": "${_niumaPlayerController?.value.errorMessage}","videoType": "niuma_player"},);
+        }
+        setState(() {});
+        final total = _niumaPlayerController?.value.duration.inSeconds ?? 0;
+        final total2 = _niumaPlayerController?.value.duration.inMilliseconds ?? 0;
+        final curr2 = _niumaPlayerController?.value.position.inMilliseconds ?? 0;
+        progress = curr2 / (total2 == 0 ? 1 : total2).toDouble();
+        if (_niumaPlayerController?.value.isCompleted == true && total > 1) {
+          setState(() {
+            _isVisible = true;
+          });
+          ref.read(playProvider.notifier).nextModel(true, false);
+        }
+        if (_niumaPlayerController != null) {
+          if (admobHelper.playVideoMethod == 0) {
+            progress =
+                _niumaPlayerController!.value.position.inMilliseconds /
+                    _niumaPlayerController!.value.duration.inMilliseconds;
+            if (_niumaPlayerController!.value.position.inSeconds ==
+                admobHelper.mediaPlayPoint) {
+              _loadAd(ThingSourceEnum.play10);
+              _showAd(ThingSourceEnum.play10);
+            }
+          } else {
+            final sec = _niumaPlayerController?.value.position.inSeconds ?? 0;
+            if (sec >= admobHelper.playVideoY &&
+                playCount >= admobHelper.playVideoN) {
+              _showAd2(ThingSourceEnum.pause);
+            }
+          }
+        }
+      });
+      if (model.position > 0 && model.position < 0.8) {
+        await _niumaPlayerController!.seekTo(
+          Duration(
+            milliseconds:
+            (model.position * _niumaPlayerController!.value.duration.inMilliseconds)
+                .toInt(),
+          ),
+        );
+        if(admobHelper.adShowing) {
+          _niumaPlayerController?.pause();
+        }
+      }
+      if (admobHelper.adShowing == false) {
+        _niumaPlayerController!.play();
+      }
+      _resetTimer();
+      _backReport();
+      CommonReport.eventThings(ThingEnum.pla5djkhySuc,data: {"PuUTVimak": widget.source, "videoType": "niuma_player"});
+    } catch (e) {
+      _niumaPlayerController?.dispose();
+      _niumaPlayerController = null;
+      print(">>>> player error: $e");
+      _initVideoPlayer();
+      CommonReport.eventThings(
+        ThingEnum.playrrXujFail,
+        data: {"PuUTVimak": widget.source, "errorInfo": "$e","videoType": "niuma_player"},
+      );
     }
   }
 
@@ -316,7 +442,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
       _timer!.cancel();
     }
     _timer = Timer(const Duration(seconds: 3), () {
-      if (_controller?.value.isPlaying == true) {
+      if (_controller?.value.isPlaying == true || _niumaPlayerController?.value.isPlaying == true) {
         setState(() {
           _isVisible = false;
         });
@@ -397,12 +523,22 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
   void _forward(int tag) async {
     playerForward = tag;
     setState(() {});
-    final curr = _controller?.value.position.inSeconds ?? 0;
-    final total = _controller?.value.duration.inSeconds ?? 0;
-    if (tag == 2) {
-      _controller?.seekTo(Duration(seconds: (curr + 10).clamp(0, total)));
-    } else {
-      _controller?.seekTo(Duration(seconds: (curr - 10).clamp(0, total)));
+    if(_controller?.value.isInitialized == true) {
+      final curr = _controller?.value.position.inSeconds ?? 0;
+      final total = _controller?.value.duration.inSeconds ?? 0;
+      if (tag == 2) {
+        _controller?.seekTo(Duration(seconds: (curr + 10).clamp(0, total)));
+      } else {
+        _controller?.seekTo(Duration(seconds: (curr - 10).clamp(0, total)));
+      }
+    }  else {
+      final curr = _niumaPlayerController?.value.position.inSeconds ?? 0;
+      final total = _niumaPlayerController?.value.duration.inSeconds ?? 0;
+      if (tag == 2) {
+        _niumaPlayerController?.seekTo(Duration(seconds: (curr + 10).clamp(0, total)));
+      } else {
+        _niumaPlayerController?.seekTo(Duration(seconds: (curr - 10).clamp(0, total)));
+      }
     }
     await Future.delayed(const Duration(milliseconds: 1000));
     playerForward = 0;
@@ -434,6 +570,13 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
                 child: VideoPlayer(_controller!),
               ),
             ),
+          if (_niumaPlayerController != null && _niumaPlayerController?.value.initialized == true)
+            Center(
+              child: AspectRatio(
+                aspectRatio: _niumaPlayerController!.value.aspectRatio,
+                child: NiumaPlayerView(_niumaPlayerController!),
+              ),
+            ),
           Positioned.fill(
             child: GestureDetector(
               onTap: _onUserActivity,
@@ -455,7 +598,15 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
           ),
           Visibility(
             visible: _isVisible,
-            child: PlayerController(
+            child: _niumaPlayerController?.value.initialized == true ? PlayerNiuMaControl(controller: _niumaPlayerController,
+              onRotate: _onRotate,
+              isLast: state.isLast,
+              onList: _showList,
+              onLast: () {
+                _loadAd(ThingSourceEnum.playLast);
+                _showAd(ThingSourceEnum.playLast);
+                ref.read(playProvider.notifier).nextModel(true, true);
+              },):PlayerController(
               controller: _controller,
               onRotate: _onRotate,
               isLast: state.isLast,
