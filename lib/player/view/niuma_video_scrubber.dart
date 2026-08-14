@@ -29,7 +29,7 @@ class _VideoScrubberState extends State<NiumaVideoScrubber> {
       final box = context.findRenderObject()! as RenderBox;
       final Offset tapPos = box.globalToLocal(globalPosition);
       final double relative = tapPos.dx / box.size.width;
-      final Duration position = controller.value.duration * relative;
+      final Duration position = controller.value.duration * relative.clamp(0, 1.0);
       controller.seekTo(position);
     }
 

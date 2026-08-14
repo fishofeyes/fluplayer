@@ -213,6 +213,9 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
     error = null;
     isLoading = true;
     _isVisible = true;
+    if(!mounted) {
+        return;
+    }
     setState(() {});
     try {
       if (model.isMiddle == null) {
