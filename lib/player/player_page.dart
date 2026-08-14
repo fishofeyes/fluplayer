@@ -343,7 +343,7 @@ class _VideoScreenState extends ConsumerState<PlayerPage> with RouteAware {
         try {
           final r = await model.getRealLink();
           CommonReport.eventThings(ThingEnum.playGetLink, data: {"PuUTVimak": widget.source, "is_success": true},);
-          _niumaPlayerController = NiumaPlayerController.dataSource(NiumaDataSource.network(r));
+          _niumaPlayerController = NiumaPlayerController.dataSource(NiumaDataSource.network(r), options: NiumaPlayerOptions(forceIjkOnAndroid: true));
         } catch(e) {
           CommonReport.eventThings(ThingEnum.playGetLink, data: {"PuUTVimak": widget.source, "errorInfo": "$e", "is_success": false},);
           if (mounted) {

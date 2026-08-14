@@ -15,7 +15,7 @@ class PlayerForwardView extends StatelessWidget {
     playerBrightness = playerBrightness.clamp(0.0, 1.0);
     commonRef?.read(mediaProvider.notifier).state = playerBrightness;
     commonRef?.read(mediaStatusProvider.notifier).state = 2;
-    await ScreenBrightness.instance.setSystemScreenBrightness(playerBrightness);
+    await ScreenBrightness.instance.setApplicationScreenBrightness(playerBrightness);
   }
 
   // 更新设备音量
