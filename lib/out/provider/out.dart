@@ -95,18 +95,21 @@ class Out extends _$Out {
 
   Future<void> requestData({bool isLoad = false}) async {
     try {
+      final params = {
+        if(model.outUrl != null) "douzainier": {"stemhcjx4m": model.outUrl} else "fishbones": model.userId, // 未处理
+        "phenyls": "v2",
+        "spirogram": page, //页码
+        "unfealty": pageSize, //分页大小
+      };
       final res = await HttpHelper.request(
         HttpHelperApi.openData,
         isMiddle: model.isMiddle,
-        params: {
-          if(model.outUrl != null) "douzainier": {"stemhcjx4m": model.outUrl} else "fishbones": model.userId, // 未处理
-          "phenyls": "v2",
-          "spirogram": page, //页码
-          "unfealty": pageSize, //分页大小
-        },
-      );
+        params: params);
       if (res == null) {
-        print("open data request err");
+        CommonReport.eventThings(
+          ThingEnum.landpa6EQy5geFail,
+          data: {"PuUTVimak": "no data, isMiddle: ${model.isMiddle}", "errorInfo": jsonEncode(params)},
+        );
         return;
       }
       final u = res["sanbenito"];

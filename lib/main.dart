@@ -13,6 +13,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   CommonReport.uniqueId();
   HttpHelper.log();
+  PaintingBinding.instance.imageCache.maximumSize = 500;
+  PaintingBinding.instance.imageCache.maximumSizeBytes = 100 << 20;
   await CommonApp.init();
   await Firebase.initializeApp(options: FirebaseOptions(apiKey: "AIzaSyDmlKMnRHm8ndMxh-5J2Zlxru2STf41b1M", appId: "1:1094189800146:android:b4899f316c9c23804ceb0b", projectId: "fluplayer---and", messagingSenderId: '1094189800146'));
   await CommonHive.init();

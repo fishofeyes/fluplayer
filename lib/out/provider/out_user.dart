@@ -129,7 +129,7 @@ class OutUser extends _$OutUser {
     final List? files = res['regrowing'];
     if (u != null) {
       final user = OutUserModel.fromJson(u);
-      CommonHive.recommendBox.put(
+      await CommonHive.recommendBox.put(
         user.id,
         RecommendModel(
           uid: user.id,
@@ -145,6 +145,7 @@ class OutUser extends _$OutUser {
             uid: user.id,
             tags: user.getTags(),
             isMiddle: model.isMiddle,
+            refresh: false,
           );
       state = state.copyWith(user: user, isLoading: false);
     }

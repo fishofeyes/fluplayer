@@ -48,15 +48,6 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
     SchedulerBinding.instance.addPostFrameCallback((e) {
       ref.read(outUserProvider(widget.model).notifier).initData();
     });
-    // AdController.loadAd(AdModelType.detail, MySessionValue.chpage);
-    // myFrom = widget.model.from;
-    // AdController.showAd(
-    //   AdModelType.detail,
-    //   uid: widget.model.userId,
-    //   source: ReportSource.channelpage,
-    //   from: widget.model.from,
-    //   value: MySessionValue.chpage,
-    // );
     CommonReport.eventThings(
       ThingEnum.channelpsMQ3HageExpose,
       data: {"bqaKMIx": widget.sourch},
