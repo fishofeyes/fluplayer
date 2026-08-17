@@ -132,7 +132,22 @@ class Out extends _$Out {
             "kroulaXb": model.userId,
           },
         );
+        state = state.copyWith(isLoading: false);
         return;
+      }
+      if(res is Map) {
+        if(res.isEmpty) {
+          state = state.copyWith(isLoading: false);
+          CommonReport.eventThings(
+            ThingEnum.landpa6EQy5geFail,
+            data: {
+              "PuUTVimak": "no data isMiddel: ${model.isMiddle}",
+              "pSEsS": model.outUrl,
+              "kroulaXb": model.userId,
+            },
+          );
+          return;
+        }
       }
       final u = res["sanbenito"];
       final List? rect = res['ariocarpus'];
@@ -264,6 +279,7 @@ class Out extends _$Out {
       }
     } catch (e, et) {
       print("error = $e, info: ${et.toString()}");
+      state = state.copyWith(isLoading: false);
       CommonReport.eventThings(
         ThingEnum.landpa6EQy5geFail,
         data: {

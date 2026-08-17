@@ -252,6 +252,7 @@ class OutUser extends _$OutUser {
         }
       }
     } catch (e) {
+      state  = state.copyWith(isLoading: false);
       // data: {"PuUTVimak": "$e", "pSEsS": model.outUrl, "kroulaXb": model.userId},
       CommonReport.eventThings(
         ThingEnum.channel_fail,

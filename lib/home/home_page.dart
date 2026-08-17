@@ -1,8 +1,4 @@
-import 'package:android_id/android_id.dart';
 import 'package:fluplayer/common/common.dart';
-import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
-import 'package:fluplayer/common/common_ad/admob_ad_helper2.dart';
-import 'package:fluplayer/common/common_report/common_event.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/view/background_title.dart';
 import 'package:fluplayer/common/view/custom_list_view.dart';
@@ -21,7 +17,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../common/common_enum.dart';
-import '../vip/view/alert_vip.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -83,8 +78,9 @@ class _HomePageState extends ConsumerState<HomePage>
                         useSafeArea: false,
                         builder: (ctx) => OutPage(
                           model: OutModel(
-                            outUrl: "2087185249523482625",
-                            isMiddle: false,
+                            // outUrl: "2087185249523482625",
+                            outUrl: "2088086552596078593",
+                            isMiddle: true,
                           ),
                         ),
                       );
