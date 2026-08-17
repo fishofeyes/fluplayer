@@ -42,7 +42,7 @@ class _RootPageState extends ConsumerState<RootPage>
     },
   ];
   final _pageController = PageController();
-
+  bool isPause = false;
   @override
   void initState() {
     super.initState();
@@ -97,7 +97,11 @@ class _RootPageState extends ConsumerState<RootPage>
 
   void _appLife(AppLifecycleState appState) async {
     print("app life state = $appState");
-    if (appState == AppLifecycleState.resumed) {
+    if(appState == AppLifecycleState.paused) {
+      isPause = true;
+    }
+    if (appState == AppLifecycleState.resumed && isPause) {
+      isPause = false;
       CommonEvent.loadAd(AdPositionEnum.open, ThingSourceEnum.hp);
       if(globalInPlayPage && (admobHelper.adShowing)) {
         CommonReport.eventThings(
