@@ -145,6 +145,7 @@ class OutUser extends _$OutUser {
             uid: user.id,
             tags: user.getTags(),
             isMiddle: model.isMiddle,
+            refresh: false,
           );
       state = state.copyWith(user: user, isLoading: false);
     }
