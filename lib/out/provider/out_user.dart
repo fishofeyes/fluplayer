@@ -7,6 +7,8 @@ import 'package:fluplayer/out/model/out_user_model.dart';
 import 'package:fluplayer/out/provider/out_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../common/common_enum.dart';
+import '../../common/common_report/common_report.dart';
 import '../../home/model/recommend_model.dart';
 
 part 'out_user.g.dart';
@@ -105,100 +107,112 @@ class OutUser extends _$OutUser {
   }
 
   Future<void> requestData({bool isLoad = false}) async {
-    final res = await HttpHelper.request(
-      HttpHelperApi.openData,
-      isMiddle: model.isMiddle,
-      params: {
-        "fishbones": model.userId,
-        "phenyls": "v2",
-        "spirogram": page, //页码
-        "unfealty": pageSize, //分页大小
-      },
-    );
-    if (res == null) {
-      print("open data request err");
-      return;
-    }
-    if (res.isEmpty) {
-      state = state.copyWith(noData: true, isLoading: false);
-      return;
-    }
-    final u = res["sanbenito"];
-    final List? rect = res['ariocarpus'];
-    final List? top = res['rlzdve3axx'];
-    final List? files = res['regrowing'];
-    if (u != null) {
-      final user = OutUserModel.fromJson(u);
-      await CommonHive.recommendBox.put(
-        user.id,
-        RecommendModel(
-          uid: user.id,
-          uname: user.name,
-          cover: user.corver,
-          createDate: DateTime.now().millisecondsSinceEpoch,
-          isMiddle: model.isMiddle,
-        ),
+    try {
+      final res = await HttpHelper.request(
+        HttpHelperApi.openData,
+        isMiddle: model.isMiddle,
+        params: {
+          "fishbones": model.userId,
+          "phenyls": "v2",
+          "spirogram": page, //页码
+          "unfealty": pageSize, //分页大小
+        },
       );
-      ref
-          .read(recommendProvider.notifier)
-          .requestHistory(
+      if (res == null) {
+        print("open data request err");
+        return;
+      }
+      if (res.isEmpty) {
+        state = state.copyWith(noData: true, isLoading: false);
+        return;
+      }
+      final u = res["sanbenito"];
+      final List? rect = res['ariocarpus'];
+      final List? top = res['rlzdve3axx'];
+      final List? files = res['regrowing'];
+      if (u != null) {
+        final user = OutUserModel.fromJson(u);
+        await CommonHive.recommendBox.put(
+          user.id,
+          RecommendModel(
             uid: user.id,
-            tags: user.getTags(),
+            uname: user.name,
+            cover: user.corver,
+            createDate: DateTime
+                .now()
+                .millisecondsSinceEpoch,
             isMiddle: model.isMiddle,
-            refresh: false,
-          );
-      state = state.copyWith(user: user, isLoading: false);
-    }
-    if (rect != null) {
-      state = state.copyWith(
-        recents: rect
-            .map(
-              (e) => OutMediaModel.fromJson(
-                e,
-                e['unholiness'],
-                model.userId,
-                model.isMiddle,
-              ),
-            )
-            .toList(),
-        isLoading: false,
-      );
-    }
-    if (top != null) {
-      state = state.copyWith(
-        tops: top
-            .map(
-              (e) => OutMediaModel.fromJson(
-                e,
-                e['unholiness'],
-                model.userId,
-                model.isMiddle,
-              ),
-            )
-            .toList(),
-        isLoading: false,
-      );
-    }
-    if (files != null) {
-      final f = files
-          .map(
-            (e) => OutMediaModel.fromJson(
-              e,
-              e['unholiness'],
-              model.userId,
-              model.isMiddle,
-            ),
+          ),
+        );
+        ref
+            .read(recommendProvider.notifier)
+            .requestHistory(
+          uid: user.id,
+          tags: user.getTags(),
+          isMiddle: model.isMiddle,
+          refresh: false,
+        );
+        state = state.copyWith(user: user, isLoading: false);
+      }
+      if (rect != null) {
+        state = state.copyWith(
+          recents: rect
+              .map(
+                (e) =>
+                OutMediaModel.fromJson(
+                  e,
+                  e['unholiness'],
+                  model.userId,
+                  model.isMiddle,
+                ),
           )
-          .toList();
-      loadMore = f.length < pageSize;
-      if (isLoad) {
-        state = state.copyWith(files: [...?state.files, ...f]);
-      } else {
-        state = state.copyWith(files: f);
+              .toList(),
+          isLoading: false,
+        );
       }
-      if (loadMore) {
-        requestRecommend(false);
+      if (top != null) {
+        state = state.copyWith(
+          tops: top
+              .map(
+                (e) =>
+                OutMediaModel.fromJson(
+                  e,
+                  e['unholiness'],
+                  model.userId,
+                  model.isMiddle,
+                ),
+          )
+              .toList(),
+          isLoading: false,
+        );
       }
+      if (files != null) {
+        final f = files
+            .map(
+              (e) =>
+              OutMediaModel.fromJson(
+                e,
+                e['unholiness'],
+                model.userId,
+                model.isMiddle,
+              ),
+        )
+            .toList();
+        loadMore = f.length < pageSize;
+        if (isLoad) {
+          state = state.copyWith(files: [...?state.files, ...f]);
+        } else {
+          state = state.copyWith(files: f);
+        }
+        if (loadMore) {
+          requestRecommend(false);
+        }
+      }
+    } catch(e) {
+      CommonReport.eventThings(
+        ThingEnum.channel_fail,
+        data: {"PuUTVimak": "$e", "errorInfo": ""},
+      );
     }
-  }
+    }
 }

@@ -92,6 +92,7 @@ enum ThingEnum {
   rateServj2snjiceClick("OVzeSH"), // 好评评分提交
   playingError("play_playing_error"), // 好评评分提交
   playingAdExitApp("ad_exit"), // 好评评分提交
+  channel_fail("channel_fail"), // 好评评分提交
   playGetLink("play_link_get") // 好评评分提交
   ;
 
