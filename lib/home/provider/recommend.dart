@@ -30,7 +30,7 @@ class Recommend extends _$Recommend {
     final h = CommonHive.recommendBox.values.toList();
     h.sort((a, b) => b.createDate.compareTo(a.createDate));
     state = state.copyWith(history: h, showHistory: h);
-    if(refresh) {
+    if (refresh || state.list.isEmpty) {
       return requestData(uid: uid, tags: tags, isMiddle: isMiddle);
     } else {
       final ids = state.history.map((e) => e.uid);
@@ -42,7 +42,7 @@ class Recommend extends _$Recommend {
       }
       List<RecommendModel> showHistory = [...state.history];
       final random = Random();
-      if(l2.isNotEmpty) {
+      if (l2.isNotEmpty) {
         final randomIndex = random.nextInt(l2.length);
         if (showHistory.length < 3) {
           showHistory.add(l2[randomIndex]);
@@ -96,49 +96,66 @@ class Recommend extends _$Recommend {
     }
     tags = jsonDecode(sp.getString(SharedStoreKey.userTags.name)!);
     if (uid == null) return;
-    final res = await HttpHelper.request(
-      HttpHelperApi.appUsers,
-      isMiddle: isMiddle,
-      params: {
-        "fenestrae": uid, //站长id
-        "logotype": "ios", //系统(android , ios)
-        "witchbells": Platform.localeName, //语言
-        "lzbbtf7zpa": {"lm3asrinkf": tags}, // 未处理
-      },
-    );
-    if (res is List) {
-      final l = <RecommendModel>[];
-      final ids = state.history.map((e) => e.uid);
-      final l2 = <RecommendModel>[];
-      for (final i in res) {
-        final m = RecommendModel.fromJson(i, isMiddle);
-        l.add(m);
-        if (ids.contains(m.uid) == false) {
-          l2.add(m);
+    try {
+      final res = await HttpHelper.request(
+        HttpHelperApi.appUsers,
+        isMiddle: isMiddle,
+        params: {
+          "fenestrae": uid, //站长id
+          "logotype": "android", //系统(android , ios)
+          "witchbells": Platform.localeName, //语言
+          "lzbbtf7zpa": {"lm3asrinkf": tags}, // 未处理
+        },
+      );
+      if (res is List) {
+        if (res.isEmpty) {
+          CommonReport.eventThings(
+            ThingEnum.recommend_fail,
+            data: {
+              "PuUTVimak": "WFZcIkYdR",
+              "fail_reason": "not data uid: $uid",
+              "kroulaXb": uid,
+            },
+          );
         }
-      }
-      List<RecommendModel> showHistory = [...state.history];
-      final random = Random();
-      if (l.isEmpty) return;
-      if(l2.isNotEmpty) {
-        final randomIndex = random.nextInt(l2.length);
-        if (showHistory.length < 3) {
-          showHistory.add(l2[randomIndex]);
-        } else {
-          showHistory.insert(2, l2[randomIndex]);
+        final l = <RecommendModel>[];
+        final ids = state.history.map((e) => e.uid);
+        final l2 = <RecommendModel>[];
+        for (final i in res) {
+          final m = RecommendModel.fromJson(i, isMiddle);
+          l.add(m);
+          if (ids.contains(m.uid) == false) {
+            l2.add(m);
+          }
         }
+        List<RecommendModel> showHistory = [...state.history];
+        final random = Random();
+        if (l.isEmpty) return;
+        if (l2.isNotEmpty) {
+          final randomIndex = random.nextInt(l2.length);
+          if (showHistory.length < 3) {
+            showHistory.add(l2[randomIndex]);
+          } else {
+            showHistory.insert(2, l2[randomIndex]);
+          }
+        }
+        if (isReport) {
+          isReport = false;
+          CommonReport.eventThings(
+            ThingEnum.homeChan8FvYXnelExpose,
+            data: {"TTdYTwdcUy": state.history.length},
+          );
+        }
+        if (showHistory.length > 20) {
+          showHistory = showHistory.take(20).toList();
+        }
+        state = state.copyWith(list: l, showHistory: showHistory);
       }
-      if (isReport) {
-        isReport = false;
-        CommonReport.eventThings(
-          ThingEnum.homeChan8FvYXnelExpose,
-          data: {"TTdYTwdcUy": state.history.length},
-        );
-      }
-      if (showHistory.length > 20) {
-        showHistory = showHistory.take(20).toList();
-      }
-      state = state.copyWith(list: l, showHistory: showHistory);
+    } catch (e) {
+      CommonReport.eventThings(
+        ThingEnum.recommend_fail,
+        data: {"PuUTVimak": "WFZcIkYdR", "fail_reason": "$e", "kroulaXb": uid},
+      );
     }
   }
 }

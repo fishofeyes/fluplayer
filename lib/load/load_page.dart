@@ -33,7 +33,6 @@ class _SplashPageState extends ConsumerState<LoadPage> {
   }
 
   void _ump() async {
-    final complete = Completer();
     final params = ConsentRequestParameters();
     ConsentInformation.instance.requestConsentInfoUpdate(
       params,
@@ -49,19 +48,14 @@ class _SplashPageState extends ConsumerState<LoadPage> {
                   : null,
             );
             MobileAds.instance.updateRequestConfiguration(config);
-            complete.complete();
           });
-        } else {
-          complete.complete();
-        }
+        } else {}
       },
       (FormError error) {
         // Called when there's an error updating consent information.
         debugPrint("consent error: ${error.message}");
-        complete.complete(error);
       },
     );
-    await complete.future;
 
     _initLoad();
   }

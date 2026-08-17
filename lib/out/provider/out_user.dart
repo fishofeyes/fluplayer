@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fluplayer/common/common_hive.dart';
 import 'package:fluplayer/common/request/http_helper.dart';
 import 'package:fluplayer/home/provider/recommend.dart';
@@ -6,7 +8,9 @@ import 'package:fluplayer/out/model/out_model.dart';
 import 'package:fluplayer/out/model/out_user_model.dart';
 import 'package:fluplayer/out/provider/out_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../common/common.dart';
 import '../../common/common_enum.dart';
 import '../../common/common_report/common_report.dart';
 import '../../home/model/recommend_model.dart';
@@ -56,57 +60,76 @@ class OutUser extends _$OutUser {
     if (load == false) {
       rPage = 1;
     }
-    final res = await HttpHelper.request(
-      HttpHelperApi.openData,
-      isMiddle: isMiddle,
-      params: {
+    try {
+      final params = {
         "fishbones": uid,
         "phenyls": "v2",
         "spirogram": rPage, //页码
         "unfealty": pageSize, //分页大小
-      },
-    );
-    final List? files = res['regrowing'];
-    if (files != null) {
-      final f = files
-          .map(
-            (e) => OutMediaModel.fromJson(
-              e,
-              e['unholiness'],
-              uid,
-              isMiddle,
-              isRecommend: true,
-            ),
-          )
-          .toList();
-      if (load) {
-        state = state.copyWith(
-          files: [...?state.files, ...f],
-          isMore: f.length < pageSize,
-        );
-      } else {
-        if (f.isEmpty && isRequest) {
-          isRequest = false;
-          final one = ref
-              .read(recommendProvider.notifier)
-              .getOne(uid: model.userId);
-          if (one != null) {
-            uid = one.uid ?? '';
-            isMiddle = one.isMiddle;
-          }
-          requestRecommend(false);
+      };
+      final res = await HttpHelper.request(
+        HttpHelperApi.openData,
+        isMiddle: isMiddle,
+        params: params,
+      );
+      final List? files = res['regrowing'];
+      if (files != null) {
+        final f = files
+            .map(
+              (e) => OutMediaModel.fromJson(
+                e,
+                e['unholiness'],
+                uid,
+                isMiddle,
+                isRecommend: true,
+              ),
+            )
+            .toList();
+        if (f.isEmpty && rPage == 1) {
+          CommonReport.eventThings(
+            ThingEnum.recommend_fail,
+            data: {
+              "PuUTVimak": "GGbBqDUBbq",
+              "fail_reason": "file is empty isMiddle: $isMiddle",
+              "kroulaXb": uid,
+            },
+          );
         }
-        state = state.copyWith(
-          files: [...?state.files, ...f],
-          isMore: f.length < pageSize,
-        );
+        if (load) {
+          state = state.copyWith(
+            files: [...?state.files, ...f],
+            isMore: f.length < pageSize,
+          );
+        } else {
+          if (f.isEmpty && isRequest) {
+            isRequest = false;
+            final one = ref
+                .read(recommendProvider.notifier)
+                .getOne(uid: model.userId);
+            if (one != null) {
+              uid = one.uid ?? '';
+              isMiddle = one.isMiddle;
+            }
+            requestRecommend(false);
+          }
+          state = state.copyWith(
+            files: [...?state.files, ...f],
+            isMore: f.length < pageSize,
+          );
+        }
+      } else {
+        state = state.copyWith(isMore: true);
       }
-    } else {
-      state = state.copyWith(isMore: true);
+    } catch (e) {
+      CommonReport.eventThings(
+        ThingEnum.recommend_fail,
+        data: {"PuUTVimak": "GGbBqDUBbq", "fail_reason": "$e"},
+      );
     }
   }
 
   Future<void> requestData({bool isLoad = false}) async {
+    final sp = await SharedPreferences.getInstance();
     try {
       final res = await HttpHelper.request(
         HttpHelperApi.openData,
@@ -119,10 +142,25 @@ class OutUser extends _$OutUser {
         },
       );
       if (res == null) {
-        print("open data request err");
+        CommonReport.eventThings(
+          ThingEnum.channel_fail,
+          data: {
+            "PuUTVimak": "no data, isMiddle: ${model.isMiddle}",
+            "pSEsS": sp.getString(SharedStoreKey.outUrlId.name),
+            "kroulaXb": model.userId,
+          },
+        );
         return;
       }
       if (res.isEmpty) {
+        CommonReport.eventThings(
+          ThingEnum.channel_fail,
+          data: {
+            "PuUTVimak": "no data, isMiddle: ${model.isMiddle}",
+            "pSEsS": sp.getString(SharedStoreKey.outUrlId.name),
+            "kroulaXb": model.userId,
+          },
+        );
         state = state.copyWith(noData: true, isLoading: false);
         return;
       }
@@ -138,34 +176,31 @@ class OutUser extends _$OutUser {
             uid: user.id,
             uname: user.name,
             cover: user.corver,
-            createDate: DateTime
-                .now()
-                .millisecondsSinceEpoch,
+            createDate: DateTime.now().millisecondsSinceEpoch,
             isMiddle: model.isMiddle,
           ),
         );
         ref
             .read(recommendProvider.notifier)
             .requestHistory(
-          uid: user.id,
-          tags: user.getTags(),
-          isMiddle: model.isMiddle,
-          refresh: false,
-        );
+              uid: user.id,
+              tags: user.getTags(),
+              isMiddle: model.isMiddle,
+              refresh: false,
+            );
         state = state.copyWith(user: user, isLoading: false);
       }
       if (rect != null) {
         state = state.copyWith(
           recents: rect
               .map(
-                (e) =>
-                OutMediaModel.fromJson(
+                (e) => OutMediaModel.fromJson(
                   e,
                   e['unholiness'],
                   model.userId,
                   model.isMiddle,
                 ),
-          )
+              )
               .toList(),
           isLoading: false,
         );
@@ -174,14 +209,13 @@ class OutUser extends _$OutUser {
         state = state.copyWith(
           tops: top
               .map(
-                (e) =>
-                OutMediaModel.fromJson(
+                (e) => OutMediaModel.fromJson(
                   e,
                   e['unholiness'],
                   model.userId,
                   model.isMiddle,
                 ),
-          )
+              )
               .toList(),
           isLoading: false,
         );
@@ -189,15 +223,24 @@ class OutUser extends _$OutUser {
       if (files != null) {
         final f = files
             .map(
-              (e) =>
-              OutMediaModel.fromJson(
+              (e) => OutMediaModel.fromJson(
                 e,
                 e['unholiness'],
                 model.userId,
                 model.isMiddle,
               ),
-        )
+            )
             .toList();
+        if (f.isEmpty && page == 1) {
+          CommonReport.eventThings(
+            ThingEnum.channel_fail,
+            data: {
+              "PuUTVimak": "file empty no data isMiddle: ${model.isMiddle}",
+              "pSEsS": sp.getString(SharedStoreKey.outUrlId.name),
+              "kroulaXb": model.userId,
+            },
+          );
+        }
         loadMore = f.length < pageSize;
         if (isLoad) {
           state = state.copyWith(files: [...?state.files, ...f]);
@@ -208,11 +251,16 @@ class OutUser extends _$OutUser {
           requestRecommend(false);
         }
       }
-    } catch(e) {
+    } catch (e) {
+      // data: {"PuUTVimak": "$e", "pSEsS": model.outUrl, "kroulaXb": model.userId},
       CommonReport.eventThings(
         ThingEnum.channel_fail,
-        data: {"PuUTVimak": "$e", "errorInfo": ""},
+        data: {
+          "PuUTVimak": "$e",
+          "pSEsS": sp.getString(SharedStoreKey.outUrlId.name),
+          "kroulaXb": model.userId,
+        },
       );
     }
-    }
+  }
 }

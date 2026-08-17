@@ -56,7 +56,6 @@ class OutMediaModel {
     bool isRecommend = false,
     String? outUrl,
   }) {
-
     // 安全获取 name
     String name = '';
     final familia = json['familia'];

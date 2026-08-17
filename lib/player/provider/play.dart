@@ -14,6 +14,7 @@ part 'play.g.dart';
 class Play extends _$Play {
   RecommendModel? userModel;
   String _source = '';
+  bool isByHand = true;
   @override
   PlayState build() {
     return PlayState();
@@ -23,8 +24,9 @@ class Play extends _$Play {
     List<HomeVideoModel> list,
     HomeVideoModel model,
     bool haveRecommend,
-      String source,
+    String source,
   ) {
+    isByHand = true;
     _source = source;
     if (list.isEmpty) return;
     state = state.copyWith(
@@ -52,38 +54,59 @@ class Play extends _$Play {
       sort.add(m.createDate);
       sort.add(m.id);
     }
-    final res = await HttpHelper.request(
-      HttpHelperApi.recommend,
-      isMiddle: userModel!.isMiddle,
-      params: {
-        "families": userModel!.uid, // 用户ID
-        "p9tqm_03j_": {"staves": sort}, // 排序索引依据
-      },
-    );
-    List? l = res?['carbamine'];
-    if (l != null) {
-      final f = l
-          .map(
-            (e) => OutMediaModel.fromRecommend(
-              e,
-              e["pneumony"],
-              userModel!.uid,
-              userModel!.isMiddle,
-            ).convertModel(recommend: true),
-          )
-          .toList();
-      state = state.copyWith(
-        list: [...state.list, ...f],
-        noData: f.length < 50,
+    try {
+      final res = await HttpHelper.request(
+        HttpHelperApi.recommend,
+        isMiddle: userModel!.isMiddle,
+        params: {
+          "families": userModel!.uid, // 用户ID
+          "p9tqm_03j_": {"staves": sort}, // 排序索引依据
+        },
+      );
+      List? l = res?['carbamine'];
+      if (l != null) {
+        final f = l
+            .map(
+              (e) => OutMediaModel.fromRecommend(
+                e,
+                e["pneumony"],
+                userModel!.uid,
+                userModel!.isMiddle,
+              ).convertModel(recommend: true),
+            )
+            .toList();
+        if (f.isEmpty && !load) {
+          CommonReport.eventThings(
+            ThingEnum.recommend_fail,
+            data: {
+              "PuUTVimak": "Jso",
+              "fail_reason":
+                  "no data isMiddle: ${userModel?.isMiddle}, userId: ${userModel!.uid}",
+            },
+          );
+        }
+        state = state.copyWith(
+          list: [...state.list, ...f],
+          noData: f.length < 50,
+        );
+      }
+    } catch (e) {
+      CommonReport.eventThings(
+        ThingEnum.recommend_fail,
+        data: {"PuUTVimak": "Jso", "fail_reason": "$e"},
       );
     }
   }
 
   void tapModel(HomeVideoModel sender, bool isReport) {
+    isByHand = isReport;
     if (isReport) {
       CommonReport.eventThings(
         ThingEnum.playST5Xource,
-        data: {"PuUTVimak": sender.recommend == true ? "kDiwrEWeWG" : "Jso", "playlist_source": _source},
+        data: {
+          "PuUTVimak": sender.recommend == true ? "kDiwrEWeWG" : "Jso",
+          "playlist_source": _source,
+        },
       );
     }
     state = state.copyWith(

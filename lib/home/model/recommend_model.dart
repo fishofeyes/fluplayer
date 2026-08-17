@@ -13,12 +13,15 @@ class RecommendModel {
   final bool isMiddle;
   @HiveField(4)
   final int createDate;
+  @HiveField(5)
+  final bool isYuning;
 
   RecommendModel({
     required this.uid,
     required this.uname,
     this.cover,
     this.isMiddle = true,
+    this.isYuning = true,
     required this.createDate,
   });
 
@@ -29,5 +32,6 @@ class RecommendModel {
         cover: json["heyduck"],
         isMiddle: isMiddle,
         createDate: DateTime.now().millisecondsSinceEpoch,
+        isYuning: true,
       );
 }

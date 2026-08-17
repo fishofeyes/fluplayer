@@ -74,6 +74,16 @@ class Out extends _$Out {
               ),
             )
             .toList();
+        if (f.isEmpty && rPage == 1) {
+          CommonReport.eventThings(
+            ThingEnum.recommend_fail,
+            data: {
+              "PuUTVimak": "glT",
+              "fail_reason": "file is empty isMiddle: ${model.isMiddle}",
+              "kroulaXb": uid,
+            },
+          );
+        }
         if (load) {
           state = state.copyWith(
             files: [...?state.files, ...f],
@@ -90,13 +100,20 @@ class Out extends _$Out {
       }
     } catch (e) {
       print("recommend error = $e");
+      CommonReport.eventThings(
+        ThingEnum.recommend_fail,
+        data: {"PuUTVimak": "glT", "fail_reason": "$e", "kroulaXb": uid},
+      );
     }
   }
 
   Future<void> requestData({bool isLoad = false}) async {
     try {
       final params = {
-        if(model.outUrl != null) "douzainier": {"stemhcjx4m": model.outUrl} else "fishbones": model.userId, // 未处理
+        if (model.outUrl != null)
+          "douzainier": {"stemhcjx4m": model.outUrl}
+        else
+          "fishbones": model.userId, // 未处理
         "phenyls": "v2",
         "spirogram": page, //页码
         "unfealty": pageSize, //分页大小
@@ -104,11 +121,16 @@ class Out extends _$Out {
       final res = await HttpHelper.request(
         HttpHelperApi.openData,
         isMiddle: model.isMiddle,
-        params: params);
+        params: params,
+      );
       if (res == null) {
         CommonReport.eventThings(
           ThingEnum.landpa6EQy5geFail,
-          data: {"PuUTVimak": "no data, isMiddle: ${model.isMiddle}", "errorInfo": jsonEncode(params)},
+          data: {
+            "PuUTVimak": "no data isMiddel: ${model.isMiddle}",
+            "pSEsS": model.outUrl,
+            "kroulaXb": model.userId,
+          },
         );
         return;
       }
@@ -128,6 +150,7 @@ class Out extends _$Out {
             cover: user.corver,
             isMiddle: model.isMiddle,
             createDate: DateTime.now().millisecondsSinceEpoch,
+            isYuning: false,
           ),
         );
         await ref
@@ -140,6 +163,9 @@ class Out extends _$Out {
         state = state.copyWith(user: user, isLoading: false);
         final sp = await SharedPreferences.getInstance();
         await sp.setString(SharedStoreKey.userId.name, user.id);
+        if (model.outUrl != null) {
+          sp.setString(SharedStoreKey.outUrlId.name, model.outUrl!);
+        }
         await sp.setBool(SharedStoreKey.isMiddle.name, model.isMiddle);
         CommonReport.adCreateEvent(user: user);
         if (sp.getString(SharedStoreKey.userEmail.name) == null) {
@@ -204,6 +230,16 @@ class Out extends _$Out {
               ),
             )
             .toList();
+        if (page == 1 && f.isEmpty) {
+          CommonReport.eventThings(
+            ThingEnum.landpa6EQy5geFail,
+            data: {
+              "PuUTVimak": "file empty no data isMiddle: ${model.isMiddle}",
+              "pSEsS": model.outUrl,
+              "kroulaXb": model.userId,
+            },
+          );
+        }
         loadMore = files.length < pageSize;
         if (isLoad) {
           state = state.copyWith(files: [...?state.files, ...f]);
@@ -230,7 +266,11 @@ class Out extends _$Out {
       print("error = $e, info: ${et.toString()}");
       CommonReport.eventThings(
         ThingEnum.landpa6EQy5geFail,
-        data: {"PuUTVimak": "$e", "errorInfo": "${et.toString()}"},
+        data: {
+          "PuUTVimak": "$e",
+          "pSEsS": model.outUrl,
+          "kroulaXb": model.userId,
+        },
       );
     }
   }

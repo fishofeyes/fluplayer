@@ -17,6 +17,7 @@ RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 enum SharedStoreKey {
   recommendUserId,
   isMiddle,
+  outUrlId,
   userId,
   userEmail,
   userTags,
