@@ -27,6 +27,7 @@ class Recommend extends _$Recommend {
     required bool isMiddle,
   }) async {
     final h = CommonHive.recommendBox.values.toList();
+    h.sort((a, b) => b.createDate.compareTo(a.createDate));
     state = state.copyWith(history: h, showHistory: h);
     return requestData(uid: uid, tags: tags, isMiddle: isMiddle);
   }
@@ -83,28 +84,31 @@ class Recommend extends _$Recommend {
     if (res is List) {
       final l = <RecommendModel>[];
       final ids = state.history.map((e) => e.uid);
+      final l2 = <RecommendModel>[];
       for (final i in res) {
         final m = RecommendModel.fromJson(i, isMiddle);
+        l.add(m);
         if (ids.contains(m.uid) == false) {
-          l.add(m);
+          l2.add(m);
         }
       }
-
-      List<RecommendModel> showHistory = [...state.showHistory];
+      List<RecommendModel> showHistory = [...state.history];
       final random = Random();
       if (l.isEmpty) return;
-      final randomIndex = random.nextInt(l.length);
+      if(l2.isNotEmpty) {
+        final randomIndex = random.nextInt(l2.length);
+        if (showHistory.length < 3) {
+          showHistory.add(l2[randomIndex]);
+        } else {
+          showHistory.insert(2, l2[randomIndex]);
+        }
+      }
       if (isReport) {
         isReport = false;
         CommonReport.eventThings(
           ThingEnum.homeChan8FvYXnelExpose,
           data: {"TTdYTwdcUy": state.history.length},
         );
-      }
-      if (showHistory.length < 3) {
-        showHistory.add(l[randomIndex]);
-      } else {
-        showHistory.insert(2, l[randomIndex]);
       }
       if (showHistory.length > 20) {
         showHistory = showHistory.take(20).toList();
