@@ -37,6 +37,7 @@ class _NativeAdPageState extends State<NativeAdPage> {
         child: SizedBox(
           width: adWidth,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children:[
               GestureDetector(
                 onTap: () {
