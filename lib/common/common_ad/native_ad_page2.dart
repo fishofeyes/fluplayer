@@ -37,6 +37,7 @@ class _NativeAdPageState extends State<NativeAdPage2> {
           width: adWidth,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
             children: [
               GestureDetector(
                 onTap: () {
@@ -44,13 +45,14 @@ class _NativeAdPageState extends State<NativeAdPage2> {
                 },
                 behavior: HitTestBehavior.translucent,
                 child: Container(
-                  width: 25, height: 25,
+                  width: 25,
+                  height: 25,
                   margin: EdgeInsets.only(bottom: 12),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(width: 1, color: Colors.white),
                   ),
-                  child: Icon(Icons.close),
+                  child: Icon(Icons.close, color: Colors.white),
                 ),
               ),
               Wrap(
@@ -64,9 +66,9 @@ class _NativeAdPageState extends State<NativeAdPage2> {
                     alignment: Alignment.bottomCenter,
                     child: widget.ad != null
                         ? AdWidget(
-                      ad: widget.ad!,
-                      key: ValueKey(widget.ad!.adUnitId),
-                    )
+                            ad: widget.ad!,
+                            key: ValueKey(widget.ad!.adUnitId),
+                          )
                         : Container(),
                   ),
                   if (widget.ad2 != null)
@@ -76,9 +78,9 @@ class _NativeAdPageState extends State<NativeAdPage2> {
                       alignment: Alignment.bottomCenter,
                       child: widget.ad2 != null
                           ? AdWidget(
-                        ad: widget.ad2!,
-                        key: ValueKey(widget.ad2!.adUnitId),
-                      )
+                              ad: widget.ad2!,
+                              key: ValueKey(widget.ad2!.adUnitId),
+                            )
                           : Container(),
                     ),
                 ],
