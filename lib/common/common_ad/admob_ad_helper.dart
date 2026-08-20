@@ -52,8 +52,6 @@ class AdmobAdHelper {
   int playVideoY = 10; // 播放到第几秒展示广告
   double playVideoClickAdRate = 0.0; // 点击广告比例，默认1全部点击
   int playVideoMethod = 0; //0按时间 1按次数
-  StreamController<bool> closeNativeAdController =
-      StreamController<bool>.broadcast();
 
   Future<void> init() async {
     refreshADConfig();
