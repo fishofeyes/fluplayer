@@ -27,6 +27,7 @@ class Recommend extends _$Recommend {
     required bool isMiddle,
   }) async {
     final h = CommonHive.recommendBox.values.toList();
+    h.sort((a, b) => b.createDate.compareTo(a.createDate));
     state = state.copyWith(history: h, showHistory: h);
     return requestData(uid: uid, tags: tags, isMiddle: isMiddle);
   }
