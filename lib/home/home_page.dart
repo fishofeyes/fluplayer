@@ -72,11 +72,10 @@ class _HomePageState extends ConsumerState<HomePage>
                     if (kDebugMode) {
                       // final mm = BaseAdModel.fromMap(   {
                       //   "id": "ca-app-pub-3940256099942544/2247696110",
-                      //   "id2":"ca-app-pub-3940256099942544/1044960115",
                       //   "sort": 8,
                       //   "source": "admob",
                       //   "name": "native"
-                      // }, AdPositionEnum.playVideo);
+                      // }, AdPositionEnum.detail);
                       // // final mm = BaseAdModel(
                       // //   high: 0,
                       // //   type: AdmobEnum.native,
