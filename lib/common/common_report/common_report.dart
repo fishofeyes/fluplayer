@@ -106,6 +106,16 @@ class CommonReport {
     }
   }
 
+  static Future<String> getDistickId() async {
+    final sp = await SharedPreferences.getInstance();
+    String? dId = sp.getString(SharedStoreKey.userDistinctId.name);
+    if (dId == null) {
+      dId = _uuid.v4();
+      sp.setString(SharedStoreKey.userDistinctId.name, dId);
+    }
+    return dId;
+  }
+
   static Future<Map<String, dynamic>> backEventParam({
     required CommonReportEnum report,
     CommonReportSourceEnum? source,
@@ -117,13 +127,8 @@ class CommonReport {
   }) async {
     final p = await package();
     final d = await device();
-    final sp = await SharedPreferences.getInstance();
 
-    String? dId = sp.getString(SharedStoreKey.userDistinctId.name);
-    if (dId == null) {
-      dId = _uuid.v4();
-      sp.setString(SharedStoreKey.userDistinctId.name, dId);
-    }
+    String? dId = await getDistickId();
     final res = {
       "underthief": _uuid.v4(),
       "rclame": report.key,
@@ -167,11 +172,7 @@ class CommonReport {
     final d = await device();
     final sp = await SharedPreferences.getInstance();
 
-    String? dId = sp.getString(SharedStoreKey.userDistinctId.name);
-    if (dId == null) {
-      dId = _uuid.v4();
-      sp.setString(SharedStoreKey.userDistinctId.name, dId);
-    }
+    String? dId = await getDistickId();
     return {
       "qs": p.packageName,
       "bizet": "exclude",
