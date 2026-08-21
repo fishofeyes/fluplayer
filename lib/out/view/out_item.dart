@@ -33,7 +33,7 @@ class OutItem extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.translucent,
       child: Container(
-        height: 62 + 26,
+        height: 72 + 26,
         alignment: Alignment.center,
         padding: padding,
         child: Row(

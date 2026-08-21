@@ -1,4 +1,5 @@
 import 'package:fluplayer/common/common.dart';
+import 'package:fluplayer/common/common_ad/base_ad_model.dart';
 import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/common/view/background_title.dart';
 import 'package:fluplayer/common/view/custom_list_view.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../common/common_ad/base_ad.dart';
 import '../common/common_enum.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -68,22 +70,49 @@ class _HomePageState extends ConsumerState<HomePage>
                 InkWell(
                   onTap: () async {
                     if (kDebugMode) {
+                      // final mm = BaseAdModel.fromMap(   {
+                      //   "id": "ca-app-pub-3940256099942544/2247696110",
+                      //   "id2":"ca-app-pub-3940256099942544/1044960115",
+                      //   "sort": 8,
+                      //   "source": "admob",
+                      //   "name": "native"
+                      // }, AdPositionEnum.playVideo);
+                      // // final mm = BaseAdModel(
+                      // //   high: 0,
+                      // //   type: AdmobEnum.native,
+                      // //   isMax: false,
+                      // //   id: "ca-app-pub-3940256099942544/3986624511",
+                      // //   secondId: "ca-app-pub-3940256099942544/2521693316",
+                      // //   position: "position",
+                      // // );
+                      // print("begin load");
+                      // await mm.load(
+                      //   listener: CommAdLoadListener(
+                      //     error: (e) {
+                      //       print("err: $e");
+                      //     },
+                      //     success: () {
+                      //       print("success");
+                      //     },
+                      //   ),
+                      // );
+                      // mm.showAD();
                       // final androidId = await AndroidId().getId();
                       // print("--androidId--$androidId");
                       // await admobHelper3.loadOpenAd(value: ThingSourceEnum.pause);
                       // admobHelper3.showOpenAd(value: ThingSourceEnum.pause);
-                      showDialog(
-                        context: commonContext!,
-                        barrierDismissible: false,
-                        useSafeArea: false,
-                        builder: (ctx) => OutPage(
-                          model: OutModel(
-                            // outUrl: "2087185249523482625",
-                            outUrl: "2088086552596078593",
-                            isMiddle: true,
-                          ),
-                        ),
-                      );
+                      // showDialog(
+                      //   context: commonContext!,
+                      //   barrierDismissible: false,
+                      //   useSafeArea: false,
+                      //   builder: (ctx) => OutPage(
+                      //     model: OutModel(
+                      //       // outUrl: "2087185249523482625",
+                      //       outUrl: "2088086552596078593",
+                      //       isMiddle: true,
+                      //     ),
+                      //   ),
+                      // );
                     }
                   },
                   child: const BackgroundTitleView(title: 'All videos'),

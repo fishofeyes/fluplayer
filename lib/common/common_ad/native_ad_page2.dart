@@ -15,138 +15,69 @@ class NativeAdPage2 extends StatefulWidget {
   State<NativeAdPage2> createState() => _NativeAdPageState();
 }
 
-class _NativeAdPageState extends State<NativeAdPage2>
-    with AutomaticKeepAliveClientMixin {
-  bool mayClickAd = false;
-  StreamSubscription<bool>? cancel;
-  final rad = Random();
-  bool isShowTop = true;
-  @override
-  void initState() {
-    super.initState();
-    if (widget.ad2 != null) {
-      mayClickAd = rad.nextDouble() < admobHelper.closeAdRate;
-      isShowTop = rad.nextBool();
-    } else {
-      mayClickAd = rad.nextDouble() < admobHelper.playVideoClickAdRate;
-    }
-  }
+class _NativeAdPageState extends State<NativeAdPage2> {
 
   @override
   void dispose() {
-    cancel?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     double adWidth = 300;
     if (!screenPortraitUp) adWidth = 250;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
-        child: Listener(
-          onPointerDown: (e) {
-            setState(() {
-              mayClickAd = false;
-            });
-          },
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 25,
-            runSpacing: 25,
-            children: [
-              Stack(
-                children: [
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              behavior: HitTestBehavior.translucent,
+              child: Container(
+                width: 24, height: 24, margin: EdgeInsets.only(bottom: 12), decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(width: 1, color: Colors.white)
+              ),child: Icon(Icons.close, color: Colors.white, size: 16,),
+              ),
+            ),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 25,
+              runSpacing: 25,
+              children: [
+                if(widget.ad != null)Container(
+                  width: adWidth,
+                  height: adWidth,
+                  alignment: Alignment.bottomCenter,
+                  child: widget.ad != null
+                      ? AdWidget(
+                    ad: widget.ad!,
+                    key: ValueKey(widget.ad!.adUnitId),
+                  )
+                      : Container(),
+                ),
+                if (widget.ad2 != null)
                   Container(
                     width: adWidth,
                     height: adWidth,
                     alignment: Alignment.bottomCenter,
-                    child: widget.ad != null
+                    child: widget.ad2 != null
                         ? AdWidget(
-                            ad: widget.ad!,
-                            key: ValueKey(widget.ad!.adUnitId),
-                          )
+                      ad: widget.ad2!,
+                      key: ValueKey(widget.ad2!.adUnitId),
+                    )
                         : Container(),
                   ),
-                  Positioned(
-                    child: Visibility(
-                      visible: isShowTop,
-                      child: mayClickAd
-                          ? IgnorePointer(
-                              ignoring: true,
-                              child: Container(
-                                color: Colors.black45,
-                                child: const Icon(
-                                  Icons.close,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )
-                          : InkWell(
-                              onTap: () => Navigator.pop(context),
-                              child: Container(
-                                color: Colors.black45,
-                                child: const Icon(
-                                  Icons.close,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                    ),
-                  ),
-                ],
-              ),
-              if (widget.ad2 != null)
-                Stack(
-                  children: [
-                    Container(
-                      width: adWidth,
-                      height: adWidth,
-                      alignment: Alignment.bottomCenter,
-                      child: widget.ad2 != null
-                          ? AdWidget(
-                              ad: widget.ad2!,
-                              key: ValueKey(widget.ad2!.adUnitId),
-                            )
-                          : Container(),
-                    ),
-                    Positioned(
-                      child: Visibility(
-                        visible: isShowTop == false,
-                        child: mayClickAd
-                            ? IgnorePointer(
-                                ignoring: true,
-                                child: Container(
-                                  color: Colors.black45,
-                                  child: const Icon(
-                                    Icons.close,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              )
-                            : InkWell(
-                                onTap: () => Navigator.pop(context),
-                                child: Container(
-                                  color: Colors.black45,
-                                  child: const Icon(
-                                    Icons.close,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                      ),
-                    ),
-                  ],
-                ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => false;
 }

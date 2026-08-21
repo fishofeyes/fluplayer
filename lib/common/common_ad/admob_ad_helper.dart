@@ -175,7 +175,7 @@ class AdmobAdHelper {
     ValueChanged<bool>? onReward,
     bool jumpTimeSpace = false,
   }) async {
-    if (adShowing || globalOpenVip || isInVipAlertPage || isInVipPage || kDebugMode) {
+    if (adShowing || globalOpenVip || isInVipAlertPage || isInVipPage) {
       debugPrint('ad is showing');
       return false;
     }

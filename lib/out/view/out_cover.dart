@@ -11,8 +11,10 @@ class OutCover extends StatelessWidget {
     final isVideo = model.video;
     final isDir = model.directory;
     if (isDir) {
-      return Image.asset("assets/folder.png", width: 110, height: 62);
+      return Image.asset("assets/folder.png", width: 120, height: 82);
     }
+    const width = 120.0;
+    const height = 82.0;
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -20,12 +22,12 @@ class OutCover extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           borderRadius: BorderRadius.circular(4),
           child: SizedBox(
-            width: 110,
-            height: 62,
+            width: width,
+            height: height,
             child: ExtendedImage.network(
               model.cover ?? "",
               fit: BoxFit.cover,
-              cacheWidth: 110 * 2,
+              cacheWidth: width.toInt() * 3,
               loadStateChanged: (state) {
                 final str = isDir
                     ? 'home/file.png'
@@ -34,14 +36,15 @@ class OutCover extends StatelessWidget {
                     : 'photo.png';
                 switch (state.extendedImageLoadState) {
                   case LoadState.loading:
-                    return Image.asset("assets/$str", width: 110, height: 62);
+                    return Image.asset("assets/$str", width: width, height: height);
                   case LoadState.completed:
                     return ExtendedRawImage(
                       image: state.extendedImageInfo?.image,
                       fit: BoxFit.cover,
+                      width: width,height: height,
                     );
                   default:
-                    return Image.asset("assets/$str", width: 110, height: 62);
+                    return Image.asset("assets/$str", width: width, height: height);
                 }
               },
             ),

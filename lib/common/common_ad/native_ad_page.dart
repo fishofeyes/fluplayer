@@ -15,70 +15,46 @@ class NativeAdPage extends StatefulWidget {
   State<NativeAdPage> createState() => _NativeAdPageState();
 }
 
-class _NativeAdPageState extends State<NativeAdPage>
-    with AutomaticKeepAliveClientMixin {
-  Timer? _timer;
-  int total = 10;
-  bool mayClickAd = false;
-  StreamSubscription<bool>? cancel;
-  final rad = Random();
-  bool isShowTop = true;
+class _NativeAdPageState extends State<NativeAdPage> {
   @override
   void initState() {
     super.initState();
-    total = admobHelper.nativeShowTime;
-    if (widget.ad2 != null) {
-      mayClickAd = rad.nextDouble() < admobHelper.closeAdRate;
-      isShowTop = rad.nextBool();
-    } else {
-      mayClickAd = rad.nextDouble() < admobHelper.nativeMayClick;
-    }
-    _beginTimer();
-  }
-
-  void _beginTimer() {
-    if (total != 0) {
-      _timer?.cancel();
-      _timer = Timer.periodic(const Duration(seconds: 1), (e) {
-        if (total == 0) {
-          _timer?.cancel();
-        } else {
-          setState(() {
-            total -= 1;
-          });
-        }
-      });
-    }
   }
 
   @override
   void dispose() {
-    cancel?.cancel();
-    _timer?.cancel();
-    _timer = null;
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     double adWidth = 300;
     if (!screenPortraitUp) adWidth = 250;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Listener(
-          onPointerDown: (e) {
-            setState(() {
-              mayClickAd = false;
-            });
-          },
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 25,
-            runSpacing: 25,
+        child: SizedBox(
+          width: adWidth,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Stack(
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                behavior: HitTestBehavior.translucent,
+                child: Container(
+                  width: 24, height: 24, margin: EdgeInsets.only(bottom: 12), decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(width: 1, color: Colors.white)
+                ),child: Icon(Icons.close, color: Colors.white, size: 16,),
+                ),
+              ),
+              Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 25,
+                runSpacing: 25,
                 children: [
                   Container(
                     width: adWidth,
@@ -89,61 +65,7 @@ class _NativeAdPageState extends State<NativeAdPage>
                       key: ValueKey(widget.ad.adUnitId),
                     ),
                   ),
-                  Positioned(
-                    child: Visibility(
-                      visible: total == 0 && isShowTop,
-                      child: mayClickAd
-                          ? IgnorePointer(
-                              ignoring: true,
-                              child: Container(
-                                color: Colors.black45,
-                                child: const Icon(
-                                  Icons.close,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )
-                          : InkWell(
-                              onTap: () => Navigator.pop(context),
-                              child: Container(
-                                color: Colors.black45,
-                                child: const Icon(
-                                  Icons.close,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                    ),
-                  ),
-                  Positioned(
-                    right: 4,
-                    top: 4,
-                    child: Visibility(
-                      visible: total != 0,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.black45,
-                        ),
-                        child: Text(
-                          "$total",
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              if (widget.ad2 != null)
-                Stack(
-                  children: [
+                  if (widget.ad2 != null)
                     Container(
                       width: adWidth,
                       height: adWidth,
@@ -153,34 +75,8 @@ class _NativeAdPageState extends State<NativeAdPage>
                         key: ValueKey(widget.ad2!.adUnitId),
                       ),
                     ),
-                    Positioned(
-                      child: Visibility(
-                        visible: total == 0 && isShowTop == false,
-                        child: mayClickAd
-                            ? IgnorePointer(
-                                ignoring: true,
-                                child: Container(
-                                  color: Colors.black45,
-                                  child: const Icon(
-                                    Icons.close,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              )
-                            : InkWell(
-                                onTap: () => Navigator.pop(context),
-                                child: Container(
-                                  color: Colors.black45,
-                                  child: const Icon(
-                                    Icons.close,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                      ),
-                    ),
-                  ],
-                ),
+                ],
+              ),
             ],
           ),
         ),
@@ -188,6 +84,4 @@ class _NativeAdPageState extends State<NativeAdPage>
     );
   }
 
-  @override
-  bool get wantKeepAlive => false;
 }
