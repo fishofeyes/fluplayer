@@ -1,2 +1,2 @@
 flutter build ipa --obfuscate --split-debug-info=build/app/outputs/symbols
-xcrun altool --upload-app --type ios -f build/ios/ipa/*.ipa --apiKey 8N8WJHZ553 --apiIssuer 41f76a5b-7758-477d-98fc-b93b8a4b6bd0
+xcrun altool --upload-app --type ios -f build/ios/ipa/*.ipa --apiKey J9PGG4D69Z --apiIssuer 41f76a5b-7758-477d-98fc-b93b8a4b6bd0
