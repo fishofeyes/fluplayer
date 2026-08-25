@@ -1248,6 +1248,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  secmtp_sdk:
+    dependency: "direct main"
+    description:
+      name: secmtp_sdk
+      sha256: "0b4e25f2856c929684ffba4e31f43d15ec5df1a42b6792cbdce42a8a7da64375"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.15"
   shared_preferences:
     dependency: "direct main"
     description:
