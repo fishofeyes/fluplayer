@@ -298,7 +298,7 @@ class _OutUserPageState extends ConsumerState<OutUserPage> {
                                                     commonPush(
                                                       context,
                                                       OutDirPage(
-                                                        model: widget.model,
+                                                        model: OutModel(userId: m.userId ?? widget.model.userId, isMiddle: widget.model.isMiddle),
                                                         mediaModel: m,
                                                         place: m.isRecommend
                                                             ? CommonReportSourceEnum
