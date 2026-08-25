@@ -16,10 +16,10 @@ void main() async {
   await CommonApp.init();
   await Firebase.initializeApp(
     options: FirebaseOptions(
-      apiKey: "AIzaSyAyV96So8i4mPw30wRwZWlanrlrjj_YToE",
-      appId: "1:1026087443559:ios:d38df4bcdb818a1786c8c2",
-      messagingSenderId: "1026087443559",
-      projectId: "fluplayer-ios",
+      apiKey: "AIzaSyDKRVQj2V3z99ZrCuo9IDkte7KeL-GvKO4",
+      appId: "1:581032080540:ios:eeb3f8323f86af67f5e959",
+      messagingSenderId: "581032080540",
+      projectId: "fluplayer-ios-6deb5",
     ),
   );
   await CommonHive.init();
