@@ -16,6 +16,7 @@ import '../common_enum.dart';
 import '../common_report/common_event.dart';
 import '../common_report/common_report.dart';
 import 'base_ad_model.dart';
+import 'top_ad_helper.dart';
 
 final admobHelper = AdmobAdHelper();
 
@@ -56,6 +57,7 @@ class AdmobAdHelper {
   Future<void> init() async {
     refreshADConfig();
     await maxHelper.listen();
+    await topHelper.listen();
     await MobileAds.instance.initialize();
     MobileAds.instance.setAppMuted(true);
     await FirebaseRemoteConfig.instance.setConfigSettings(
