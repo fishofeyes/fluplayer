@@ -96,55 +96,41 @@ dependencies {
     implementation("com.google.ads.mediation:unity:4.16.0.0")
 
     implementation("com.anythink.sdk:debugger-ui-tpn:1.1.3")
-    //Anythink (Necessary)
+
     api("com.anythink.sdk:core-tpn:6.6.22.3")
-//Androidx (Necessary)
     api("androidx.appcompat:appcompat:1.6.1")
     api("androidx.browser:browser:1.4.0")
-//Moloco
     api("com.anythink.sdk:adapter-tpn-moloco:4.10.1.1.0")
     api("com.moloco.sdk:moloco-sdk:4.10.1")
-//Vungle
     api("com.anythink.sdk:adapter-tpn-vungle:7.7.7.1.0")
     api("com.vungle:vungle-ads:7.7.7")
     api("com.google.android.gms:play-services-basement:18.1.0")
     api("com.google.android.gms:play-services-ads-identifier:18.0.1")
-//UnityAds
     api("com.anythink.sdk:adapter-tpn-unityads:4.18.0.1.0")
     api("com.unity3d.ads:unity-ads:4.18.0")
-//Ironsource
     api("com.anythink.sdk:adapter-tpn-ironsource:9.2.0.1.2")
     api("com.unity3d.ads-mediation:mediation-sdk:9.2.0")
     api("com.google.android.gms:play-services-appset:16.0.2")
     api("com.google.android.gms:play-services-ads-identifier:18.0.1")
     api("com.google.android.gms:play-services-basement:18.1.0")
-//Pangle
     api("com.anythink.sdk:adapter-tpn-pangle:8.1.0.3.1.0")
     api("com.pangle.global:pag-sdk:8.1.0.3")
     api("com.google.android.gms:play-services-ads-identifier:18.2.0")
-//Facebook
     api("com.anythink.sdk:adapter-tpn-facebook:6.22.0.1.0")
     api("com.facebook.android:audience-network-sdk:6.22.0")
     api("androidx.annotation:annotation:1.0.0")
-//Admob
     api("com.anythink.sdk:adapter-tpn-admob:25.4.0.1.1")
     api("com.google.android.gms:play-services-ads:25.4.0")
-//Inmobi
     api("com.anythink.sdk:adapter-tpn-inmobi:11.4.0.1.0")
     api("com.inmobi.monetization:inmobi-ads-kotlin:11.4.0")
-//Anythink Adx SDK(Necessary)
     api("com.anythink.sdk:adapter-tpn-sdm:6.5.77.1.1")
     api("com.smartdigimkttech.sdk:smartdigimkttech-sdk:6.5.77")
-//AppLovin
     api("com.anythink.sdk:adapter-tpn-applovin:13.6.3.1.0")
     api("com.applovin:applovin-sdk:13.6.3")
-//Mintegral
     api("com.anythink.sdk:adapter-tpn-mintegral:17.1.71.1.0")
     api("com.mbridge.msdk.oversea:mbridge_android_sdk:17.1.71")
     api("androidx.recyclerview:recyclerview:1.1.0")
-//Bidmachine
     api("com.anythink.sdk:adapter-tpn-bidmachine:3.7.1.1.0")
     api("io.bidmachine:ads:3.7.1")
-//Tramini
     api("com.anythink.sdk:tramini-plugin-tpn:6.6.22.3")
 }

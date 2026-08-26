@@ -1,5 +1,4 @@
 import 'package:fluplayer/common/common.dart';
-import 'package:fluplayer/common/common_ad/top_ad_helper.dart';
 import 'package:fluplayer/common/common_val.dart';
 import 'package:fluplayer/common/view/background_title.dart';
 import 'package:fluplayer/mine/privacy_page.dart';
@@ -97,7 +96,6 @@ class _MinePageState extends State<MinePage> {
                       InkWell(
                         onTap: () {
                           EasyLoading.showToast("current version $version");
-                          topHelper.showToponTestUI();
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 0),
