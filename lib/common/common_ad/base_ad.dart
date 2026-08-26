@@ -5,6 +5,8 @@ enum AdPositionEnum { open, media, detail, native, playVideo }
 
 enum ADType { open, interstitial, native, rewarded }
 
+enum AdPlatform { max, admob, top }
+
 class CommonAdLoadError {
   String code;
   String msg;

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:secmtp_sdk/at_index.dart';
 
 import 'base_ad.dart';
@@ -5,18 +7,18 @@ import 'base_ad.dart';
 final topHelper = TopAdHelper();
 
 class TopAdHelper {
+  static const String toponId = 'h6a8d321912b90';
+  static const String toponKey = 'ae497a5c9f89d0d274253f3cccab97c9a';
   Map<String, CommAdLoadListener> load = {};
   Map<String, CommAdShowListener> show = {};
 
   Future<void> listen() async {
-    await ATInitManger.initSDK(
-      appidStr: 'h6a8d321912b90',
-      appidkeyStr: 'ae497a5c9f89d0d274253f3cccab97c9a',
-    );
+    await ATInitManger.initSDK(appidStr: toponId, appidkeyStr: toponKey);
 
     ATListenerManager.splashEventHandler.listen((value) {
       if (value.splashStatus == SplashStatus.splashDidFinishLoading) {
         //广告加载成功
+        log('topon 开屏广告加载成功 ${value.placementID}');
         load[value.placementID]?.success?.call();
       } else if (value.splashStatus == SplashStatus.splashDidShowSuccess) {
         //广告展示成功
@@ -38,6 +40,7 @@ class TopAdHelper {
           value.splashStatus == SplashStatus.splashUnknown ||
           value.splashStatus == SplashStatus.splashDidShowFailed) {
         // 广告加载超时 广告加载失败  splashUnknown 广告展示失败
+        log('topon 开屏广告加载失败 ${value.placementID}');
         load[value.placementID]?.error?.call(
           CommonAdLoadError('${value.extraMap['code']}', value.requestMessage),
         );
@@ -46,6 +49,7 @@ class TopAdHelper {
     ATListenerManager.rewardedVideoEventHandler.listen((value) {
       if (value.rewardStatus == RewardedStatus.rewardedVideoDidFinishLoading) {
         //广告加载成功
+        log('topon 激励广告加载成功 ${value.placementID}');
         load[value.placementID]?.success?.call();
       } else if (value.rewardStatus ==
           RewardedStatus.rewardedVideoDidStartPlaying) {
@@ -74,6 +78,7 @@ class TopAdHelper {
           value.rewardStatus == RewardedStatus.rewardedVideoUnknown ||
           value.rewardStatus == RewardedStatus.rewardedVideoDidFailToPlay) {
         //广告加载失败 广告播放失败
+        log('topon 激励广告加载失败 ${value.placementID}');
         load[value.placementID]?.error?.call(
           CommonAdLoadError('${value.extraMap['code']}', value.requestMessage),
         );
@@ -84,6 +89,7 @@ class TopAdHelper {
           InterstitialStatus.interstitialAdDidFinishLoading) {
         //广告加载成功
         load[value.placementID]?.success?.call();
+        log('topon 插屏广告加载成功 ${value.placementID}');
       } else if (value.interstatus ==
           InterstitialStatus.interstitialDidShowSucceed) {
         //广告展示成功
@@ -107,11 +113,16 @@ class TopAdHelper {
           value.interstatus == InterstitialStatus.interstitialUnknown ||
           value.interstatus == InterstitialStatus.interstitialFailedToShow) {
         //广告加载失败 广告展示失败
+        log('topon 插屏广告加载失败 ${value.placementID}');
         load[value.placementID]?.error?.call(
           CommonAdLoadError('${value.extraMap['code']}', value.requestMessage),
         );
       }
     });
+  }
+
+  void showToponTestUI() {
+    ATInitManger.showDebuggerUI(debugKey: toponKey);
   }
 
   void addLoadListener({

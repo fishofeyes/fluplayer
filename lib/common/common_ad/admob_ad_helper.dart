@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper2.dart';
 import 'package:fluplayer/common/common_ad/app_config.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/common/common_ad/max_ad_helper.dart';
+import 'package:fluplayer/common/common_ad/top_ad_helper.dart';
 import 'package:fluplayer/common/common_val.dart';
 import 'package:fluplayer/vip/provider/provider.dart';
 import 'package:fluplayer/vip/provider/vip.dart';
@@ -57,6 +59,7 @@ class AdmobAdHelper {
   Future<void> init() async {
     refreshADConfig();
     await maxHelper.listen();
+    await topHelper.listen();
     await MobileAds.instance.initialize();
     MobileAds.instance.setAppMuted(true);
     await FirebaseRemoteConfig.instance.setConfigSettings(
@@ -154,7 +157,7 @@ class AdmobAdHelper {
     CommAdLoadListener? load,
     required ThingSourceEnum value,
   }) async {
-    if(globalOpenVip) return null;
+    if (globalOpenVip) return null;
     CommonReport.eventThings(
       ThingEnum.adReqPlR1Kacement,
       data: {"PuUTVimak": value.value, "gNAuA": 1},
@@ -209,7 +212,7 @@ class AdmobAdHelper {
         return r;
       } else {
         adShowing = false;
-        print("admob ad is not ready");
+        log("admob ad is not ready");
         return false;
       }
     }

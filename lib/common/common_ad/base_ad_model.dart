@@ -10,6 +10,9 @@ import 'admob/admob_reward.dart';
 import 'base_ad.dart';
 import 'max/max_insert.dart';
 import 'max/max_rewarded.dart';
+import 'topon/top_insert.dart';
+import 'topon/top_open.dart';
+import 'topon/top_reward.dart';
 
 class BaseAdModel {
   BaseAd adLoader = BaseAd();
@@ -19,7 +22,9 @@ class BaseAdModel {
   String? id2;
   int sort = 1;
   int loadADTime = 0;
-  bool isAdmob = true;
+
+  // bool isAdmob = true;
+  AdPlatform adPlatform = AdPlatform.admob;
 
   BaseAdModel({
     required this.id,
@@ -33,7 +38,14 @@ class BaseAdModel {
     sort = map['sort'] ?? 1;
     id = map['id'] ?? '';
     id2 = map['id2'];
-    isAdmob = map['source'] == 'admob';
+    final String? source = map['source'];
+    if (source == 'admob') {
+      adPlatform = AdPlatform.admob;
+    } else if (source == 'max') {
+      adPlatform = AdPlatform.max;
+    } else {
+      adPlatform = AdPlatform.top;
+    }
     adType = ADType.values.firstWhere(
       (e) => e.toString() == 'ADType.${map['name']}',
       orElse: () => ADType.open,
@@ -112,19 +124,37 @@ class BaseAdModel {
   BaseAd getADLoader() {
     switch (adType) {
       case ADType.open:
-        if (!isAdmob) return MaxOpenLoader();
-        return AdmobOpenLoader();
+        switch (adPlatform) {
+          case AdPlatform.max:
+            return MaxOpenLoader();
+          case AdPlatform.admob:
+            return AdmobOpenLoader();
+          case AdPlatform.top:
+            return TopOpen();
+        }
       case ADType.interstitial:
-        if (!isAdmob) return MaxInterstitialLoader();
-        return AdmobInterLoader();
+        switch (adPlatform) {
+          case AdPlatform.max:
+            return MaxInterstitialLoader();
+          case AdPlatform.admob:
+            return AdmobInterLoader();
+          case AdPlatform.top:
+            return TopInsert();
+        }
       case ADType.native:
         if (position == AdPositionEnum.playVideo) {
           return AdmobNativeLoader2();
         }
         return AdmobNativeLoader();
       case ADType.rewarded:
-        if (!isAdmob) return MaxRewardLoader();
-        return AdmobRewardLoader();
+        switch (adPlatform) {
+          case AdPlatform.max:
+            return MaxRewardLoader();
+          case AdPlatform.admob:
+            return AdmobRewardLoader();
+          case AdPlatform.top:
+            return TopReward();
+        }
     }
   }
 }
