@@ -58,9 +58,9 @@ class AdmobAdHelper {
 
   Future<void> init() async {
     refreshADConfig();
-    await maxHelper.listen();
-    await topHelper.listen();
-    await MobileAds.instance.initialize();
+    MobileAds.instance.initialize();
+    maxHelper.listen();
+    topHelper.listen();
     MobileAds.instance.setAppMuted(true);
     await FirebaseRemoteConfig.instance.setConfigSettings(
       RemoteConfigSettings(
