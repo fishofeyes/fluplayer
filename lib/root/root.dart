@@ -77,7 +77,7 @@ class _RootPageState extends ConsumerState<RootPage>
       }
     });
 
-    // ref.read(vipProvider.notifier).redeem(false);
+    ref.read(vipProvider.notifier).redeem(false);
 
     autoJumpVip = (isPage, isAd) {
       CommonAutoVip.jumpVip(context, isPage, isAd);
