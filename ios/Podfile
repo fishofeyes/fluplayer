@@ -30,7 +30,20 @@ flutter_ios_podfile_setup
 target 'Runner' do
   use_frameworks!
 
+
 #   pod 'GoogleMobileAdsMediationAppLovin'
+    pod 'TPNMediationAdxSmartdigimktAdapter','6.5.78.2.0'
+    pod 'TPNMediationMolocoAdapter','4.8.0.2.1'
+    pod 'TPNMediationVungleAdapter','7.7.6.2.0'
+    pod 'TPNMediationUnityAdsAdapter','4.19.0.2.0'
+    pod 'TPNMediationIronSourceAdapter','9.3.0.0.2.1'
+    pod 'TPNMediationPangleAdapter','8.2.1.0.2.0'
+    pod 'TPNMediationFacebookAdapter','6.22.0.2.1'
+    pod 'TPNMediationAdmobAdapter','13.3.0.2.0'
+    pod 'TPNMediationApplovinAdapter','13.6.0.2.1'
+    pod 'TPNMediationMintegralAdapter','8.1.6.2.0'
+    pod 'TPNMediationBidMachineAdapter','3.7.1.2.3'
+
 	pod 'GoogleMobileAdsMediationFyber'
 	pod 'GoogleMobileAdsMediationIMobile'
 	pod 'GoogleMobileAdsMediationInMobi'
@@ -39,7 +52,7 @@ target 'Runner' do
 	pod 'GoogleMobileAdsMediationFacebook'
 	pod 'GoogleMobileAdsMediationMintegral'
 	pod 'GoogleMobileAdsMediationMoloco'
-	pod 'GoogleMobileAdsMediationPangle'
+# 	pod 'GoogleMobileAdsMediationPangle'
 	pod 'GoogleMobileAdsMediationUnity'
 	pod 'AppLovinMediationGoogleAdapter'
 	pod 'AppLovinMediationVungleAdapter'
@@ -53,6 +66,8 @@ target 'Runner' do
 	pod 'AppLovinMediationInMobiAdapter'
 	pod 'AppLovinMediationIronSourceAdapter'
 	pod 'AppLovinMediationMolocoAdapter'
+
+    
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
     inherit! :search_paths

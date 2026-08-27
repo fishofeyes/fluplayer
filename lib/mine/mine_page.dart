@@ -1,4 +1,5 @@
 import 'package:fluplayer/common/common.dart';
+import 'package:fluplayer/common/common_ad/top_ad_helper.dart';
 import 'package:fluplayer/common/common_app.dart';
 import 'package:fluplayer/common/common_val.dart';
 import 'package:fluplayer/common/view/background_title.dart';
@@ -19,6 +20,7 @@ class MinePage extends StatefulWidget {
 class _MinePageState extends State<MinePage> {
   String version = "1.0.0";
   bool showToast = false;
+
   @override
   void initState() {
     super.initState();
@@ -96,6 +98,7 @@ class _MinePageState extends State<MinePage> {
                       InkWell(
                         onTap: () {
                           EasyLoading.showToast("current version $version");
+                          topHelper.showToponTestUI();
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 0),

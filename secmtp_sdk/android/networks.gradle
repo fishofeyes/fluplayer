@@ -1,0 +1,13 @@
+repositories {
+    maven {
+        url "https://jfrog.anythinktech.com/artifactory/overseas_sdk"
+    }
+}
+
+dependencies {
+    // SecMTP / TopOn core (compileOnly — same as up_sdk_react_native/android/networks.gradle)
+    compileOnly "com.anythink.sdk:core-tpn:6.5.73.3"
+
+    // Debugger UI (showDebuggerUI)
+    compileOnly "com.anythink.sdk:debugger-ui-tpn:1.1.5"
+}

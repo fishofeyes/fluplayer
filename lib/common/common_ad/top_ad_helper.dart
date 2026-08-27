@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:secmtp_sdk/at_index.dart';
 
 import 'base_ad.dart';
@@ -90,6 +91,7 @@ class TopAdHelper {
         //广告加载成功
         load[value.placementID]?.success?.call();
         log('topon 插屏广告加载成功 ${value.placementID}');
+        EasyLoading.showToast('插屏广告加载成功');
       } else if (value.interstatus ==
           InterstitialStatus.interstitialDidShowSucceed) {
         //广告展示成功
@@ -114,6 +116,7 @@ class TopAdHelper {
           value.interstatus == InterstitialStatus.interstitialFailedToShow) {
         //广告加载失败 广告展示失败
         log('topon 插屏广告加载失败 ${value.placementID}');
+        EasyLoading.showToast('插屏广告加载失败 ${value.requestMessage}');
         load[value.placementID]?.error?.call(
           CommonAdLoadError('${value.extraMap['code']}', value.requestMessage),
         );
