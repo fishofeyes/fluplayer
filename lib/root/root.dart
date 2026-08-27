@@ -116,7 +116,7 @@ class _RootPageState extends ConsumerState<RootPage>
 
   void _appLife(AppLifecycleState appState) async {
     print("app life state = $appState");
-    if(appState == AppLifecycleState.paused) {
+    if (appState == AppLifecycleState.paused) {
       isPause = true;
     }
     if (appState == AppLifecycleState.resumed && isPause) {
