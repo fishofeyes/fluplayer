@@ -7,8 +7,8 @@ import 'base_ad.dart';
 final topHelper = TopAdHelper();
 
 class TopAdHelper {
-  static const String toponId = 'x';
-  static const String toponKey = 'x';
+  static const String toponId = 'h6a8facf818507';
+  static const String toponKey = 'a041d71a03d28a9c6c1dc3da08f7371ff';
   Map<String, CommAdLoadListener> load = {};
   Map<String, CommAdShowListener> show = {};
 
@@ -74,7 +74,7 @@ class TopAdHelper {
         //广告被关闭
         show[value.placementID]?.onClose?.call();
       } else if (value.rewardStatus ==
-          RewardedStatus.rewardedVideoDidFailToLoad ||
+              RewardedStatus.rewardedVideoDidFailToLoad ||
           value.rewardStatus == RewardedStatus.rewardedVideoUnknown ||
           value.rewardStatus == RewardedStatus.rewardedVideoDidFailToPlay) {
         //广告加载失败 广告播放失败
@@ -109,7 +109,7 @@ class TopAdHelper {
         //广告被关闭
         show[value.placementID]?.onClose?.call();
       } else if (value.interstatus ==
-          InterstitialStatus.interstitialAdFailToLoadAD ||
+              InterstitialStatus.interstitialAdFailToLoadAD ||
           value.interstatus == InterstitialStatus.interstitialUnknown ||
           value.interstatus == InterstitialStatus.interstitialFailedToShow) {
         //广告加载失败 广告展示失败
