@@ -77,7 +77,7 @@ class _RootPageState extends ConsumerState<RootPage>
       }
     });
 
-    ref.read(vipProvider.notifier).redeem(false);
+    // ref.read(vipProvider.notifier).redeem(false);
 
     autoJumpVip = (isPage, isAd) {
       CommonAutoVip.jumpVip(context, isPage, isAd);
@@ -116,7 +116,7 @@ class _RootPageState extends ConsumerState<RootPage>
 
   void _appLife(AppLifecycleState appState) async {
     print("app life state = $appState");
-    if(appState == AppLifecycleState.paused) {
+    if (appState == AppLifecycleState.paused) {
       isPause = true;
     }
     if (appState == AppLifecycleState.resumed && isPause) {
