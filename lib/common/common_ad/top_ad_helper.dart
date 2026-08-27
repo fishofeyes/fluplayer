@@ -116,7 +116,10 @@ class TopAdHelper {
           value.interstatus == InterstitialStatus.interstitialFailedToShow) {
         //广告加载失败 广告展示失败
         log('topon 插屏广告加载失败 ${value.placementID}');
-        EasyLoading.showToast('插屏广告加载失败 ${value.requestMessage}');
+        EasyLoading.showError(
+          '插屏广告加载失败 ${value.requestMessage}',
+          duration: Duration(seconds: 4),
+        );
         load[value.placementID]?.error?.call(
           CommonAdLoadError('${value.extraMap['code']}', value.requestMessage),
         );
