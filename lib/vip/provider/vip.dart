@@ -71,7 +71,7 @@ class Vip extends _$Vip {
     });
   }
 
-  void buyVip(Map<String, dynamic>? sender) {
+  void buyVip(Map<String, dynamic>? sender) async {
     EasyLoading.show();
     final curr = ref.read(vipChooseProvider);
     final model = state.models.firstWhereOrNull((e) => e.id == curr);
@@ -83,9 +83,9 @@ class Vip extends _$Vip {
       CommonReport.eventThings(ThingEnum.premiuTHTLmClick, data: data);
       final p = PurchaseParam(productDetails: del);
       if (model?.type == 3) {
-        InAppPurchase.instance.buyConsumable(purchaseParam: p);
+        await InAppPurchase.instance.buyConsumable(purchaseParam: p);
       } else {
-        InAppPurchase.instance.buyNonConsumable(purchaseParam: p);
+        await InAppPurchase.instance.buyNonConsumable(purchaseParam: p);
       }
     } else {
       EasyLoading.showError("Product unavailable");
