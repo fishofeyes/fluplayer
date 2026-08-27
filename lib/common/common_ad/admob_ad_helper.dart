@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper2.dart';
 import 'package:fluplayer/common/common_ad/app_config.dart';
@@ -56,9 +57,9 @@ class AdmobAdHelper {
 
   Future<void> init() async {
     refreshADConfig();
-    await maxHelper.listen();
-    await topHelper.listen();
-    await MobileAds.instance.initialize();
+    maxHelper.listen();
+    topHelper.listen();
+    MobileAds.instance.initialize();
     MobileAds.instance.setAppMuted(true);
     await FirebaseRemoteConfig.instance.setConfigSettings(
       RemoteConfigSettings(
@@ -145,7 +146,9 @@ class AdmobAdHelper {
     loadMedia(value: ThingSourceEnum.cp);
     loadNative(value: ThingSourceEnum.cp);
     admobHelper2.loadOpenAd(value: ThingSourceEnum.cp);
-    Future.delayed(const Duration(seconds: 1)).then((e) => admobHelper3.loadOpenAd(value: ThingSourceEnum.cp));
+    Future.delayed(
+      const Duration(seconds: 1),
+    ).then((e) => admobHelper3.loadOpenAd(value: ThingSourceEnum.cp));
   }
 
   Future<BaseAdModel?> _loadAd(
@@ -207,7 +210,7 @@ class AdmobAdHelper {
         return r;
       } else {
         adShowing = false;
-        print("admob ad is not ready");
+        log("admob ad is not ready");
         return false;
       }
     }

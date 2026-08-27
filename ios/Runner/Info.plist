@@ -41,8 +41,53 @@
 	<string>ca-app-pub-2124863777532045~4972387934</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>pinduoduo</string>
+		<string>openapp.jdmobile</string>
+		<string>tbopen</string>
+		<string>imeituan</string>
+		<string>iosamap</string>
+		<string>alipay</string>
+		<string>baiduboxapp</string>
+		<string>vipshop</string>
+		<string>tmall</string>
+		<string>meituanwaimai</string>
+		<string>kwai</string>
+		<string>snssdk1128</string>
+		<string>eleme</string>
+		<string>xhsdiscover</string>
+		<string>pddopen</string>
+		<string>ksnebula</string>
+		<string>sinaweibo</string>
+		<string>fleamarket</string>
+		<string>snssdk2329</string>
+		<string>ctrip</string>
+		<string>id6443575749</string>
+		<string>1235601864</string>
+		<string>1001394201</string>
+		<string>lazada</string>
+		<string>shopee</string>
+		<string>baiduboxlite</string>
+		<string>wireless1688</string>
+		<string>iqiyi</string>
+		<string>weixin</string>
+		<string>taobaotravel</string>
+		<string>youku</string>
+		<string>taobaolive</string>
+		<string>tongyi</string>
+		<string>taptap</string>
+		<string>yuanbao</string>
+		<string>snssdk561124</string>
+		<string>cainiao</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To make sure that the photo and video import feature in the media library works properly, you need to give access permissions to your photos and videos. You can adjust these permissions in "Settings."</string>
 	<key>NSUserTrackingUsageDescription</key>

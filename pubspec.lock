@@ -61,10 +61,10 @@ packages:
     dependency: "direct main"
     description:
       name: applovin_max
-      sha256: d179b33535589ce72dbc30c1fd0a3f0d249f5d1d547645b7837f8456c6a1df93
+      sha256: a0a8004d2d66f3c0d15a414493105189c2f8d5f3d7acc1960221c9c0d975d0f6
       url: "https://pub.dev"
     source: hosted
-    version: "4.6.4"
+    version: "4.6.2"
   appsflyer_sdk:
     dependency: "direct main"
     description:
@@ -692,10 +692,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_mobile_ads
-      sha256: a4f59019f2c32769fb6c60ed8aa321e9c21a36297e2c4f23452b3e779a3e7a26
+      sha256: "6029f6c48bc9b6b47767ddbb4847683048a2f006d418c871bd93c5eb6a8e5c3c"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0"
+    version: "9.0.0"
   graphs:
     dependency: transitive
     description:
@@ -996,10 +996,10 @@ packages:
     dependency: transitive
     description:
       name: meta
-      sha256: "1741988757a65eb6b36abe716829688cf01910bbf91c34354ff7ec1c3de2b349"
+      sha256: "23f08335362185a5ea2ad3a4e597f1375e78bce8a040df5c600c8d3552ef2394"
       url: "https://pub.dev"
     source: hosted
-    version: "1.18.0"
+    version: "1.17.0"
   mime:
     dependency: transitive
     description:
@@ -1291,10 +1291,9 @@ packages:
   secmtp_sdk:
     dependency: "direct main"
     description:
-      name: secmtp_sdk
-      sha256: "0b4e25f2856c929684ffba4e31f43d15ec5df1a42b6792cbdce42a8a7da64375"
-      url: "https://pub.dev"
-    source: hosted
+      path: secmtp_sdk
+      relative: true
+    source: path
     version: "1.0.15"
   shared_preferences:
     dependency: "direct main"
@@ -1449,10 +1448,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: "949a932224383300f01be9221c39180316445ecb8e7547f70a41a35bf421fb9e"
+      sha256: "8161c84903fd860b26bfdefb7963b3f0b68fee7adea0f59ef805ecca346f0c7a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.11"
+    version: "0.7.10"
   timing:
     dependency: transitive
     description:
