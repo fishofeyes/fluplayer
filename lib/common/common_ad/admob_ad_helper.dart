@@ -88,6 +88,7 @@ class AdmobAdHelper {
     try {
       final config = FirebaseRemoteConfig.instance;
       final configJson = config.getString('adConfigJson');
+      logarte?.log(configJson);
       String vipJson = config.getString('vipJson');
       String adBase64String = configJson.isEmpty ? testAdConfig : configJson;
       vipJson = vipJson.isEmpty ? testVipJson : vipJson;
