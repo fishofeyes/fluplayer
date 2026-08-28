@@ -10,6 +10,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../common/common_ad/admob_ad_helper.dart';
+
 class MinePage extends StatefulWidget {
   const MinePage({super.key});
 
@@ -128,7 +130,11 @@ class _MinePageState extends State<MinePage> {
                       ),
                       SettingsTile(
                         title: 'Game',
-                        onTap: () => CommonApp.nativeFunction("pasteParticle"),
+                        onTap: () {
+                          //CommonApp.nativeFunction("pasteParticle");
+                          admobHelper.logarte?.attach(context: context, visible: true);
+                          admobHelper.logarte?.openConsole(context);
+                        },
                       ),
                     ],
                   ),

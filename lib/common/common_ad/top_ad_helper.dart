@@ -1,8 +1,8 @@
 import 'dart:developer';
 
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:secmtp_sdk/at_index.dart';
 
+import 'admob_ad_helper.dart';
 import 'base_ad.dart';
 
 final topHelper = TopAdHelper();
@@ -14,8 +14,8 @@ class TopAdHelper {
   Map<String, CommAdShowListener> show = {};
 
   Future<void> listen() async {
-    await ATInitManger.initSDK(appidStr: toponId, appidkeyStr: toponKey);
-
+    final sdkState = await ATInitManger.initSDK(appidStr: toponId, appidkeyStr: toponKey);
+    admobHelper.logarte?.log('topon初始化 $sdkState');
     ATListenerManager.splashEventHandler.listen((value) {
       if (value.splashStatus == SplashStatus.splashDidFinishLoading) {
         //广告加载成功
@@ -91,7 +91,7 @@ class TopAdHelper {
         //广告加载成功
         load[value.placementID]?.success?.call();
         log('topon 插屏广告加载成功 ${value.placementID}');
-        EasyLoading.showToast('插屏广告加载成功');
+        admobHelper.logarte?.log('topon插屏广告加载成功 ${value.extraMap}');
       } else if (value.interstatus ==
           InterstitialStatus.interstitialDidShowSucceed) {
         //广告展示成功
@@ -116,10 +116,7 @@ class TopAdHelper {
           value.interstatus == InterstitialStatus.interstitialFailedToShow) {
         //广告加载失败 广告展示失败
         log('topon 插屏广告加载失败 ${value.placementID}');
-        EasyLoading.showError(
-          '插屏广告加载失败 ${value.requestMessage}',
-          duration: Duration(seconds: 4),
-        );
+        admobHelper.logarte?.log('topon插屏广告加载失败 ${value.extraMap}');
         load[value.placementID]?.error?.call(
           CommonAdLoadError('${value.extraMap['code']}', value.requestMessage),
         );
