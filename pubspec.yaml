@@ -74,7 +74,6 @@ dependencies:
   in_app_purchase: 3.2.2
   secmtp_sdk:
     path: secmtp_sdk
-  logarte: ^1.5.0
 
 dev_dependencies:
   flutter_test:

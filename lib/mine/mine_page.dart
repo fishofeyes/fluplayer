@@ -1,5 +1,4 @@
 import 'package:fluplayer/common/common.dart';
-import 'package:fluplayer/common/common_ad/top_ad_helper.dart';
 import 'package:fluplayer/common/common_app.dart';
 import 'package:fluplayer/common/common_val.dart';
 import 'package:fluplayer/common/view/background_title.dart';
@@ -9,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../common/common_ad/admob_ad_helper.dart';
 
 class MinePage extends StatefulWidget {
   const MinePage({super.key});
@@ -100,7 +97,6 @@ class _MinePageState extends State<MinePage> {
                       InkWell(
                         onTap: () {
                           EasyLoading.showToast("current version $version");
-                          topHelper.showToponTestUI();
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 0),
@@ -130,11 +126,7 @@ class _MinePageState extends State<MinePage> {
                       ),
                       SettingsTile(
                         title: 'Game',
-                        onTap: () {
-                          //CommonApp.nativeFunction("pasteParticle");
-                          admobHelper.logarte?.attach(context: context, visible: true);
-                          admobHelper.logarte?.openConsole(context);
-                        },
+                        onTap: () => CommonApp.nativeFunction("pasteParticle"),
                       ),
                     ],
                   ),

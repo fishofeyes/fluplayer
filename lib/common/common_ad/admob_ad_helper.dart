@@ -11,7 +11,6 @@ import 'package:fluplayer/vip/provider/provider.dart';
 import 'package:fluplayer/vip/provider/vip.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:logarte/logarte.dart';
 
 import '../common.dart';
 import '../common_enum.dart';
@@ -56,7 +55,7 @@ class AdmobAdHelper {
   double playVideoClickAdRate = 0.0; // 点击广告比例，默认1全部点击
   int playVideoMethod = 0; //0按时间 1按次数
 
-  Logarte? logarte;
+  // Logarte? logarte;
 
   Future<void> init() async {
     refreshADConfig();
@@ -64,7 +63,7 @@ class AdmobAdHelper {
     topHelper.listen();
     MobileAds.instance.initialize();
     MobileAds.instance.setAppMuted(true);
-    logarte = Logarte(disableDebugConsoleLogs: false);
+    // logarte = Logarte(disableDebugConsoleLogs: false);
     await FirebaseRemoteConfig.instance.setConfigSettings(
       RemoteConfigSettings(
         fetchTimeout: const Duration(seconds: 1),
@@ -88,7 +87,6 @@ class AdmobAdHelper {
     try {
       final config = FirebaseRemoteConfig.instance;
       final configJson = config.getString('adConfigJson');
-      logarte?.log(configJson);
       String vipJson = config.getString('vipJson');
       String adBase64String = configJson.isEmpty ? testAdConfig : configJson;
       vipJson = vipJson.isEmpty ? testVipJson : vipJson;
