@@ -4,7 +4,6 @@ import 'package:fluplayer/common/common.dart';
 import 'package:fluplayer/common/common_ad/admob_ad_helper.dart';
 import 'package:fluplayer/common/common_ad/base_ad.dart';
 import 'package:fluplayer/common/common_report/common_event.dart';
-import 'package:fluplayer/common/common_report/common_report.dart';
 import 'package:fluplayer/root/root.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,6 +23,7 @@ class LoadPage extends ConsumerStatefulWidget {
 class _SplashPageState extends ConsumerState<LoadPage> {
   int _launchTime = 7;
   double _width = 0;
+
   @override
   void initState() {
     super.initState();
@@ -76,10 +76,12 @@ class _SplashPageState extends ConsumerState<LoadPage> {
     sp.setBool(SharedStoreKey.firstInstall.name, true);
     await Future.delayed(const Duration(seconds: 1));
     admobHelper.updateVipModels();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (t) => const RootPage()),
-    );
+    if (mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (t) => const RootPage()),
+      );
+    }
   }
 
   @override
@@ -115,7 +117,7 @@ class _SplashPageState extends ConsumerState<LoadPage> {
             ),
             const SizedBox(height: 16),
             const Text(
-              "FluPlayer",
+              "JevWatch",
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
